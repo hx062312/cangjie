@@ -1,13 +1,13 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-  echo "Usage: ./scripts/java/decompose_test.sh <project_name>"
+  echo "Usage: ./scripts/java/decompose_test.sh <project>"
   exit 1
 fi
 
-PROJECT_NAME="$1"
+project="$1"
 
-echo "Decomposing tests for $PROJECT_NAME";
-mkdir -p projects/java/cleaned_final_projects_decomposed_tests/$PROJECT_NAME;
-cp -r projects/java/cleaned_final_projects/$PROJECT_NAME projects/java/cleaned_final_projects_decomposed_tests/;
-python3 src/java/preprocessing/decompose_dev_test.py --project_name=$PROJECT_NAME;
+echo "Decomposing tests for $project";
+mkdir -p projects/java/cleaned_final_projects_decomposed_tests/$project;
+cp -r projects/java/cleaned_final_projects/$project projects/java/cleaned_final_projects_decomposed_tests/;
+python3 src/java/preprocessing/decompose_dev_test.py --project_name=$project;
