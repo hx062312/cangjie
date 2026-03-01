@@ -136,7 +136,7 @@ bash scripts/java/extract_call_graph.sh _decomposed_tests
 ```Bash
 bash scripts/java/extract_types.sh _decomposed_tests
 bash scripts/java/crawl_type_desc.sh
-bash scripts/java/translate_types.sh <type> <model_name>
+bash scripts/java/translate_types.sh <project> <model_name> <type>
 ```
 
 ------

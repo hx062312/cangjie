@@ -1,0 +1,11 @@
+{
+    "0": "Validator",
+    "1": "HistoryLogger",
+    "2": "Arithmetics",
+    "3": "Calculator",
+    "4": "ValidatorTest",
+    "5": "HistoryLoggerTest",
+    "6": "CalculatorTest",
+    "7": "ArithmeticsTest",
+    "8": "Main"
+}

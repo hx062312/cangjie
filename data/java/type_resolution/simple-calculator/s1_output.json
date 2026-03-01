@@ -1,0 +1,21 @@
+{
+    "java.lang.NumberFormatException": "",
+    "HistoryLoggerTest": "HistoryLoggerTest",
+    "java.lang.Integer": "Int64",
+    "java.lang.IllegalArgumentException": "",
+    "void": "",
+    "ValidatorTest": "ValidatorTest",
+    "boolean": "Bool",
+    "java.util.ArrayList<String>": "Array<String>",
+    "Validator": "Validator",
+    "java.lang.String": "String",
+    "Main": "Main",
+    "ArithmeticsTest": "ArithmeticsTest",
+    "int": "Int64",
+    "Calculator": "Calculator",
+    "CalculatorTest": "CalculatorTest",
+    "Arithmetics": "Arithmetics",
+    "java.util.List<String>": "Array<String>",
+    "java.lang.System": "",
+    "HistoryLogger": "HistoryLogger"
+}

@@ -58,7 +58,7 @@ def main(args):
 
     formatted_project_name = args.project_name.replace("-", "_")
     os.makedirs(f"data/java/custom_types/{formatted_project_name}", exist_ok=True)
-    os.makedirs(f"data//java/type_resolution/{args.project_name}", exist_ok=True)
+    os.makedirs(f"data/java/type_resolution/{args.project_name}", exist_ok=True)
     os.makedirs(f"data/java/templates/{args.project_name}", exist_ok=True)
 
     templates_content = ""
@@ -68,52 +68,29 @@ def main(args):
         type_dct.setdefault(type_, "")
         if type_ in all_classes:
             type_dct[type_] = type_
-            templates_content += f"from data.custom_types.{formatted_project_name}.{type_} import {type_}\n"
+            # Generate Cangjie custom type files
             with open(
-                f"data/java/custom_types/{formatted_project_name}/{type_}.py", "w"
+                f"data/java/custom_types/{formatted_project_name}/{type_}.cj", "w"
             ) as f:
-                f.write(f"class {type_}:\n    pass\n")
+                f.write(f"pub class {type_} {{\n}}\n")
 
-    templates_content += "\n".join(
-        [
-            "from typing import *",
-            "import collections",
-            "import typing",
-            "import sqlalchemy",
-            "import builtins",
-            "import io",
-            "import sys",
-            "import itertools",
-            "import urllib",
-            "import copy",
-            "import datetime",
-            "import functools",
-            "import os",
-            "import pickle",
-            "import numbers",
-            "from numbers import *",
-            "import re",
-            "import decimal",
-            "import enum",
-            "import uuid",
-            "import math",
-            "import threading",
-            "import ipaddress",
-            "import socket",
-            "import http",
-            "import random",
-            "import idna",
-            "import locale",
-            "import weakref",
-            "import concurrent",
-            "import asyncio",
-            "def main(a: <placeholder>):",
-            "    pass",
-        ]
-    )
-    templates_content += "\n"
+    # Cangjie template content
+    templates_content = """// Cangjie type translation template
+// This file is used for type resolution validation
 
-    with open(f"data/java/templates/{args.project_name}/template.py", "w") as f:
+"""
+
+    # Add imports for Cangjie built-in types that may be needed
+    templates_content += """
+// Standard library imports are handled by the Cangjie compiler
+
+func main(): Int64 {{
+    let test_var: <placeholder> = throw Exception("test")
+    0
+}}
+"""
+
+    with open(f"data/java/templates/{args.project_name}/template.cj", "w") as f:
         f.write(templates_content)
 
     total_app_type_resolved = 0

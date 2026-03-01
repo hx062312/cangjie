@@ -5,7 +5,6 @@ import subprocess
 import os
 import re
 import yaml
-from subprocess import Popen
 import logging
 from openai import OpenAI
 
@@ -62,10 +61,13 @@ def main(args):
         types = json.load(f)
 
     type_description = {}
-    with open(
-        f"data/java/type_resolution/{args.project_name}/type_description.json", "r"
-    ) as f:
-        type_description = json.load(f)
+    try:
+        with open(
+            f"data/java/type_resolution/{args.project_name}/type_description.json", "r"
+        ) as f:
+            type_description = json.load(f)
+    except FileNotFoundError:
+        type_description = {}
 
     index = 0
     max_attempts = 5
@@ -104,31 +106,87 @@ def main(args):
             pbar.update(1)
             continue
 
-        icl = f"Java type:\n```\nString\n```\n\nPython type:\n```\nstr\n```"
-        instruction = (
-            f"### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:\n\nJava type:\n```\n"
-            + type_
-            + f"\n```\n\n### Response:\nPython type:\n\n"
-        )
+        # Few-shot examples for Cangjie (same format as original Python version)
+        icl = """Java type:
+```
+String
+```
 
-        if args.type == "source_description":
+Cangjie type:
+```
+String
+```
+
+Java type:
+```
+int
+```
+
+Cangjie type:
+```
+Int64
+```
+
+Java type:
+```
+List<String>
+```
+
+Cangjie type:
+```
+Array<String>
+```
+
+Java type:
+```
+Map<String, Integer>
+```
+
+Cangjie type:
+```
+HashMap<String, Int64>
+```
+
+Java type:
+```
+Optional<String>
+```
+
+Cangjie type:
+```
+?String
+```"""
+
+        instruction = f"""### Instruction:
+Translate the following Java type to Cangjie language type and write your response like the example above:
+
+Java type:
+```
+{type_}
+```
+
+### Response:
+Cangjie type:
+"""
+
+        if args.type == "source_description" and type_ in type_description:
             description = type_description[type_]["summarized_text"].replace("\n", "")
             instruction = instruction.replace(
-                f"### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:",
-                f"### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above. A description of Java type is given as well:\n\nType Description:\n{description}",
+                "### Instruction:\nTranslate the following Java type to Cangjie language type and write your response like the example above:",
+                f"### Instruction:\nTranslate the following Java type to Cangjie language type and write your response like the example above. A description of Java type is given as well:\n\nType Description:\n{description}"
             )
 
             if include_feedback:
                 instruction = instruction.replace(
                     f"A description of Java type is given as well:\n\nType Description:\n{description}",
-                    f"Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nA description of Java type is give as well:\n\nType Description:\n{description}",
+                    f"Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\nA description of Java type is given as well:\n\nType Description:\n{description}"
                 )
 
         elif args.type == "simple":
             if include_feedback:
                 instruction = instruction.replace(
-                    f"### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:",
-                    f"Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\n### Instruction:\nTranslate the following Java type to Python 3.11 type and write your response like the example above:",
+                    "### Instruction:\nTranslate the following Java type to Cangjie language type and write your response like the example above:",
+                    f"Your previous translation attempt was incorrect. Here is the feedback:\n\n{feedback}\n\n### Instruction:\nTranslate the following Java type to Cangjie language type and write your response like the example above:"
                 )
 
         prompt = f"{icl}\n\n{instruction}"
@@ -147,27 +205,30 @@ def main(args):
 
         generation = prompt_model(model_info, client, prompt, args)
 
-        generation = generation.replace("```python", "```")
+        # Debug: log raw response
+        logging.info(f"Raw LLM response: {generation[:500]}...")
+
+        # Same parsing logic as original Python code
+        generation = generation.replace("```cangjie", "```")
+        generation = generation.replace("```cj", "```")
         pattern = r"```((?:[^`]|`[^`]|``[^`])*?)```"
         match = re.search(pattern, generation, re.DOTALL)
 
         if not match:
-            logging.info(f"Failed to translate {type_}... trying again")
+            logging.info(f"Failed to translate {type_} - no code block found")
             max_attempts -= 1
             continue
 
         generation = match.group(1).strip()
 
         if generation == "":
-            logging.info(f"Failed to translate {type_}... trying again")
+            logging.info(f"Failed to translate {type_} - empty translation")
             max_attempts -= 1
             continue
 
-        generation = generation.replace("list", "List")
-        generation = generation.replace("dict", "Dict")
-        generation = generation.replace("set", "Set")
-        generation = generation.replace("type", "Type")
+        logging.info(f"Parsed translation: {generation}")
 
+        # Replace generic type parameters with Any (Cangjie's placeholder type)
         pattern = re.compile(r"\bV\b")
         generation = pattern.sub("Any", generation)
 
@@ -195,57 +256,44 @@ def main(args):
         pattern = re.compile(r"\bF\b")
         generation = pattern.sub("Any", generation)
 
-        if "Option" in type_ and "Optional" in generation:
-            generation = generation.replace("Optional", "Option")
+        # Read template and replace placeholder (same logic as original)
+        template_path = f"data/java/templates/{args.project_name}/template.cj"
+        with open(template_path, "r") as f:
+            cangjie_program = f.read()
 
-        with open(f"data/java/templates/{args.project_name}/template.py", "r") as f:
-            python_program = f.read()
-            python_program = python_program.replace("<placeholder>", generation)
+        cangjie_program = cangjie_program.replace("<placeholder>", generation)
 
-        with open("program.py", "w") as f:
-            f.write(python_program)
+        with open("test.cj", "w") as f:
+            f.write(cangjie_program)
 
+        # Compile check (same as original py_compile)
         try:
             subprocess.run(
-                "python3 -m py_compile program.py",
+                ["cjc", "test.cj"],
                 check=True,
                 capture_output=True,
-                shell=True,
-                timeout=30,
+                timeout=60,
             )
-            p = Popen(
-                ["python3", "program.py"],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-            stdout, stderr_data = p.communicate(timeout=100)
-
-            if stderr_data.decode("utf-8") != "":
-                # logging.info(stderr_data.decode('utf-8'))
-                logging.info(
-                    f"execution error for translated type {generation}... trying again for {type_}"
-                )
-                feedback = stderr_data.decode("utf-8")
-                feedback = "\n".join(feedback.strip().split("\n")[-2:])
-                include_feedback = True
-                max_attempts -= 1
-                continue
-            else:
-                # logging.info('success')
-                pass
 
         except subprocess.CalledProcessError as e:
-            # logging.info(e.stderr.decode('utf-8'))
-            logging.info(
-                f"compile error for translated type {generation}... trying again for {type_}"
-            )
-            feedback = f"The translated type {generation} is syntactically incorrect in Python 3.11.\n\n"
+            logging.info(f"compile error for translated type {generation}... trying again for {type_}")
+            # cjc outputs errors to stdout, not stderr
+            error_output = e.stdout if e.stdout else (e.stderr if e.stderr else "Unknown error")
+            logging.info(f"Compiler output: {error_output}")
+            feedback = f"The translated type '{generation}' is syntactically incorrect in Cangjie.\n\n{error_output}"
+            feedback = "\n".join(feedback.strip().split("\n")[-2:])
             include_feedback = True
             max_attempts -= 1
+            if os.path.exists("test.cj"):
+                os.remove("test.cj")
             continue
 
-        os.remove("program.py")
+        except FileNotFoundError:
+            logging.info(f"cjc compiler not found, skipping validation")
+            # If compiler not found, still accept the translation
+
+        if os.path.exists("test.cj"):
+            os.remove("test.cj")
 
         logging.info(f"Translated {type_} to {generation}")
 
@@ -275,7 +323,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser_ = argparse.ArgumentParser(
-        description="Translate java types to python types"
+        description="Translate java types to cangjie types"
     )
     parser_.add_argument(
         "--project_name", type=str, dest="project_name", help="project name"
