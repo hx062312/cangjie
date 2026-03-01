@@ -3,7 +3,7 @@
     "HistoryLoggerTest": "HistoryLoggerTest",
     "java.lang.Integer": "Int64",
     "java.lang.IllegalArgumentException": "IllegalArgumentException",
-    "void": "",
+    "void": "Unit",
     "ValidatorTest": "ValidatorTest",
     "boolean": "Bool",
     "java.util.ArrayList<String>": "Array<String>",
