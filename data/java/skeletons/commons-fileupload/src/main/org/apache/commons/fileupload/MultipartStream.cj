@@ -88,7 +88,7 @@ class MultipartStream {
 
 }
 
-class ItemInputStream <: {
+class ItemInputStream <:Closeable,  {
 	// Class Fields Begin
 	internal var total: Int64 = 0
 	internal var pad: Int64 = 0

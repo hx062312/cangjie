@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ./scripts/java/generate_cg.sh simple-calculator
+# ./scripts/java/generate_cg.sh commons-fileupload
+
 if [ $# -ne 1 ]; then
   echo "Usage: ./generate_cg.sh <project_name>"
   exit 1

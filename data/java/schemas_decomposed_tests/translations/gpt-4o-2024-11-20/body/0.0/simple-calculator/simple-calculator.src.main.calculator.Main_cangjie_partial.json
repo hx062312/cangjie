@@ -1,0 +1,361 @@
+{
+    "path": "projects/java/cleaned_final_projects_decomposed_tests/simple-calculator/src/main/java/calculator/Main.java",
+    "imports": {},
+    "classes": {
+        "Main": {
+            "start": 3,
+            "end": 3,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "4-47:main": {
+                    "start": 4,
+                    "end": 47,
+                    "body": [
+                        "    public static void main(String[] args) {\n",
+                        "        if (args.length == 0) {\n",
+                        "            printUsage();\n",
+                        "            return;\n",
+                        "        }\n",
+                        "\n",
+                        "        Calculator calc = new Calculator();\n",
+                        "        String operation = args[0].toLowerCase();\n",
+                        "\n",
+                        "        try {\n",
+                        "            if (operation.equals(\"add\") || operation.equals(\"+\")) {\n",
+                        "                if (args.length != 3) throw new IllegalArgumentException(\"add requires 2 numbers\");\n",
+                        "                int result = calc.performAdd(parseInt(args[1]), parseInt(args[2]));\n",
+                        "                printResult(result);\n",
+                        "            } else if (operation.equals(\"sub\") || operation.equals(\"-\")) {\n",
+                        "                if (args.length != 3) throw new IllegalArgumentException(\"sub requires 2 numbers\");\n",
+                        "                int result = calc.performSub(parseInt(args[1]), parseInt(args[2]));\n",
+                        "                printResult(result);\n",
+                        "            } else if (operation.equals(\"mul\") || operation.equals(\"*\")) {\n",
+                        "                if (args.length != 3) throw new IllegalArgumentException(\"mul requires 2 numbers\");\n",
+                        "                int result = calc.performMul(parseInt(args[1]), parseInt(args[2]));\n",
+                        "                printResult(result);\n",
+                        "            } else if (operation.equals(\"div\") || operation.equals(\"/\")) {\n",
+                        "                if (args.length != 3) throw new IllegalArgumentException(\"div requires 2 numbers\");\n",
+                        "                int result = calc.performDiv(parseInt(args[1]), parseInt(args[2]));\n",
+                        "                printResult(result);\n",
+                        "            } else if (operation.equals(\"history\") || operation.equals(\"h\")) {\n",
+                        "                for (String entry : calc.getLogger().getHistory()) {\n",
+                        "                    System.out.println(entry);\n",
+                        "                }\n",
+                        "            } else if (operation.equals(\"help\") || operation.equals(\"-h\") || operation.equals(\"--help\")) {\n",
+                        "                printUsage();\n",
+                        "            } else {\n",
+                        "                System.err.println(\"Unknown operation: \" + operation);\n",
+                        "                printUsage();\n",
+                        "            }\n",
+                        "        } catch (NumberFormatException e) {\n",
+                        "            System.err.println(\"Error: Please enter valid integers\");\n",
+                        "            System.exit(1);\n",
+                        "        } catch (IllegalArgumentException e) {\n",
+                        "            System.err.println(\"Error: \" + e.getMessage());\n",
+                        "            System.exit(1);\n",
+                        "        }\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "static"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "main(String[])",
+                    "parameters": [
+                        "args"
+                    ],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.Calculator",
+                            "Calculator",
+                            "Calculator"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "toLowerCase()"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Main",
+                            "Main",
+                            "61-81:printUsage"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/String",
+                            "equals(java.lang.Object)"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Calculator",
+                            "Calculator",
+                            "7-14:performAdd"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Main",
+                            "Main",
+                            "49-51:parseInt"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/IllegalArgumentException",
+                            "IllegalArgumentException(java.lang.String)"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Main",
+                            "Main",
+                            "53-59:printResult"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Calculator",
+                            "Calculator",
+                            "16-23:performSub"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Calculator",
+                            "Calculator",
+                            "25-32:performMul"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Calculator",
+                            "Calculator",
+                            "34-41:performDiv"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "14-16:getHistory"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Calculator",
+                            "Calculator",
+                            "43-45:getLogger"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "exit(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/Throwable",
+                            "getMessage()"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static func main(args: Array<String>): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "61-81:printUsage": {
+                    "start": 61,
+                    "end": 81,
+                    "body": [
+                        "    private static void printUsage() {\n",
+                        "        System.out.println(\"Simple Calculator - Command Line Tool\");\n",
+                        "        System.out.println(\"\");\n",
+                        "        System.out.println(\"Usage:\");\n",
+                        "        System.out.println(\"    calc <operation> <num1> <num2>\");\n",
+                        "        System.out.println(\"\");\n",
+                        "        System.out.println(\"Operations:\");\n",
+                        "        System.out.println(\"    add, +     Addition\");\n",
+                        "        System.out.println(\"    sub, -     Subtraction\");\n",
+                        "        System.out.println(\"    mul, *     Multiplication\");\n",
+                        "        System.out.println(\"    div, /     Division\");\n",
+                        "        System.out.println(\"\");\n",
+                        "        System.out.println(\"Examples:\");\n",
+                        "        System.out.println(\"    calc add 10 5\");\n",
+                        "        System.out.println(\"    calc + 10 5\");\n",
+                        "        System.out.println(\"    calc sub 20 8\");\n",
+                        "        System.out.println(\"    calc mul 6 7\");\n",
+                        "        System.out.println(\"    calc div 100 4\");\n",
+                        "        System.out.println(\"\");\n",
+                        "        System.out.println(\"Note: Input values must be between 0 and 999\");\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "printUsage()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal static func printUsage(): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "53-59:printResult": {
+                    "start": 53,
+                    "end": 59,
+                    "body": [
+                        "    private static void printResult(int result) {\n",
+                        "        if (result == -1) {\n",
+                        "            System.err.println(\"Error: Invalid input. Values must be between 0 and 999\");\n",
+                        "            System.exit(1);\n",
+                        "        }\n",
+                        "        System.out.println(result);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "printResult(int)",
+                    "parameters": [
+                        "result"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(java.lang.String)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/lang/System",
+                            "exit(int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/io/PrintStream",
+                            "println(int)"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal static func printResult(result: Int64): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "49-51:parseInt": {
+                    "start": 49,
+                    "end": 51,
+                    "body": [
+                        "    private static int parseInt(String s) {\n",
+                        "        return Integer.parseInt(s);\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "static",
+                        "private"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "parseInt(String)",
+                    "parameters": [
+                        "s"
+                    ],
+                    "calls": [
+                        [
+                            "library",
+                            "java.base/java/lang/Integer",
+                            "parseInt(java.lang.String)"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal static func parseInt(s: String): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "cangjie_class_declaration": "class Main {\n"
+        }
+    },
+    "cangjie_imports": [
+        "import std.io.*",
+        "import std.collection.*",
+        "import calculator/Calculator",
+        "import calculator/HistoryLogger"
+    ]
+}

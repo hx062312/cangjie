@@ -1,0 +1,249 @@
+{
+    "calculator.ArithmeticsTest": {
+        "testDivByZero": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [
+                "<init>",
+                "div"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testAdd": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [
+                "<init>",
+                "add"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testDiv": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [
+                "<init>",
+                "div"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testMul": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [
+                "<init>",
+                "mul"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testSub": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [
+                "<init>",
+                "sub"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        }
+    },
+    "calculator.CalculatorTest": {
+        "testHistoryLogging": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [
+                "<init>",
+                "add",
+                "sub"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": [
+                "<init>",
+                "performAdd",
+                "performSub",
+                "getLogger"
+            ]
+        },
+        "testPerformAdd": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [
+                "<init>",
+                "add"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": [
+                "<init>",
+                "performAdd",
+                "getLogger"
+            ]
+        },
+        "testPerformDiv": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [
+                "<init>",
+                "div"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": [
+                "<init>",
+                "performDiv",
+                "getLogger"
+            ]
+        },
+        "testPerformMul": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [
+                "<init>",
+                "mul"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": [
+                "<init>",
+                "performMul",
+                "getLogger"
+            ]
+        },
+        "testPerformSub": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [
+                "<init>",
+                "sub"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": [
+                "<init>",
+                "performSub",
+                "getLogger"
+            ]
+        },
+        "testInvalidInput": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [
+                "<init>"
+            ],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": [
+                "<init>",
+                "performAdd",
+                "getLogger"
+            ]
+        }
+    },
+    "calculator.ValidatorTest": {
+        "testInvalidValues": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": []
+        },
+        "testValidValues": {
+            "calculator/HistoryLogger": [],
+            "calculator/Arithmetics": [],
+            "calculator/Main": [],
+            "calculator/Validator": [
+                "isValid"
+            ],
+            "calculator/Calculator": []
+        }
+    },
+    "calculator.HistoryLoggerTest": {
+        "testLog": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory"
+            ],
+            "calculator/Arithmetics": [],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testClear": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory",
+                "clear"
+            ],
+            "calculator/Arithmetics": [],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testGetHistoryReturnsCopy": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory"
+            ],
+            "calculator/Arithmetics": [],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        },
+        "testMultipleLogs": {
+            "calculator/HistoryLogger": [
+                "<init>",
+                "log",
+                "getHistory"
+            ],
+            "calculator/Arithmetics": [],
+            "calculator/Main": [],
+            "calculator/Validator": [],
+            "calculator/Calculator": []
+        }
+    }
+}

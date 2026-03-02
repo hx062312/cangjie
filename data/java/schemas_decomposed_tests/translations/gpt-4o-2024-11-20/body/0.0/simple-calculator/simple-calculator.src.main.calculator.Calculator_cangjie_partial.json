@@ -1,0 +1,374 @@
+{
+    "path": "projects/java/cleaned_final_projects_decomposed_tests/simple-calculator/src/main/java/calculator/Calculator.java",
+    "imports": {},
+    "classes": {
+        "Calculator": {
+            "start": 3,
+            "end": 3,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "43-45:getLogger": {
+                    "start": 43,
+                    "end": 45,
+                    "body": [
+                        "    public HistoryLogger getLogger() {\n",
+                        "        return logger;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "HistoryLogger",
+                            "HistoryLogger"
+                        ]
+                    ],
+                    "signature": "getLogger()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "\tpublic func getLogger(): HistoryLogger {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "34-41:performDiv": {
+                    "start": 34,
+                    "end": 41,
+                    "body": [
+                        "    public int performDiv(int x, int y) {\n",
+                        "        if (Validator.isValid(x) && Validator.isValid(y)) {\n",
+                        "            int result = math.div(x, y);\n",
+                        "            logger.log(\"Div\", result);\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "        return -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "performDiv(int, int)",
+                    "parameters": [
+                        "x",
+                        "y"
+                    ],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.Validator",
+                            "Validator",
+                            "4-6:isValid"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Arithmetics",
+                            "Arithmetics",
+                            "16-21:div"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic func performDiv(x: Int64, y: Int64): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "25-32:performMul": {
+                    "start": 25,
+                    "end": 32,
+                    "body": [
+                        "    public int performMul(int x, int y) {\n",
+                        "        if (Validator.isValid(x) && Validator.isValid(y)) {\n",
+                        "            int result = math.mul(x, y);\n",
+                        "            logger.log(\"Mul\", result);\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "        return -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "performMul(int, int)",
+                    "parameters": [
+                        "x",
+                        "y"
+                    ],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.Validator",
+                            "Validator",
+                            "4-6:isValid"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Arithmetics",
+                            "Arithmetics",
+                            "12-14:mul"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic func performMul(x: Int64, y: Int64): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "16-23:performSub": {
+                    "start": 16,
+                    "end": 23,
+                    "body": [
+                        "    public int performSub(int x, int y) {\n",
+                        "        if (Validator.isValid(x) && Validator.isValid(y)) {\n",
+                        "            int result = math.sub(x, y);\n",
+                        "            logger.log(\"Sub\", result);\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "        return -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "performSub(int, int)",
+                    "parameters": [
+                        "x",
+                        "y"
+                    ],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.Validator",
+                            "Validator",
+                            "4-6:isValid"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Arithmetics",
+                            "Arithmetics",
+                            "8-10:sub"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic func performSub(x: Int64, y: Int64): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "7-14:performAdd": {
+                    "start": 7,
+                    "end": 14,
+                    "body": [
+                        "    public int performAdd(int x, int y) {\n",
+                        "        if (Validator.isValid(x) && Validator.isValid(y)) {\n",
+                        "            int result = math.add(x, y);\n",
+                        "            logger.log(\"Add\", result);\n",
+                        "            return result;\n",
+                        "        }\n",
+                        "        return -1;\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "int",
+                            "int"
+                        ]
+                    ],
+                    "signature": "performAdd(int, int)",
+                    "parameters": [
+                        "x",
+                        "y"
+                    ],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.Validator",
+                            "Validator",
+                            "4-6:isValid"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.Arithmetics",
+                            "Arithmetics",
+                            "4-6:add"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic func performAdd(x: Int64, y: Int64): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "5-5:logger": {
+                    "start": 5,
+                    "end": 5,
+                    "body": [
+                        "    private final HistoryLogger logger = new HistoryLogger();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "HistoryLogger",
+                            "HistoryLogger"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal let logger: HistoryLogger = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "4-4:math": {
+                    "start": 4,
+                    "end": 4,
+                    "body": [
+                        "    private final Arithmetics math = new Arithmetics();\n"
+                    ],
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "Arithmetics",
+                            "Arithmetics"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal let math: Arithmetics = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class Calculator {\n"
+        }
+    },
+    "cangjie_imports": [
+        "import std.io.*",
+        "import calculator/Arithmetics",
+        "import calculator/HistoryLogger",
+        "import calculator/Validator"
+    ]
+}

@@ -8,7 +8,7 @@ import std.collection.*
 import std.io.*
 // Imports End
 
-class LimitedInputStream <: {
+class LimitedInputStream <:Closeable,  {
 	// Class Fields Begin
 	internal let sizeMax: Int64 = 0
 	internal var count: Int64 = 0

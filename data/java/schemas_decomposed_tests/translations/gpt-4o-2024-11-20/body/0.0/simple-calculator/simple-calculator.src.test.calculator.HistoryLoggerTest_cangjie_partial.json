@@ -1,0 +1,395 @@
+{
+    "path": "projects/java/cleaned_final_projects_decomposed_tests/simple-calculator/src/test/java/calculator/HistoryLoggerTest.java",
+    "imports": {
+        "3-3:import Test": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        },
+        "4-4:import BeforeEach": {
+            "start": 4,
+            "end": 4,
+            "body": [
+                "import org.junit.jupiter.api.BeforeEach;\n"
+            ]
+        },
+        "5-5:import static Assertions.*": {
+            "start": 5,
+            "end": 5,
+            "body": [
+                "import static org.junit.jupiter.api.Assertions.*;\n"
+            ]
+        }
+    },
+    "classes": {
+        "HistoryLoggerTest": {
+            "start": 7,
+            "end": 7,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "46-52:testGetHistoryReturnsCopy": {
+                    "start": 46,
+                    "end": 52,
+                    "body": [
+                        "    void testGetHistoryReturnsCopy() {\n",
+                        "        logger.log(\"Add\", 5);\n",
+                        "        \n",
+                        "        logger.getHistory().add(\"Invalid\");\n",
+                        "        \n",
+                        "        assertEquals(1, logger.getHistory().size());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testGetHistoryReturnsCopy()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "add(java.lang.String)"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "14-16:getHistory"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal func testGetHistoryReturnsCopy(): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "36-43:testClear": {
+                    "start": 36,
+                    "end": 43,
+                    "body": [
+                        "    void testClear() {\n",
+                        "        logger.log(\"Add\", 5);\n",
+                        "        logger.log(\"Sub\", 3);\n",
+                        "        \n",
+                        "        logger.clear();\n",
+                        "        \n",
+                        "        assertTrue(logger.getHistory().isEmpty());\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testClear()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "18-20:clear"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertTrue(boolean)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "isEmpty()"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "14-16:getHistory"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal func testClear(): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "24-33:testMultipleLogs": {
+                    "start": 24,
+                    "end": 33,
+                    "body": [
+                        "    void testMultipleLogs() {\n",
+                        "        logger.log(\"Add\", 5);\n",
+                        "        logger.log(\"Sub\", 3);\n",
+                        "        logger.log(\"Mul\", 10);\n",
+                        "        \n",
+                        "        assertEquals(3, logger.getHistory().size());\n",
+                        "        assertEquals(\"Add: 5\", logger.getHistory().get(0));\n",
+                        "        assertEquals(\"Sub: 3\", logger.getHistory().get(1));\n",
+                        "        assertEquals(\"Mul: 10\", logger.getHistory().get(2));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testMultipleLogs()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "14-16:getHistory"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal func testMultipleLogs(): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "17-21:testLog": {
+                    "start": 17,
+                    "end": 21,
+                    "body": [
+                        "    void testLog() {\n",
+                        "        logger.log(\"Add\", 5);\n",
+                        "        assertEquals(1, logger.getHistory().size());\n",
+                        "        assertEquals(\"Add: 5\", logger.getHistory().get(0));\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testLog()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "9-12:log"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(int,int)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "size()"
+                        ],
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "14-16:getHistory"
+                        ],
+                        [
+                            "library",
+                            "Assertions",
+                            "assertEquals(java.lang.Object,java.lang.Object)"
+                        ],
+                        [
+                            "library",
+                            "java.base/java/util/List",
+                            "get(int)"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal func testLog(): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                },
+                "12-14:setUp": {
+                    "start": 12,
+                    "end": 14,
+                    "body": [
+                        "    void setUp() {\n",
+                        "        logger = new HistoryLogger();\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setUp()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "simple-calculator.src.main.calculator.HistoryLogger",
+                            "HistoryLogger",
+                            "HistoryLogger"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal func setUp(): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "fields": {
+                "9-9:logger": {
+                    "start": 9,
+                    "end": 9,
+                    "body": [
+                        "    private HistoryLogger logger;\n"
+                    ],
+                    "modifiers": [
+                        "private"
+                    ],
+                    "types": [
+                        [
+                            "HistoryLogger",
+                            "HistoryLogger"
+                        ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var logger: HistoryLogger = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
+                }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class HistoryLoggerTest {\n"
+        }
+    },
+    "cangjie_imports": [
+        "import std.io.*",
+        "import calculator/HistoryLogger"
+    ]
+}

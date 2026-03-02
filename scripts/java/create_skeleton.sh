@@ -3,6 +3,8 @@
 # ./scripts/java/create_skeleton.sh simple-calculator gpt-4o-2024-11-20 signature _decomposed_tests 0.0
 # ./scripts/java/create_skeleton.sh commons-fileupload gpt-4o-2024-11-20 signature _decomposed_tests 0.0
 
+# ./scripts/java/create_skeleton.sh simple-calculator gpt-4o-2024-11-20 body _decomposed_tests 0.0
+# ./scripts/java/create_skeleton.sh commons-fileupload gpt-4o-2024-11-20 body _decomposed_tests 0.0
 if [ $# -ne 5 ]; then
   echo "Usage: ./scripts/java/create_skeleton.sh <project> <model> <type> <suffix> <temperature>"
   exit 1
