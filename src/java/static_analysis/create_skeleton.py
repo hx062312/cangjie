@@ -239,6 +239,7 @@ def main(args):
     with open(f"data/java/type_resolution/universal_type_map_final.json", "r") as f:
         extracted_types = json.load(f)
 
+    # TODO:unprocessed
     reserved_tokens = dir(__builtins__) + keyword.kwlist
 
     # fix
@@ -277,6 +278,7 @@ def main(args):
         with open(schema_path, "r") as f:
             schema = json.load(f)
 
+        # TODO: preserve method overloading
         schema = remove_duplicate_methods(schema)
 
         # Cangjie uses package declaration instead of imports at the top
@@ -308,11 +310,13 @@ def main(args):
         if not class_order:
             class_order = list(schema["classes"].keys())
 
+        # Begin processing classes
         class_dependencies = []
         for class_ in class_order:
             if "new" in class_ or "{" in class_:  # skip nested and nameless classes
                 continue
 
+            # Read Java source code by line range to mark if class is enum
             source_class_declaration = ""
             with open(schema["path"], "r") as f:
                 source_class_declaration = "".join(
@@ -329,6 +333,7 @@ def main(args):
 
             dependencies.setdefault(class_, [])
 
+            # If nested class, find its top-level parent class
             main_class = class_
             if schema["classes"][class_]["nested_inside"] != []:
                 main_class = schema["classes"][class_]["nested_inside"]
@@ -337,9 +342,11 @@ def main(args):
 
             dependencies[main_class] += schema["classes"][main_class]["nests"]
 
+            # Record nested class relationships
             if class_ in dependencies:
                 class_dependencies.append((schema["path"], dependencies[class_]))
 
+            # Extract class name
             class_name = class_
             if "<" in class_:
                 class_name = class_.split("<")[0].replace("new ", "").strip()
@@ -348,17 +355,18 @@ def main(args):
 
             # Cangjie class declaration using < for inheritance
             class_declaration = ""
-            exceptional_superclasses = {
-                "Comparator",
-                "Queue",
-                "Comparable",
-                "Closeable",
-                "Enum",
-                "Iterator",
-                "Iterable",
-                "Supplier",
-                "Runnable",
-            }
+            # TODO: These Java interfaces should not be parent classes in translation
+            # exceptional_superclasses = {
+            #     "Comparator",
+            #     "Queue",
+            #     "Comparable",
+            #     "Closeable",
+            #     "Enum",
+            #     "Iterator",
+            #     "Iterable",
+            #     "Supplier",
+            #     "Runnable",
+            # }
 
             # Determine class type markers
             is_interface = schema["classes"][class_].get("is_interface", False)
@@ -381,14 +389,14 @@ def main(args):
                     )
                     for cls_name in schema["classes"][class_]["extends"]
                 ]
-                schema["classes"][class_]["extends"] = [
-                    cls_name
-                    for cls_name in schema["classes"][class_]["extends"]
-                    if not any(
-                        substring in cls_name for substring in exceptional_superclasses
-                    )
-                    and cls_name != class_name
-                ]
+                # schema["classes"][class_]["extends"] = [
+                #     cls_name
+                #     for cls_name in schema["classes"][class_]["extends"]
+                #     if not any(
+                #         substring in cls_name for substring in exceptional_superclasses
+                #     )
+                #     and cls_name != class_name
+                # ]
 
                 if is_interface:
                     # Interface in Cangjie
@@ -433,14 +441,14 @@ def main(args):
                     )
                     for cls_name in schema["classes"][class_]["implements"]
                 ]
-                schema["classes"][class_]["implements"] = [
-                    cls_name
-                    for cls_name in schema["classes"][class_]["implements"]
-                    if not any(
-                        substring in cls_name for substring in exceptional_superclasses
-                    )
-                    and cls_name != class_name
-                ]
+                # schema["classes"][class_]["implements"] = [
+                #     cls_name
+                #     for cls_name in schema["classes"][class_]["implements"]
+                #     if not any(
+                #         substring in cls_name for substring in exceptional_superclasses
+                #     )
+                #     and cls_name != class_name
+                # ]
 
                 if is_interface:
                     # Interfaces can only use extends in Java, not implements
@@ -537,6 +545,7 @@ def main(args):
                         True if args.type == "body" else False
                     )
 
+            # Process fields
             is_empty_class = True
             skeleton += "\t// Class Fields Begin\n"
             for field in sorted(schema["classes"][class_]["fields"]):
@@ -608,8 +617,10 @@ def main(args):
                         field_body = "[]"
                     elif field_type.startswith("HashMap"):
                         field_body = "[:]"
+                    # TODO: elif field_type == cla_name:
                     else:
                         field_body = "?"
+                # Process List type fields
                 elif "=" in "".join(schema["classes"][class_]["fields"][field]["body"]):
                     if "new ArrayList" in "".join(
                         schema["classes"][class_]["fields"][field]["body"]
@@ -617,15 +628,19 @@ def main(args):
                         schema["classes"][class_]["fields"][field]["body"]
                     ):
                         field_body = "[]"
-                    elif "new LinkedHashMap" in "".join(
-                        schema["classes"][class_]["fields"][field]["body"]
-                    ) or "new HashMap" in "".join(
-                        schema["classes"][class_]["fields"][field]["body"]
+                    elif (
+                        "new LinkedHashMap"
+                        in "".join(schema["classes"][class_]["fields"][field]["body"])
+                        or "new HashMap"
+                        in "".join(schema["classes"][class_]["fields"][field]["body"])
+                        or "new EnumMap"
+                        in "".join(schema["classes"][class_]["fields"][field]["body"])
                     ):
                         field_body = "[:]"
                     else:
                         field_body = "?"
 
+                # Save field info to target_schema
                 target_schema["classes"][class_]["fields"][field][
                     "partial_translation"
                 ] = f"\t{access_modifier}{var_keyword}{field_name}: {field_type} = {field_body}".split(
@@ -709,7 +724,6 @@ def main(args):
                 is_constructor = class_ == method_name
 
                 # Get return type
-                return_type = "Unit"
                 if (
                     len(schema["classes"][class_]["methods"][method]["return_types"])
                     == 1
@@ -925,6 +939,7 @@ def main(args):
                 path = get_dependency_path(
                     dependent_class[1], args.project_name, args.suffix
                 )
+                # If two classes already have inheritance (parent-child), no separate import needed
                 skip = False
                 for (
                     class_1,
