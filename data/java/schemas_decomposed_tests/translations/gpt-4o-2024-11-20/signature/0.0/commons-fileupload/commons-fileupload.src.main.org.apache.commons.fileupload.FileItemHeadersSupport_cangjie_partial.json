@@ -1,0 +1,101 @@
+{
+    "path": "projects/java/cleaned_final_projects_decomposed_tests/commons-fileupload/src/main/java/org/apache/commons/fileupload/FileItemHeadersSupport.java",
+    "imports": {},
+    "classes": {
+        "FileItemHeadersSupport": {
+            "start": 27,
+            "end": 27,
+            "is_abstract": false,
+            "is_interface": true,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "43-43:setHeaders": {
+                    "start": 43,
+                    "end": 43,
+                    "body": [
+                        "    void setHeaders(FileItemHeaders headers);\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "setHeaders(FileItemHeaders)",
+                    "parameters": [
+                        "headers"
+                    ],
+                    "calls": [],
+                    "partial_translation": [
+                        "\tpublic func setHeaders(headers: FileItemHeaders): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": false
+                },
+                "34-34:getHeaders": {
+                    "start": 34,
+                    "end": 34,
+                    "body": [
+                        "    FileItemHeaders getHeaders();\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [],
+                    "modifiers": [
+                        "public",
+                        "abstract"
+                    ],
+                    "return_types": [
+                        [
+                            "FileItemHeaders",
+                            "FileItemHeaders"
+                        ]
+                    ],
+                    "signature": "getHeaders()",
+                    "parameters": [],
+                    "calls": [],
+                    "partial_translation": [
+                        "\tpublic func getHeaders(): FileItemHeaders {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": false
+                }
+            },
+            "fields": {},
+            "is_enum": false,
+            "cangjie_class_declaration": "interface FileItemHeadersSupport {\n"
+        }
+    },
+    "cangjie_imports": [
+        "import std.io.*",
+        "import org/apache/commons/fileupload/FileItemHeaders"
+    ]
+}
