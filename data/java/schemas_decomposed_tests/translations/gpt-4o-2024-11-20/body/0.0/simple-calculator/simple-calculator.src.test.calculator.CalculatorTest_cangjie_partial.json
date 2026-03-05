@@ -105,6 +105,7 @@
                             "get(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testHistoryLogging(): Unit {",
                         "\t\t// TODO",
@@ -174,6 +175,7 @@
                             "43-45:getLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testInvalidInput(): Unit {",
                         "\t\t// TODO",
@@ -237,6 +239,7 @@
                             "43-45:getLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testPerformDiv(): Unit {",
                         "\t\t// TODO",
@@ -300,6 +303,7 @@
                             "43-45:getLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testPerformMul(): Unit {",
                         "\t\t// TODO",
@@ -363,6 +367,7 @@
                             "43-45:getLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testPerformSub(): Unit {",
                         "\t\t// TODO",
@@ -426,6 +431,7 @@
                             "43-45:getLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testPerformAdd(): Unit {",
                         "\t\t// TODO",
@@ -479,6 +485,7 @@
                             "43-45:getLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func setUp(): Unit {",
                         "\t\t// TODO",

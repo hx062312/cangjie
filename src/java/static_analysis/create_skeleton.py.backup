@@ -102,11 +102,24 @@ def split_with_nested_commas(s):
 
 
 def get_dependency_path(dependent_class, project_name, suffix):
-    """Get the dependency path for a class."""
-    if dependent_class.startswith(project_name):
-        return ".".join(dependent_class.split(".")[1:-1])
+
+    src_fname = (
+        f"java_projects/cleaned_final_projects{suffix}/{project_name}/src/main/java/"
+        + dependent_class.replace(".", "/")
+        + ".java"
+    )
+    test_fname = (
+        f"java_projects/cleaned_final_projects{suffix}/{project_name}/src/test/java/"
+        + dependent_class.replace(".", "/")
+        + ".java"
+    )
+
+    if os.path.exists(src_fname):
+        return f"src.main.{dependent_class}"
+    elif os.path.exists(test_fname):
+        return f"src.test.{dependent_class}"
     else:
-        return dependent_class.replace(".", "/")
+        return f"src.main.{dependent_class}"
 
 
 def remove_duplicate_methods(schema):
@@ -153,8 +166,12 @@ def has_child_parent_dept(dependent_files, class_path, project_name, suffix):
         class_1_path = get_dependency_path(class_path[class_1], project_name, suffix)
         class_2_path = get_dependency_path(class_path[class_2], project_name, suffix)
 
-        class_1_schema_name = f"data/java/schemas{suffix}/{project_name}/{project_name}.{class_1_path}.json"
-        class_2_schema_name = f"data/java/schemas{suffix}/{project_name}/{project_name}.{class_2_path}.json"
+        class_1_schema_name = (
+            f"data/schemas{suffix}/{project_name}/{project_name}.{class_1_path}.json"
+        )
+        class_2_schema_name = (
+            f"data/schemas{suffix}/{project_name}/{project_name}.{class_2_path}.json"
+        )
 
         class_1_schema = {}
         with open(class_1_schema_name, "r") as f:
@@ -169,111 +186,79 @@ def has_child_parent_dept(dependent_files, class_path, project_name, suffix):
                 class_.split("<")[0].replace("new ", "").strip()
                 for class_ in class_2_schema["classes"][schema_class]["extends"]
             ]:
-                (
-                    verified_dependent_files.append(
-                        (class_1, class_1_schema_name, class_2, class_2_schema_name, 0)
-                    )
-                    if (
-                        class_1,
-                        class_1_schema_name,
-                        class_2,
-                        class_2_schema_name,
-                        0,
-                    )
-                    not in verified_dependent_files
-                    else None
-                )
+                verified_dependent_files.append(
+                    (class_1, class_1_schema_name, class_2, class_2_schema_name, 0)
+                ) if (
+                    class_1,
+                    class_1_schema_name,
+                    class_2,
+                    class_2_schema_name,
+                    0,
+                ) not in verified_dependent_files else None
                 continue
             if class_1 in [
                 class_.split("<")[0].replace("new ", "").strip()
                 for class_ in class_2_schema["classes"][schema_class]["implements"]
             ]:
-                (
-                    verified_dependent_files.append(
-                        (class_1, class_1_schema_name, class_2, class_2_schema_name, 0)
-                    )
-                    if (
-                        class_1,
-                        class_1_schema_name,
-                        class_2,
-                        class_2_schema_name,
-                        0,
-                    )
-                    not in verified_dependent_files
-                    else None
-                )
+                verified_dependent_files.append(
+                    (class_1, class_1_schema_name, class_2, class_2_schema_name, 0)
+                ) if (
+                    class_1,
+                    class_1_schema_name,
+                    class_2,
+                    class_2_schema_name,
+                    0,
+                ) not in verified_dependent_files else None
+                continue
+
+        for schema_class in class_1_schema["classes"]:
+            if class_2 in [
+                class_.split("<")[0].replace("new ", "").strip()
+                for class_ in class_1_schema["classes"][schema_class]["extends"]
+            ]:
+                verified_dependent_files.append(
+                    (class_1, class_1_schema_name, class_2, class_2_schema_name, 1)
+                ) if (
+                    class_1,
+                    class_1_schema_name,
+                    class_2,
+                    class_2_schema_name,
+                    1,
+                ) not in verified_dependent_files else None
+                continue
+
+            if class_2 in [
+                class_.split("<")[0].replace("new ", "").strip()
+                for class_ in class_1_schema["classes"][schema_class]["implements"]
+            ]:
+                verified_dependent_files.append(
+                    (class_1, class_1_schema_name, class_2, class_2_schema_name, 1)
+                ) if (
+                    class_1,
+                    class_1_schema_name,
+                    class_2,
+                    class_2_schema_name,
+                    1,
+                ) not in verified_dependent_files else None
                 continue
 
     return verified_dependent_files
 
 
-# Cangjie type mapping
-cangjie_type_map = {
-    "int": "Int64",
-    "long": "Int64",
-    "double": "Float64",
-    "boolean": "Bool",
-    "String": "String",
-    "List<T>": "Array<T>",
-    "Map<K,V>": "HashMap<K, V>",
-    "void": "Unit",
-    "byte": "UInt8",
-    "short": "Int16",
-    "float": "Float32",
-}
-
-
-def get_cangjie_type(java_type, extracted_types):
-    """Convert Java type to Cangjie type."""
-    if java_type in extracted_types:
-        java_type = extracted_types[java_type]
-
-    # Handle generic types
-    if "<" in java_type:
-        base = java_type.split("<")[0]
-        type_params = java_type.split("<")[1].rstrip(">")
-        if base == "List" or base == "ArrayList":
-            return f"Array<{type_params}>"
-        elif base == "Map" or base == "HashMap":
-            return f"HashMap<{type_params}>"
-
-    # Simple type mapping
-    type_mapping = {
-        "int": "Int64",
-        "long": "Int64",
-        "double": "Float64",
-        "boolean": "Bool",
-        "String": "String",
-        "void": "Unit",
-        "byte": "UInt8",
-        "short": "Int16",
-        "float": "Float32",
-    }
-
-    return type_mapping.get(java_type, java_type)
-
-
 def main(args):
 
-    with open(f"data/java/type_resolution/universal_type_map_final.json", "r") as f:
+    with open(f"data/type_resolution/universal_type_map_final.json", "r") as f:
         extracted_types = json.load(f)
 
-    # TODO:unprocessed
     reserved_tokens = dir(__builtins__) + keyword.kwlist
 
-    # fix
-    # extracted_types = {k.split(".")[-1]: v for k, v in extracted_types.items()}
-    temp_types = {}
-    for k, v in extracted_types.items():
-        short_key = k.split(".")[-1]
-        if short_key in temp_types and not v:
-            continue
-        temp_types[short_key] = v
-    extracted_types = temp_types
+    extracted_types = {k.split(".")[-1]: v for k, v in extracted_types.items()}
 
-    schemas = os.listdir(f"data/java/schemas{args.suffix}/{args.project_name}")
+    schemas = os.listdir(f"data/schemas{args.suffix}/{args.project_name}")
 
-    dependencies_dir = f"data/java/dependencies{args.suffix}"
+    dependencies_dir = f"data/dependencies{args.suffix}"
+
+    dependencies = {}
     with open(f"{dependencies_dir}/{args.project_name}/dependencies.json", "r") as f:
         dependencies = json.load(f)
 
@@ -289,55 +274,35 @@ def main(args):
         if args.suffix != "_evosuite" and "ESTest" in schema_fname:
             continue
 
-        schema_path = (
-            f"data/java/schemas{args.suffix}/{args.project_name}/{schema_fname}"
-        )
+        schema_path = f"data/schemas{args.suffix}/{args.project_name}/{schema_fname}"
 
         schema = {}
         with open(schema_path, "r") as f:
             schema = json.load(f)
 
-        # TODO: preserve method overloading
         schema = remove_duplicate_methods(schema)
 
-        # Cangjie uses package declaration instead of imports at the top
-        skeleton = "// Package Declaration\npackage "
-        # Extract package name from path
-        if "src/main/java" in schema["path"]:
-            package_name = (
-                schema["path"]
-                .split("src/main/java/")[1]
-                .rsplit("/", 1)[0]
-                .replace("/", ".")
-            )
-        elif "src" in schema["path"]:
-            package_name = (
-                schema["path"].split("src/")[1].rsplit("/", 1)[0].replace("/", ".")
-            )
-        else:
-            package_name = args.project_name
-        skeleton += package_name + "\n\n"
-
-        skeleton += "// Imports Begin\n"
-        skeleton += "// Imports End\n\n"
+        skeleton = "from __future__ import annotations\n"
+        skeleton += "# Imports Begin\n"
+        skeleton += "# Imports End\n\n"
 
         target_schema = schema.copy()
-        cangjie_imports = []
+        python_imports = []
+        python_imports.append("from __future__ import annotations")
         class_order = get_class_order(schema)
 
-        # Begin processing classes
         class_dependencies = []
         for class_ in class_order:
             if "new" in class_ or "{" in class_:  # skip nested and nameless classes
                 continue
 
-            # Read Java source code by line range to mark if class is enum
             source_class_declaration = ""
             with open(schema["path"], "r") as f:
                 source_class_declaration = "".join(
                     f.readlines()[
-                        schema["classes"][class_]["start"]
-                        - 1 : schema["classes"][class_]["end"]
+                        schema["classes"][class_]["start"] - 1 : schema["classes"][
+                            class_
+                        ]["end"]
                     ]
                 )
 
@@ -348,7 +313,6 @@ def main(args):
 
             dependencies.setdefault(class_, [])
 
-            # If nested class, find its top-level parent class
             main_class = class_
             if schema["classes"][class_]["nested_inside"] != []:
                 main_class = schema["classes"][class_]["nested_inside"]
@@ -357,36 +321,30 @@ def main(args):
 
             dependencies[main_class] += schema["classes"][main_class]["nests"]
 
-            # Record nested class relationships
             if class_ in dependencies:
                 class_dependencies.append((schema["path"], dependencies[class_]))
 
-            # Extract class name
             class_name = class_
             if "<" in class_:
                 class_name = class_.split("<")[0].replace("new ", "").strip()
             elif "(" in class_:
                 class_name = class_.split("(")[0].replace("new ", "").strip()
 
-            # Cangjie class declaration using < for inheritance
             class_declaration = ""
-            # TODO: These Java interfaces should not be parent classes in translation
-            # exceptional_superclasses = {
-            #     "Comparator",
-            #     "Queue",
-            #     "Comparable",
-            #     "Closeable",
-            #     "Enum",
-            #     "Iterator",
-            #     "Iterable",
-            #     "Supplier",
-            #     "Runnable",
-            # }
-
-            # Determine class type markers
-            is_interface = schema["classes"][class_].get("is_interface", False)
-            is_abstract = schema["classes"][class_].get("is_abstract", False)
-
+            exceptional_superclasses = {
+                "typing.",
+                "Comparator",
+                "Queue",
+                "Comparable",
+                "threading.RLock",
+                "Closeable",
+                "Enum",
+                "Iterator",
+                "Iterable",
+                "scaffolding",
+                "Supplier",
+                "Runnable",
+            }
             if schema["classes"][class_]["extends"] != []:
                 schema["classes"][class_]["extends"] = [
                     cls_name.split("<")[0].replace("new ", "").strip()
@@ -397,48 +355,38 @@ def main(args):
                     for cls_name in schema["classes"][class_]["extends"]
                 ]
                 schema["classes"][class_]["extends"] = [
-                    (
-                        extracted_types[cls_name]
-                        if cls_name in extracted_types and cls_name not in class_path
-                        else cls_name
-                    )
+                    extracted_types[cls_name]
+                    if cls_name in extracted_types and cls_name not in class_path
+                    else cls_name
                     for cls_name in schema["classes"][class_]["extends"]
                 ]
-                # schema["classes"][class_]["extends"] = [
-                #     cls_name
-                #     for cls_name in schema["classes"][class_]["extends"]
-                #     if not any(
-                #         substring in cls_name for substring in exceptional_superclasses
-                #     )
-                #     and cls_name != class_name
-                # ]
-
-                if is_interface:
-                    # Interface in Cangjie
-                    class_declaration = (
-                        "interface "
-                        + class_name
-                        + " <:"
-                        + ", ".join(schema["classes"][class_]["extends"])
-                        + " {\n"
+                schema["classes"][class_]["extends"] = [
+                    cls_name
+                    for cls_name in schema["classes"][class_]["extends"]
+                    if not any(
+                        substring in cls_name for substring in exceptional_superclasses
                     )
-                elif is_abstract:
+                    and cls_name != class_name
+                ]
+                if (
+                    schema["classes"][class_]["is_abstract"]
+                    or schema["classes"][class_]["is_interface"]
+                ):
                     class_declaration = (
                         "class "
                         + class_name
-                        + " <:"
-                        + ", ".join(schema["classes"][class_]["extends"])
-                        + " {\n"
+                        + "("
+                        + ", ".join(schema["classes"][class_]["extends"] + ["ABC"])
+                        + "):\n\n"
                     )
                 else:
                     class_declaration = (
                         "class "
                         + class_name
-                        + " <:"
+                        + "("
                         + ", ".join(schema["classes"][class_]["extends"])
-                        + " {\n"
+                        + "):\n\n"
                     )
-
             elif schema["classes"][class_]["implements"] != []:
                 schema["classes"][class_]["implements"] = [
                     cls_name.split("<")[0].replace("new ", "").strip()
@@ -449,50 +397,47 @@ def main(args):
                     for cls_name in schema["classes"][class_]["implements"]
                 ]
                 schema["classes"][class_]["implements"] = [
-                    (
-                        extracted_types[cls_name]
-                        if cls_name in extracted_types and cls_name not in class_path
-                        else cls_name
-                    )
+                    extracted_types[cls_name]
+                    if cls_name in extracted_types and cls_name not in class_path
+                    else cls_name
                     for cls_name in schema["classes"][class_]["implements"]
                 ]
-                # schema["classes"][class_]["implements"] = [
-                #     cls_name
-                #     for cls_name in schema["classes"][class_]["implements"]
-                #     if not any(
-                #         substring in cls_name for substring in exceptional_superclasses
-                #     )
-                #     and cls_name != class_name
-                # ]
-
-                if is_interface:
-                    # Interfaces can only use extends in Java, not implements
-                    # Fall through to else branch for interface declaration
-                    class_declaration = f"interface {class_name} {{\n"
-                elif is_abstract:
+                schema["classes"][class_]["implements"] = [
+                    cls_name
+                    for cls_name in schema["classes"][class_]["implements"]
+                    if not any(
+                        substring in cls_name for substring in exceptional_superclasses
+                    )
+                    and cls_name != class_name
+                ]
+                if (
+                    schema["classes"][class_]["is_abstract"]
+                    or schema["classes"][class_]["is_interface"]
+                ):
                     class_declaration = (
                         "class "
                         + class_name
-                        + " <:"
-                        + ", ".join(schema["classes"][class_]["implements"])
-                        + " {\n"
+                        + "("
+                        + ", ".join(schema["classes"][class_]["implements"] + ["ABC"])
+                        + "):\n\n"
                     )
                 else:
                     class_declaration = (
                         "class "
                         + class_name
-                        + " <:"
+                        + "("
                         + ", ".join(schema["classes"][class_]["implements"])
-                        + " {\n"
+                        + "):\n\n"
                     )
-
             else:
-                if is_interface:
-                    class_declaration = f"interface {class_name} {{\n"
+                if (
+                    schema["classes"][class_]["is_abstract"]
+                    or schema["classes"][class_]["is_interface"]
+                ):
+                    class_declaration = "class " + class_name + "(ABC):\n\n"
                 else:
-                    class_declaration = f"class {class_name} {{\n"
+                    class_declaration = "class " + class_name + ":\n\n"
 
-            # Check for test class
             is_test_class = False
             for method_ in schema["classes"][class_]["methods"]:
                 if "Test" in [
@@ -504,17 +449,42 @@ def main(args):
                     is_test_class = True
                     break
 
-            # Add @Test decorator for test classes in Cangjie
             if "src.test" in schema_fname and is_test_class:
-                class_declaration = "@Test\n" + class_declaration
-                if "import testing" not in cangjie_imports:
-                    cangjie_imports.append("import testing")
+                if "):" not in class_declaration:
+                    class_declaration = class_declaration.replace(
+                        ":", "(unittest.TestCase):"
+                    )
+                elif "():" in class_declaration:
+                    class_declaration = class_declaration.replace(
+                        "():", "(unittest.TestCase):"
+                    )
+                elif (
+                    "):" in class_declaration
+                    and "unittest.TestCase" not in class_declaration
+                ):
+                    class_declaration = class_declaration.replace(
+                        "):", ", unittest.TestCase):"
+                    )
+                # else:
+                #     class_declaration = class_declaration.replace('):', ', unittest.TestCase):')
+            if "src.test" in schema_fname and "import unittest" not in python_imports:
+                python_imports.append("import unittest")
+            if "src.test" in schema_fname and "import pytest" not in python_imports:
+                python_imports.append("import pytest")
+
+            # if schema['classes'][class_]['is_enum']:
+            #     if '):' not in class_declaration:
+            #         class_declaration = class_declaration.replace(':', '(enum.Enum):')
+            #     elif '():' in class_declaration:
+            #         class_declaration = class_declaration.replace('():', '(enum.Enum):')
+            #     else:
+            #         class_declaration = class_declaration.replace('):', ', enum.Enum):')
 
             skeleton += class_declaration
 
-            target_schema["classes"][class_][
-                "cangjie_class_declaration"
-            ] = class_declaration
+            target_schema["classes"][class_]["python_class_declaration"] = (
+                class_declaration
+            )
 
             if "static_initializers" in target_schema["classes"][class_]:
                 for static_initializer_se in target_schema["classes"][class_][
@@ -556,39 +526,24 @@ def main(args):
                     )
                     target_schema["classes"][class_]["static_initializers"][
                         static_initializer_se
-                    ]["include_implementation"] = (
-                        True if args.type == "body" else False
-                    )
+                    ]["include_implementation"] = True if args.type == "body" else False
 
-            # Process fields
             is_empty_class = True
-            skeleton += "\t// Class Fields Begin\n"
+            skeleton += "\t# Class Fields Begin\n"
             for field in sorted(schema["classes"][class_]["fields"]):
                 is_empty_class = False
                 field_name = field.split(":")[1].strip()
-
-                # Determine access modifier
-                is_public = (
-                    "public" in schema["classes"][class_]["fields"][field]["modifiers"]
-                )
-                is_private = (
-                    "private" in schema["classes"][class_]["fields"][field]["modifiers"]
-                )
-                is_protected = (
+                if (
                     "protected"
                     in schema["classes"][class_]["fields"][field]["modifiers"]
-                )
-                is_static = (
-                    "static" in schema["classes"][class_]["fields"][field]["modifiers"]
-                )
+                ):
+                    field_name = "_" + field_name
+                elif (
+                    "private" in schema["classes"][class_]["fields"][field]["modifiers"]
+                ):
+                    field_name = "__" + field_name
 
-                # Determine let/var (mutable vs immutable)
-                is_final = (
-                    "final" in schema["classes"][class_]["fields"][field]["modifiers"]
-                )
-
-                # Get field type
-                field_type = "<?>"  # placeholder
+                field_type = "<placeholder>"
                 assert (
                     len(schema["classes"][class_]["fields"][field]["types"]) == 1
                     or len(schema["classes"][class_]["fields"][field]["types"]) == 0
@@ -602,65 +557,76 @@ def main(args):
                     field_type = extracted_types[
                         schema["classes"][class_]["fields"][field]["types"][0][0]
                     ]
-                    field_type = get_cangjie_type(field_type, extracted_types)
 
-                # Build field declaration
-                access_modifier = (
-                    "public "
-                    if is_public
-                    else ("protected " if is_protected else "internal ")
-                )
-                if is_static:
-                    access_modifier = "public static " if is_public else ("static ")
-
-                var_keyword = "let " if is_final else "var "
-
-                # Get default value
-                field_body = ""
+                field_body = field_name + f": {field_type} = "
                 if "=" not in "".join(
                     schema["classes"][class_]["fields"][field]["body"]
                 ):
-                    if field_type == "String":
-                        field_body = '""'
-                    elif field_type in ["Int64", "Int16", "UInt8"]:
-                        field_body = "0"
-                    elif field_type == "Float64" or field_type == "Float32":
-                        field_body = "0.0"
-                    elif field_type == "Bool":
-                        field_body = "false"
-                    elif field_type.startswith("Array"):
-                        field_body = "[]"
-                    elif field_type.startswith("HashMap"):
-                        field_body = "[:]"
-                    # TODO: elif field_type == cla_name:
+                    if field_type == "str" and "char" in [
+                        y
+                        for x in schema["classes"][class_]["fields"][field]["types"]
+                        for y in x
+                    ]:
+                        field_body += "'\\u0000'\n"
+                    elif field_type == "str":
+                        field_body += "''\n"
+                    elif field_type == "int":
+                        field_body += "0\n"
+                    elif field_type == "float":
+                        field_body += "0.0\n"
+                    elif field_type == "bool":
+                        field_body += "False\n"
+                    elif field_type == "List":
+                        field_body += "[]\n"
+                    elif field_type == "Dict":
+                        field_body += "{}\n"
                     else:
-                        field_body = "?"
-                # Process List type fields
-                elif "=" in "".join(schema["classes"][class_]["fields"][field]["body"]):
+                        field_body += "None\n"
+
+                elif "=" in "".join(
+                    schema["classes"][class_]["fields"][field]["body"]
+                ) and (
+                    field_type.startswith("typing.List")
+                    or field_type.startswith("List")
+                ):
                     if "new ArrayList" in "".join(
                         schema["classes"][class_]["fields"][field]["body"]
-                    ) or "new LinkedList" in "".join(
+                    ):
+                        field_body += "[]\n"
+                    elif "new LinkedList" in "".join(
                         schema["classes"][class_]["fields"][field]["body"]
                     ):
-                        field_body = "[]"
-                    elif (
-                        "new LinkedHashMap"
-                        in "".join(schema["classes"][class_]["fields"][field]["body"])
-                        or "new HashMap"
-                        in "".join(schema["classes"][class_]["fields"][field]["body"])
-                        or "new EnumMap"
-                        in "".join(schema["classes"][class_]["fields"][field]["body"])
-                    ):
-                        field_body = "[:]"
+                        field_body += "[]\n"
                     else:
-                        field_body = "?"
+                        field_body += "<placeholder>\n"
 
-                # Save field info to target_schema
+                elif "=" in "".join(
+                    schema["classes"][class_]["fields"][field]["body"]
+                ) and (
+                    field_type.startswith("typing.Dict")
+                    or field_type.startswith("Dict")
+                ):
+                    if "new LinkedHashMap" in "".join(
+                        schema["classes"][class_]["fields"][field]["body"]
+                    ):
+                        field_body += "{}\n"
+                    elif "new HashMap" in "".join(
+                        schema["classes"][class_]["fields"][field]["body"]
+                    ):
+                        field_body += "{}\n"
+                    elif "new EnumMap" in "".join(
+                        schema["classes"][class_]["fields"][field]["body"]
+                    ):
+                        field_body += "{}\n"
+                    else:
+                        field_body += "<placeholder>\n"
+
+                else:
+                    field_body += "<placeholder>\n"
+
                 target_schema["classes"][class_]["fields"][field][
                     "partial_translation"
-                ] = f"\t{access_modifier}{var_keyword}{field_name}: {field_type} = {field_body}".split(
-                    "\n"
-                )
+                ] = f"    {field_body}".split("\n")
                 target_schema["classes"][class_]["fields"][field]["translation"] = []
                 target_schema["classes"][class_]["fields"][field][
                     "translation_status"
@@ -668,15 +634,15 @@ def main(args):
                 target_schema["classes"][class_]["fields"][field][
                     "syntactic_validation"
                 ] = "pending"
-                target_schema["classes"][class_]["fields"][field][
-                    "field_exercise"
-                ] = "pending"
+                target_schema["classes"][class_]["fields"][field]["field_exercise"] = (
+                    "pending"
+                )
                 target_schema["classes"][class_]["fields"][field][
                     "graal_validation"
                 ] = "pending"
-                target_schema["classes"][class_]["fields"][field][
-                    "test_execution"
-                ] = "pending"
+                target_schema["classes"][class_]["fields"][field]["test_execution"] = (
+                    "pending"
+                )
                 target_schema["classes"][class_]["fields"][field]["elapsed_time"] = 0
                 target_schema["classes"][class_]["fields"][field][
                     "generation_timestamp"
@@ -688,13 +654,12 @@ def main(args):
                 )
                 target_schema["classes"][class_]["fields"][field][
                     "include_implementation"
-                ] = (True if args.type == "body" else False)
+                ] = True if args.type == "body" else False
 
-                skeleton += f"\t{access_modifier}{var_keyword}{field_name}: {field_type} = {field_body}\n"
+                skeleton += f"\t{field_name}: {field_type} = None\n"
+            skeleton += "\t# Class Fields End\n\n"
 
-            skeleton += "\t// Class Fields End\n\n"
-
-            skeleton += "\t// Class Methods Begin\n"
+            skeleton += "\t# Class Methods Begin\n"
             for method in schema["classes"][class_]["methods"]:
                 current_method = []
                 method_name = method.split(":")[1].strip()
@@ -707,70 +672,50 @@ def main(args):
 
                 is_empty_class = False
 
-                # Determine access modifier
-                is_public = (
-                    "public"
-                    in schema["classes"][class_]["methods"][method]["modifiers"]
-                )
-                is_private = (
-                    "private"
-                    in schema["classes"][class_]["methods"][method]["modifiers"]
-                )
-                is_protected = (
-                    "protected"
-                    in schema["classes"][class_]["methods"][method]["modifiers"]
-                )
-                is_static = (
+                is_static = False
+                if (
                     "static"
                     in schema["classes"][class_]["methods"][method]["modifiers"]
-                )
-
-                # Build access modifier
-                access_modifier = (
-                    "public "
-                    if is_public
-                    else ("protected " if is_protected else "internal ")
-                )
-
-                # Handle static methods
-                static_prefix = "static " if is_static else ""
-
-                # Check if this is a constructor (method name equals class name)
-                is_constructor = class_ == method_name
-
-                # Get return type
-                if (
-                    len(schema["classes"][class_]["methods"][method]["return_types"])
-                    == 1
-                    and schema["classes"][class_]["methods"][method]["return_types"][0][
-                        0
-                    ]
-                    in extracted_types
                 ):
-                    return_type = extracted_types[
-                        schema["classes"][class_]["methods"][method]["return_types"][0][
-                            0
-                        ]
-                    ]
-                    return_type = get_cangjie_type(return_type, extracted_types)
+                    is_static = True
+                    skeleton += "\t@staticmethod\n"
+                    current_method += ["\t@staticmethod\n"]
 
-                # Build method parameters
+                updated_method_name = method_name
+                if (
+                    "protected"
+                    in schema["classes"][class_]["methods"][method]["modifiers"]
+                ):
+                    updated_method_name = (
+                        "_" + method_name
+                        if method_name not in ["setUp", "tearDown"]
+                        else method_name
+                    )
+                elif (
+                    "private"
+                    in schema["classes"][class_]["methods"][method]["modifiers"]
+                ):
+                    updated_method_name = (
+                        "__" + method_name
+                        if method_name not in ["setUp", "tearDown"]
+                        else method_name
+                    )
+
                 if len(schema["classes"][class_]["methods"][method]["parameters"]) == 0:
-                    if is_constructor:
-                        # Constructor
-                        skeleton += f"\t{access_modifier}init() {{\n\t\t// TODO\n\t}}\n"
-                        current_method.append(f"\t{access_modifier}init() {{")
+                    if class_ == method_name:
+                        skeleton += "\tdef __init__(self) -> "
+                        current_method += ["\tdef __init__(self) -> "]
                     else:
-                        if is_static:
-                            skeleton += f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{\n\t\t// TODO\n\t}}\n"
-                            current_method.append(
-                                f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{"
-                            )
+                        if not is_static:
+                            skeleton += "\tdef " + updated_method_name + "(self) -> "
+                            current_method += [
+                                "\tdef " + updated_method_name + "(self) -> "
+                            ]
                         else:
-                            skeleton += f"\t{access_modifier}func {method_name}(): {return_type} {{\n\t\t// TODO\n\t}}\n"
-                            current_method.append(
-                                f"\t{access_modifier}func {method_name}(): {return_type} {{"
-                            )
+                            skeleton += "\tdef " + updated_method_name + "() -> "
+                            current_method += [
+                                "\tdef " + updated_method_name + "() -> "
+                            ]
                 else:
                     types_ = split_with_nested_commas(
                         schema["classes"][class_]["methods"][method]["signature"][
@@ -785,12 +730,9 @@ def main(args):
                     parameter_types = []
                     for type_ in types_:
                         if type_.strip() in extracted_types:
-                            param_type = extracted_types[type_.strip()]
-                            parameter_types.append(
-                                get_cangjie_type(param_type, extracted_types)
-                            )
+                            parameter_types.append(extracted_types[type_.strip()])
                         else:
-                            parameter_types.append("?")
+                            parameter_types.append("<placeholder>")
 
                     parameters = schema["classes"][class_]["methods"][method][
                         "parameters"
@@ -801,50 +743,79 @@ def main(args):
                         for x, y in param_types
                     ]
 
-                    if is_constructor:
+                    if class_ == method_name:
                         skeleton += (
-                            f"\t{access_modifier}init("
+                            "\tdef __init__(self, "
                             + ", ".join([x + f": {y.strip()}" for x, y in param_types])
-                            + ") {\n\t\t// TODO\n\t}\n"
+                            + ") -> "
                         )
-                        current_method.append(
-                            f"\t{access_modifier}init("
+                        current_method += [
+                            "\tdef __init__(self, "
                             + ", ".join([x + f": {y.strip()}" for x, y in param_types])
-                            + ") {"
-                        )
+                            + ") -> "
+                        ]
                     else:
-                        if is_static:
+                        if not is_static:
                             skeleton += (
-                                f"\t{access_modifier}{static_prefix}func {method_name}("
+                                "\tdef "
+                                + updated_method_name
+                                + "(self, "
                                 + ", ".join(
                                     [x + f": {y.strip()}" for x, y in param_types]
                                 )
-                                + f"): {return_type} {{\n\t\t// TODO\n\t}}\n"
+                                + ") -> "
                             )
-                            current_method.append(
-                                f"\t{access_modifier}{static_prefix}func {method_name}("
+                            current_method += [
+                                "\tdef "
+                                + updated_method_name
+                                + "(self, "
                                 + ", ".join(
                                     [x + f": {y.strip()}" for x, y in param_types]
                                 )
-                                + f"): {return_type} {{"
-                            )
+                                + ") -> "
+                            ]
                         else:
                             skeleton += (
-                                f"\t{access_modifier}func {method_name}("
+                                "\tdef "
+                                + updated_method_name
+                                + "("
                                 + ", ".join(
                                     [x + f": {y.strip()}" for x, y in param_types]
                                 )
-                                + f"): {return_type} {{\n\t\t// TODO\n\t}}\n"
+                                + ") -> "
                             )
-                            current_method.append(
-                                f"\t{access_modifier}func {method_name}("
+                            current_method += [
+                                "\tdef "
+                                + updated_method_name
+                                + "("
                                 + ", ".join(
                                     [x + f": {y.strip()}" for x, y in param_types]
                                 )
-                                + f"): {return_type} {{"
-                            )
+                                + ") -> "
+                            ]
 
-                # Handle test methods
+                assert (
+                    len(schema["classes"][class_]["methods"][method]["return_types"])
+                    == 1
+                    or len(schema["classes"][class_]["methods"][method]["return_types"])
+                    == 0
+                )
+
+                return_type = "<placeholder>"
+                if (
+                    len(schema["classes"][class_]["methods"][method]["return_types"])
+                    == 1
+                    and schema["classes"][class_]["methods"][method]["return_types"][0][
+                        0
+                    ]
+                    in extracted_types
+                ):
+                    return_type = extracted_types[
+                        schema["classes"][class_]["methods"][method]["return_types"][0][
+                            0
+                        ]
+                    ]
+
                 if "src.test" in schema_fname:
                     has_setup_method = False
                     setup_method = ""
@@ -864,8 +835,10 @@ def main(args):
                             [schema_fname.replace(".json", ""), class_, setup_method]
                         )
 
-                current_method.append("\t\t// TODO")
-                current_method.append("\t}\n")
+                skeleton += f"{return_type}:\n\t\tpass\n\n"
+                current_method[-1] = current_method[-1] + f"{return_type}:\n"
+                current_method += ["\t\tpass\n\n"]
+                current_method = [x.replace("\t", "    ") for x in current_method]
 
                 target_schema["classes"][class_]["methods"][method][
                     "partial_translation"
@@ -897,55 +870,62 @@ def main(args):
                 )
                 target_schema["classes"][class_]["methods"][method][
                     "include_implementation"
-                ] = (True if args.type == "body" else False)
+                ] = True if args.type == "body" else False
 
-            skeleton += "\t// Class Methods End\n\n"
-            skeleton += "}\n\n"
+                assert "<placeholder>" not in "".join(current_method)
+
+            skeleton += "\t# Class Methods End\n\n\n"
 
             if is_empty_class:
-                skeleton += "\t// Empty class body\n"
+                skeleton += "\tpass\n\n"
 
-        # Cangjie import mapping
         import_map = {
-            "Path": "import std.fs.*",
-            "IOBase": "import std.io.*",
-            "StringIO": "import std.io.*",
-            "io": "import std.io.*",
-            "threading": "import std.concurrency.*",
-            "BytesIO": "import std.io.*",
-            "TextIOWrapper": "import std.io.*",
-            "Number": "import std.math.*",
-            "Callable": "import std.functional.*",
-            "enum": "import std.enum.*",
-            "Type": "import std.reflect.*",
-            "Any": "import std.any.*",
-            "Iterator": "import std.iterator.*",
-            "Iterable": "import std.iterator.*",
-            "decimal": "import std.bigint.*",
-            "Dict": "import std.collection.*",
-            "Array": "import std.collection.*",
-            "Union": "import std.*",
-            "datetime": "import std.time.*",
-            "os": "import std.os.*",
-            "pickle": "import std.serialization.*",
-            "itertools": "import std.iterator.*",
-            "sys": "import std.os.*",
-            "collections": "import std.collection.*",
-            "uuid": "import std.uuid.*",
-            "tempfile": "import std.fs.*",
-            "logging": "import std.log.*",
-            "Enum": "import std.enum.*",
-            "testing": "import testing.*",
+            "ABC": "from abc import ABC\n",
+            "Path": "import pathlib\n",
+            "IOBase": "import io\n",
+            "StringIO": "import io\n",
+            "io": "import io\n",
+            "threading": "import threading\n",
+            "BytesIO": "import io\n",
+            "TextIOWrapper": "import io\n",
+            "Number": "import numbers\n",
+            "Callable": "import typing\nfrom typing import *\n",
+            "enum": "import enum\n",
+            "Type": "import typing\nfrom typing import *\n",
+            "Any": "import typing\nfrom typing import *\n",
+            "Iterator": "import typing\nfrom typing import *\n",
+            "decimal": "import decimal\n",
+            "Dict": "import typing\nfrom typing import *\n",
+            "List": "import typing\nfrom typing import *\n",
+            "Union": "import typing\nfrom typing import *\n",
+            "datetime": "import datetime\n",
+            "os": "import os\n",
+            "pickle": "import pickle\n",
+            "itertools": "import itertools\n",
+            "sys": "import sys\n",
+            "collections": "import collections\n",
+            "unittest.TestCase": "import unittest\n",
+            "uuid": "import uuid\n",
+            "tempfile": "import tempfile\n",
+            "typing": "import typing\n",
+            "BytesIO": "from io import BytesIO\n",
+            "configparser": "import configparser\n",
+            "StringIO": "from io import StringIO\n",
+            "IOBase": "from io import IOBase\n",
+            "Number": "import numbers\n",
+            "zoneinfo": "import zoneinfo\n",
+            "urllib": "import urllib\n",
+            "logging": "import logging\n",
+            "Enum": "import enum\n",
         }
 
         for key in import_map:
             if key in skeleton and import_map[key] not in skeleton:
                 skeleton = skeleton.replace(
-                    "// Imports Begin\n", "// Imports Begin\n" + import_map[key] + "\n"
+                    "# Imports Begin\n", "# Imports Begin\n" + import_map[key]
                 )
-                cangjie_imports.append(import_map[key].strip())
+                python_imports.append(import_map[key].strip())
 
-        # Handle class dependencies
         for dependency in class_dependencies:
             for dependent_class in dependency[1]:
                 if len(dependent_class) != 2:
@@ -954,7 +934,6 @@ def main(args):
                 path = get_dependency_path(
                     dependent_class[1], args.project_name, args.suffix
                 )
-                # If two classes already have inheritance (parent-child), no separate import needed
                 skip = False
                 for (
                     class_1,
@@ -981,16 +960,16 @@ def main(args):
                 if skip:
                     continue
 
-                import_stmt = f"import {path.replace('/', '.')}"
-                if import_stmt in skeleton:
+                if f"from {path} import *" in skeleton:
                     continue
-                cangjie_imports.append(import_stmt)
+                python_imports.append(f"from {path} import *")
                 skeleton = skeleton.replace(
-                    "// Imports Begin\n", f"// Imports Begin\n{import_stmt}\n"
+                    "# Imports Begin\n", f"# Imports Begin\nfrom {path} import *\n"
                 )
 
-        target_schema.setdefault("cangjie_imports", [])
+        target_schema.setdefault("python_imports", [])
 
+        skeleton = skeleton.replace("\t", "    ")
         skeleton_lines = skeleton.split("\n")
         for i in range(len(skeleton_lines)):
             current_line = skeleton_lines[i]
@@ -1003,59 +982,76 @@ def main(args):
                 "scaffolding",
             ]:
                 if exceptional_import in current_line:
-                    skeleton_lines[i] = f"// {current_line}"
-                    if current_line in cangjie_imports:
-                        cangjie_imports[cangjie_imports.index(current_line)] = (
-                            f"// {current_line}"
+                    skeleton_lines[i] = f"# {current_line}"
+                    if current_line in python_imports:
+                        python_imports[python_imports.index(current_line)] = (
+                            f"# {current_line}"
                         )
                 if (
                     "joda.convert" in current_line and args.project_name == "joda-money"
                 ):  # resolving these dependencies later
-                    skeleton_lines[i] = f"// {current_line}"
-                    for import_ in cangjie_imports:
-                        if "joda.convert" in import_ and "//" not in import_:
-                            cangjie_imports[cangjie_imports.index(import_)] = (
-                                f"// {import_}"
+                    skeleton_lines[i] = f"# {current_line}"
+                    for import_ in python_imports:
+                        if "joda.convert" in import_ and "#" not in import_:
+                            python_imports[python_imports.index(import_)] = (
+                                f"# {import_}"
                             )
 
-        target_schema["cangjie_imports"] = cangjie_imports
+        target_schema["python_imports"] = python_imports
 
         skeleton = "\n".join(skeleton_lines)
         formatted_schema_fname = ".".join(schema_fname.split(".")[:-1])
 
-        os.makedirs(f"data/java/skeletons/{args.project_name}", exist_ok=True)
+        os.makedirs(f"data/skeletons/{args.project_name}", exist_ok=True)
 
         formatted_schema_fname = ".".join(schema_fname.split(".")[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f"data/java/skeletons/{args.project_name}/{sub_dir}", exist_ok=True)
-
-        # Change file extension from .py to .cj
-        file_path = f"data/java/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1]}.cj"
+        os.makedirs(f"data/skeletons/{args.project_name}/{sub_dir}", exist_ok=True)
+        file_path = f"data/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1]}.py"
         with open(file_path, "w") as f:
             f.write(skeleton)
 
-        # Note: Cangjie doesn't need black formatting like Python
-        # The generated .cj file should be valid Cangjie code
+        os.system(f"python3 -m black {file_path}")  # check for syntactical errors
 
-        # add __init__.cj files for each subdirectory (optional for Cangjie)
+        # add __init__.py files for each subdirectory
         sub_dirs = sub_dir.split("/")
         for i in range(len(sub_dirs)):
             current_sub_dir = "/".join(sub_dirs[: i + 1])
-            # Cangjie doesn't require __init__.cj files
+            with open(
+                f"data/skeletons/{args.project_name}/{current_sub_dir}/__init__.py", "w"
+            ) as f:
+                f.write("")
+
+        fp = f"data/skeletons/{args.project_name}/{sub_dir}/__init__.py"
+        with open(fp, "w") as f:
+            f.write("")
 
         os.makedirs(
-            f"data/java/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}",
+            f"data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}",
             exist_ok=True,
         )
         with open(
-            f"data/java/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{formatted_schema_fname}_cangjie_partial.json",
+            f"data/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}/{formatted_schema_fname}_python_partial.json",
             "w",
         ) as f:
             json.dump(target_schema, f, indent=4)
 
+    # find all .py files in a given directory
+    def find_files(directory):
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                if file.endswith(".py"):
+                    yield os.path.join(root, file)
+
+    # run black on all files in the directory
+    for file in find_files(f"data/skeletons/{args.project_name}"):
+        print(f"checking {file} for runtime errors...")
+        os.system(f"python3 {file}")
+    os.system(f'find ./data/skeletons -name "__pycache__" -type d -exec rm -rf {{}} +')
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Create a Cangjie class skeleton")
+    parser = argparse.ArgumentParser(description="Create a class skeleton")
     parser.add_argument(
         "--project_name", type=str, dest="project_name", help="name of the project"
     )

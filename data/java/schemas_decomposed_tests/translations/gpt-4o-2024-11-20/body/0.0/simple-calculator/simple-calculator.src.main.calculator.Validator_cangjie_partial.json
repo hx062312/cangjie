@@ -37,6 +37,7 @@
                         "value"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func isValid(value: Int64): Bool {",
                         "\t\t// TODO",

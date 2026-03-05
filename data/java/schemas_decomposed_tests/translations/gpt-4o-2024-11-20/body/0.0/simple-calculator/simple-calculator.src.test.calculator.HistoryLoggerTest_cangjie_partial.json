@@ -84,6 +84,7 @@
                             "size()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testGetHistoryReturnsCopy(): Unit {",
                         "\t\t// TODO",
@@ -151,6 +152,7 @@
                             "14-16:getHistory"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testClear(): Unit {",
                         "\t\t// TODO",
@@ -225,6 +227,7 @@
                             "get(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testMultipleLogs(): Unit {",
                         "\t\t// TODO",
@@ -294,6 +297,7 @@
                             "get(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testLog(): Unit {",
                         "\t\t// TODO",
@@ -336,6 +340,7 @@
                             "HistoryLogger"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func setUp(): Unit {",
                         "\t\t// TODO",

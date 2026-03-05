@@ -61,6 +61,7 @@
                             "4-6:isValid"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testInvalidValues(): Unit {",
                         "\t\t// TODO",
@@ -111,6 +112,7 @@
                             "4-6:isValid"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func testValidValues(): Unit {",
                         "\t\t// TODO",

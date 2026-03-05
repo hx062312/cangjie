@@ -55,6 +55,7 @@
                             "clear()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func clear(): Unit {",
                         "\t\t// TODO",
@@ -99,6 +100,7 @@
                             "ArrayList<String>(java.util.Collection)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHistory(): Array<String> {",
                         "\t\t// TODO",
@@ -147,6 +149,7 @@
                             "add(java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func log(operation: String, result: Int64): Unit {",
                         "\t\t// TODO",

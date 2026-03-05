@@ -159,6 +159,7 @@
                             "getMessage()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func main(args: Array<String>): Unit {",
                         "\t\t// TODO",
@@ -222,6 +223,7 @@
                             "println(java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func printUsage(): Unit {",
                         "\t\t// TODO",
@@ -283,6 +285,7 @@
                             "println(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func printResult(result: Int64): Unit {",
                         "\t\t// TODO",
@@ -330,6 +333,7 @@
                             "parseInt(java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func parseInt(s: String): Int64 {",
                         "\t\t// TODO",

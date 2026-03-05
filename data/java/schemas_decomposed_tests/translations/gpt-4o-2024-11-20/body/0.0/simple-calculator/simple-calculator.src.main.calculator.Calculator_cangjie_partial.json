@@ -34,6 +34,7 @@
                     "signature": "getLogger()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getLogger(): HistoryLogger {",
                         "\t\t// TODO",
@@ -96,6 +97,7 @@
                             "9-12:log"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func performDiv(x: Int64, y: Int64): Int64 {",
                         "\t\t// TODO",
@@ -158,6 +160,7 @@
                             "9-12:log"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func performMul(x: Int64, y: Int64): Int64 {",
                         "\t\t// TODO",
@@ -220,6 +223,7 @@
                             "9-12:log"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func performSub(x: Int64, y: Int64): Int64 {",
                         "\t\t// TODO",
@@ -282,6 +286,7 @@
                             "9-12:log"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func performAdd(x: Int64, y: Int64): Int64 {",
                         "\t\t// TODO",
