@@ -131,6 +131,7 @@
                             "iterator()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeaders(name: String): Iterator<String> {",
                         "\t\t// TODO",
@@ -182,6 +183,7 @@
                             "keySet()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeaderNames(): Iterator<String> {",
                         "\t\t// TODO",
@@ -245,6 +247,7 @@
                             "get(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeader(name: String): String {",
                         "\t\t// TODO",
@@ -319,6 +322,7 @@
                             "add(java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func addHeader(name: String, value: String): Unit {",
                         "\t\t// TODO",
@@ -408,6 +412,6 @@
         "import std.io.*",
         "import std.any.*",
         "import std.iterator.*",
-        "import org/apache/commons/fileupload/FileItemHeaders"
+        "import FileItemHeaders"
     ]
 }

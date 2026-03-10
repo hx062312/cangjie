@@ -93,6 +93,7 @@
                         "charset"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setDefaultCharset(charset: String): Unit {",
                         "\t\t// TODO",
@@ -131,6 +132,7 @@
                     "signature": "getDefaultCharset()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getDefaultCharset(): String {",
                         "\t\t// TODO",
@@ -171,6 +173,7 @@
                         "pHeaders"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setHeaders(pHeaders: FileItemHeaders): Unit {",
                         "\t\t// TODO",
@@ -209,6 +212,7 @@
                     "signature": "getHeaders()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeaders(): FileItemHeaders {",
                         "\t\t// TODO",
@@ -283,6 +287,7 @@
                             "File(java.io.File,java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tprotected func getTempFile():  {",
                         "\t\t// TODO",
@@ -323,6 +328,7 @@
                         "state"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setFormField(state: Bool): Unit {",
                         "\t\t// TODO",
@@ -361,6 +367,7 @@
                     "signature": "isFormField()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isFormField(): Bool {",
                         "\t\t// TODO",
@@ -401,6 +408,7 @@
                         "fieldName"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setFieldName(fieldName: String): Unit {",
                         "\t\t// TODO",
@@ -439,6 +447,7 @@
                     "signature": "getFieldName()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getFieldName(): String {",
                         "\t\t// TODO",
@@ -483,6 +492,7 @@
                             "97-114:checkFileName"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getName(): String {",
                         "\t\t// TODO",
@@ -550,6 +560,7 @@
                             "get(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getCharSet(): String {",
                         "\t\t// TODO",
@@ -588,6 +599,7 @@
                     "signature": "getContentType()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContentType(): String {",
                         "\t\t// TODO",
@@ -644,6 +656,7 @@
                         "repository"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(fieldName: String, contentType: String, isFormField: Bool, fileName: String, sizeThreshold: Int64, repository: ) {",
                         "\t\t// TODO",
@@ -711,6 +724,7 @@
                             "length()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func getUniqueId(): String {",
                         "\t\t// TODO",
@@ -1156,8 +1170,8 @@
         "import std.reflect.*",
         "import std.collection.*",
         "import std.os.*",
-        "import org/apache/commons/fileupload/FileItemHeaders",
-        "import org/apache/commons/fileupload/ParameterParser",
-        "import org/apache/commons/fileupload/util/Streams"
+        "import FileItemHeaders",
+        "import ParameterParser",
+        "import util.Streams"
     ]
 }

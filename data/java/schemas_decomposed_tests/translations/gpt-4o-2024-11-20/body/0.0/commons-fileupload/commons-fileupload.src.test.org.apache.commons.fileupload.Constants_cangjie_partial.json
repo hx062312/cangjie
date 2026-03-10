@@ -32,6 +32,7 @@
                     "signature": "Constants()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal init() {",
                         "\t\t// TODO",

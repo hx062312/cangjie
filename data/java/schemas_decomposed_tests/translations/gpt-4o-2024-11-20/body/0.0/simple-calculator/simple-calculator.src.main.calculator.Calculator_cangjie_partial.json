@@ -372,8 +372,8 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import calculator/Arithmetics",
-        "import calculator/HistoryLogger",
-        "import calculator/Validator"
+        "import calculator.Arithmetics",
+        "import calculator.HistoryLogger",
+        "import calculator.Validator"
     ]
 }

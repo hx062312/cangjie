@@ -105,6 +105,7 @@
                             "write(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func decode(data: Array<Int8>, out: ): Int64 {",
                         "\t\t// TODO",
@@ -141,6 +142,7 @@
                     "signature": "Base64Decoder()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal init() {",
                         "\t\t// TODO",

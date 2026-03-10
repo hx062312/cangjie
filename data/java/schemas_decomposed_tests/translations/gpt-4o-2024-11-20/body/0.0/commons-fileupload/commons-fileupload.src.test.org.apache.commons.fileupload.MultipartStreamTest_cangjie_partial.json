@@ -100,6 +100,7 @@
                             "assertNotNull(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testTwoParamConstructor(): Unit {",
                         "\t\t// TODO",
@@ -170,6 +171,7 @@
                             "100-103:ProgressNotifier"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testSmallBuffer(): Unit {",
                         "\t\t// TODO",
@@ -247,6 +249,7 @@
                             "assertNotNull(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testThreeParamConstructor(): Unit {",
                         "\t\t// TODO",
@@ -304,7 +307,7 @@
     "cangjie_imports": [
         "import testing",
         "import std.io.*",
-        "import org/apache/commons/fileupload/MultipartStream",
-        "import org/apache/commons/fileupload/ProgressListener"
+        "import MultipartStream",
+        "import ProgressListener"
     ]
 }

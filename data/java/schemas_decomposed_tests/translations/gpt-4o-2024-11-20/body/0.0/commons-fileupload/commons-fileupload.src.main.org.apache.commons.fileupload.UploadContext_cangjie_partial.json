@@ -33,6 +33,7 @@
                     "signature": "contentLength()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func contentLength(): Int64 {",
                         "\t\t// TODO",
@@ -57,6 +58,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/RequestContext"
+        "import RequestContext"
     ]
 }

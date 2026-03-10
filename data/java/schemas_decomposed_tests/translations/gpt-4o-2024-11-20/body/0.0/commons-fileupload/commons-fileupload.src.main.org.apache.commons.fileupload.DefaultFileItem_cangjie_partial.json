@@ -72,6 +72,7 @@
                             "124-137:DiskFileItem"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(fieldName: String, contentType: String, isFormField: Bool, fileName: String, sizeThreshold: Int64, repository: ) {",
                         "\t\t// TODO",
@@ -98,6 +99,6 @@
         "import std.io.*",
         "import std.reflect.*",
         "import std.os.*",
-        "import org/apache/commons/fileupload/disk/DiskFileItem"
+        "import disk.DiskFileItem"
     ]
 }

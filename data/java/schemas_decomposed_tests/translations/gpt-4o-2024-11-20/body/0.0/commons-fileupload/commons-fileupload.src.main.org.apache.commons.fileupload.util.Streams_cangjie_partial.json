@@ -110,6 +110,7 @@
                             "40-43:InvalidFileNameException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func checkFileName(fileName: String): String {",
                         "\t\t// TODO",
@@ -146,6 +147,7 @@
                     "signature": "Streams()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal init() {",
                         "\t\t// TODO",
@@ -202,6 +204,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/InvalidFileNameException"
+        "import InvalidFileNameException"
     ]
 }

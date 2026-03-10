@@ -90,6 +90,7 @@
                             "Integer(int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func update(pBytesRead: Int64, pContentLength: Int64, pItems: Int64): Unit {",
                         "\t\t// TODO",
@@ -143,6 +144,7 @@
                             "intValue()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func checkFinished(): Unit {",
                         "\t\t// TODO",
@@ -183,6 +185,7 @@
                         "pItems"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal init(pContentLength: Int64, pItems: Int64) {",
                         "\t\t// TODO",
@@ -342,6 +345,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/ProgressListener"
+        "import ProgressListener"
     ]
 }

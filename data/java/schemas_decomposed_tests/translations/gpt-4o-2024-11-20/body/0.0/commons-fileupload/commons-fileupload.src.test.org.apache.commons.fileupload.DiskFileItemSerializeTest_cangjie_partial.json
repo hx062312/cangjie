@@ -118,6 +118,7 @@
                             "close()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func deserialize(baos: ): Any {",
                         "\t\t// TODO",
@@ -189,6 +190,7 @@
                             "close()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func serialize(target: Any):  {",
                         "\t\t// TODO",
@@ -259,6 +261,7 @@
                             "toString()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func createContentBytes(size: Int64): Array<Int8> {",
                         "\t\t// TODO",
@@ -317,6 +320,7 @@
                             "assertEquals(java.lang.String,long,long)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func compareBytes(text: String, origBytes: Array<Int8>, newBytes: Array<Int8>): Unit {",
                         "\t\t// TODO",

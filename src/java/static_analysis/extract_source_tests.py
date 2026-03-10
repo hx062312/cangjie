@@ -8,15 +8,15 @@ import subprocess
 def main(args):
 
     os.makedirs(
-        f"data/java/source_test_execution{args.suffix}/{args.project_name}",
+        f"data/java/source_test_execution{args.suffix}/{args.project}",
         exist_ok=True,
     )
 
     if not os.path.exists(
-        f"data/java/source_test_execution{args.suffix}/{args.project_name}/tests.json"
+        f"data/java/source_test_execution{args.suffix}/{args.project}/tests.json"
     ):
 
-        surefire_report_path = f"projects/java/cleaned_final_projects{args.suffix}/{args.project_name}/target/surefire-reports"
+        surefire_report_path = f"projects/java/cleaned_final_projects{args.suffix}/{args.project}/target/surefire-reports"
         surefire_reports = [
             f for f in os.listdir(surefire_report_path) if f.endswith(".xml")
         ]
@@ -51,7 +51,7 @@ def main(args):
                         test_details[test_class].append(test_name)
 
         with open(
-            f"data/java/source_test_execution{args.suffix}/{args.project_name}/tests.json",
+            f"data/java/source_test_execution{args.suffix}/{args.project}/tests.json",
             "w",
             encoding="utf-8",
         ) as f:
@@ -59,7 +59,7 @@ def main(args):
 
     test_details = {}
     with open(
-        f"data/java/source_test_execution{args.suffix}/{args.project_name}/tests.json",
+        f"data/java/source_test_execution{args.suffix}/{args.project}/tests.json",
         "r",
         encoding="utf-8",
     ) as f:
@@ -74,7 +74,7 @@ def main(args):
             status = subprocess.run(
                 f'mvn clean test -Drat.skip=true -Dtest="{test_class}#{test_case}"',
                 shell=True,
-                cwd=f"projects/java/cleaned_final_projects{args.suffix}/{args.project_name}",
+                cwd=f"projects/java/cleaned_final_projects{args.suffix}/{args.project}",
             )
 
             if status.returncode != 0:
@@ -82,10 +82,10 @@ def main(args):
                 continue
 
             assert os.path.exists(
-                f"projects/java/cleaned_final_projects{args.suffix}/{args.project_name}/target/site/jacoco/index.html"
+                f"projects/java/cleaned_final_projects{args.suffix}/{args.project}/target/site/jacoco/index.html"
             ), "Jacoco report not generated"
 
-            coverage_report_path = f"projects/java/cleaned_final_projects{args.suffix}/{args.project_name}/target/site/jacoco/jacoco.xml"
+            coverage_report_path = f"projects/java/cleaned_final_projects{args.suffix}/{args.project}/target/site/jacoco/jacoco.xml"
             assert os.path.exists(
                 coverage_report_path
             ), f"Jacoco report not generated for {test_class}#{test_case}"
@@ -113,7 +113,7 @@ def main(args):
                                     ].append(method.attrib["name"])
 
     with open(
-        f"data/java/source_test_execution{args.suffix}/{args.project_name}/coverage.json",
+        f"data/java/source_test_execution{args.suffix}/{args.project}/coverage.json",
         "w",
     ) as f:
         json.dump(coverage_details, f, indent=4)
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="extract call graph of preprocessed project"
     )
-    parser.add_argument("--project_name", type=str, help="Name of the project")
+    parser.add_argument("--project", type=str, help="Name of the project")
     parser.add_argument("--suffix", type=str, help="Suffix of the project name")
     args = parser.parse_args()
     main(args)

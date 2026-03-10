@@ -44,6 +44,7 @@
                         "pCharset"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setDefaultCharset(pCharset: String): Unit {",
                         "\t\t// TODO",
@@ -82,6 +83,7 @@
                     "signature": "getDefaultCharset()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getDefaultCharset(): String {",
                         "\t\t// TODO",
@@ -122,6 +124,7 @@
                         "sizeThreshold"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setSizeThreshold(sizeThreshold: Int64): Unit {",
                         "\t\t// TODO",
@@ -160,6 +163,7 @@
                     "signature": "getSizeThreshold()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getSizeThreshold(): Int64 {",
                         "\t\t// TODO",
@@ -200,6 +204,7 @@
                         "repository"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setRepository(repository: ): Unit {",
                         "\t\t// TODO",
@@ -238,6 +243,7 @@
                     "signature": "getRepository()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getRepository():  {",
                         "\t\t// TODO",
@@ -283,6 +289,7 @@
                             "85-88:DiskFileItemFactory"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func DiskFileItemFactory1(): DiskFileItemFactory {",
                         "\t\t// TODO",
@@ -325,6 +332,7 @@
                         "repository"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(sizeThreshold: Int64, repository: ) {",
                         "\t\t// TODO",
@@ -469,6 +477,6 @@
     "cangjie_imports": [
         "import std.io.*",
         "import std.os.*",
-        "import org/apache/commons/fileupload/disk/DiskFileItem"
+        "import disk.DiskFileItem"
     ]
 }

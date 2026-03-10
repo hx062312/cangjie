@@ -6,12 +6,12 @@ import argparse
 def main(args):
     all_types = []
     all_classes = []
-    filenames = os.listdir(f"data/java/schemas{args.suffix}/{args.project_name}")
+    filenames = os.listdir(f"data/java/schemas{args.suffix}/{args.project}")
 
     for filename in filenames:
         data = {}
         with open(
-            f"data/java/schemas{args.suffix}/{args.project_name}/{filename}", "r"
+            f"data/java/schemas{args.suffix}/{args.project}/{filename}", "r"
         ) as f:
             data = json.load(f)
 
@@ -36,7 +36,7 @@ def main(args):
 
     types_query_output = []
     with open(
-        f"data/java/query_outputs{args.suffix}/{args.project_name}/{args.project_name}_types.txt",
+        f"data/java/query_outputs{args.suffix}/{args.project}/{args.project}_types.txt",
         "r",
     ) as f:
         types_query_output = f.readlines()
@@ -56,10 +56,10 @@ def main(args):
     all_types = set([x for x in all_classes + all_types if "..." not in x])
     print("total unique types:", len(all_types))
 
-    formatted_project_name = args.project_name.replace("-", "_")
+    formatted_project_name = args.project.replace("-", "_")
     os.makedirs(f"data/java/custom_types/{formatted_project_name}", exist_ok=True)
-    os.makedirs(f"data/java/type_resolution/{args.project_name}", exist_ok=True)
-    os.makedirs(f"data/java/templates/{args.project_name}", exist_ok=True)
+    os.makedirs(f"data/java/type_resolution/{args.project}", exist_ok=True)
+    os.makedirs(f"data/java/templates/{args.project}", exist_ok=True)
 
     templates_content = ""
 
@@ -90,7 +90,7 @@ func main(): Int64 {{
 }}
 """
 
-    with open(f"data/java/templates/{args.project_name}/template.cj", "w") as f:
+    with open(f"data/java/templates/{args.project}/template.cj", "w") as f:
         f.write(templates_content)
 
     total_app_type_resolved = 0
@@ -99,13 +99,13 @@ func main(): Int64 {{
             total_app_type_resolved += 1
     print("total resolved:", total_app_type_resolved)
     print("-" * 50)
-    with open(f"data/java/type_resolution/{args.project_name}/s1_input.json", "w") as f:
+    with open(f"data/java/type_resolution/{args.project}/s1_input.json", "w") as f:
         json.dump(type_dct, f, indent=4)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Extract types from schemas")
-    parser.add_argument("--project_name", type=str, help="Name of the project")
+    parser.add_argument("--project", type=str, help="Name of the project")
     parser.add_argument("--suffix", type=str, help="Suffix for the project")
     args = parser.parse_args()
     main(args)

@@ -41,6 +41,7 @@
                     "signature": "getHeaderNames()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeaderNames(): Iterator<String> {",
                         "\t\t// TODO",
@@ -80,6 +81,7 @@
                         "name"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeaders(name: String): Iterator<String> {",
                         "\t\t// TODO",
@@ -119,6 +121,7 @@
                         "name"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeader(name: String): String {",
                         "\t\t// TODO",

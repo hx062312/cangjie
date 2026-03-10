@@ -5,6 +5,66 @@ import os
 from collections import defaultdict
 
 
+def calculate_output_path(
+    formatted_schema_fname: str,
+    class_name: str,
+    project_name: str,
+    is_test: bool,
+    src_dir: str,
+    tests_dir: str
+) -> str:
+    """
+    Calculate the output file path for a Cangjie skeleton file.
+
+    Args:
+        formatted_schema_fname: Schema filename without extension (e.g., commons-fileupload.src.main.org.apache.commons.fileupload.disk.DiskFileItem)
+        class_name: Name of the class (e.g., DiskFileItem)
+        project_name: Name of the project (e.g., commons-fileupload)
+        is_test: Whether this is a test file
+        src_dir: Source directory path
+        tests_dir: Tests directory path
+
+    Returns:
+        The output file path for the .cj file
+    """
+    # Extract subdirectory using schema filename
+    # e.g., commons-fileupload.src.main.org.apache.commons.fileupload.disk.DiskFileItem -> disk
+    # e.g., commons-fileupload.src.main.org.apache.commons.fileupload.DefaultFileItem -> "" (no subdir)
+    java_sub_dir = ""
+    # Convert schema filename to path and remove first part (project/src) and last part (class)
+    path_from_fname = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
+    # e.g., src/main/org/apache/commons/fileupload/disk
+    # Delete src/main/ prefix
+    if path_from_fname.startswith("src/main/"):
+        path_from_fname = path_from_fname[len("src/main/"):]
+    elif path_from_fname.startswith("src/"):
+        path_from_fname = path_from_fname[len("src/"):]
+    # Now path is like: org/apache/commons/fileupload/disk
+    # Calculate package path for the project (remove project-specific subdir)
+    if project_name == "commons-fileupload":
+        # Package is: org/apache/commons/fileupload (without the last 'disk' etc)
+        # So we need to check if there's something after fileupload
+        if path_from_fname.startswith("org/apache/commons/fileupload/"):
+            java_sub_dir = path_from_fname.split("org/apache/commons/fileupload/")[-1]
+    else:
+        # Default: use the last directory
+        path_parts = path_from_fname.split("/")
+        if len(path_parts) > 1:
+            java_sub_dir = path_parts[-1]
+
+    # Put .cj files in src/ or tests/ with original subdirectory structure preserved
+    if is_test:
+        if java_sub_dir:
+            return f"{tests_dir}/{java_sub_dir}/{class_name}.cj"
+        else:
+            return f"{tests_dir}/{class_name}.cj"
+    else:
+        if java_sub_dir:
+            return f"{src_dir}/{java_sub_dir}/{class_name}.cj"
+        else:
+            return f"{src_dir}/{class_name}.cj"
+
+
 def topological_sort(graph: list[tuple[str, str]]) -> list[str]:
     """
     Provides a topological sort of the graph.
@@ -303,7 +363,14 @@ def main(args):
         # Cangjie uses package declaration instead of imports at the top
         skeleton = "// Package Declaration\npackage "
         # Extract package name from path
-        if "src/main/java" in schema["path"]:
+        if "src/test/java" in schema["path"]:
+            package_name = (
+                schema["path"]
+                .split("src/test/java/")[1]
+                .rsplit("/", 1)[0]
+                .replace("/", ".")
+            )
+        elif "src/main/java" in schema["path"]:
             package_name = (
                 schema["path"]
                 .split("src/main/java/")[1]
@@ -981,7 +1048,27 @@ def main(args):
                 if skip:
                     continue
 
-                import_stmt = f"import {path.replace('/', '.')}"
+                # Remove company name and project name from import path
+                # e.g., import org.apache.commons.fileupload.ProgressListener -> import ProgressListener
+                # e.g., import org.apache.commons.fileupload.disk.DiskFileItem -> import disk.DiskFileItem
+                full_import_path = path.replace('/', '.')
+
+                # Special handling for commons-fileupload project
+                if args.project_name == "commons-fileupload":
+                    # Remove "org.apache.commons.fileupload" prefix
+                    if full_import_path.startswith("org.apache.commons.fileupload."):
+                        import_path = full_import_path[len("org.apache.commons.fileupload."):]
+                    else:
+                        import_path = full_import_path
+                else:
+                    # Default: remove "org.apache.{project}" prefix
+                    import_parts = full_import_path.split('.')
+                    if len(import_parts) >= 3 and import_parts[0] == 'org' and import_parts[1] == 'apache':
+                        import_path = '.'.join(import_parts[3:])
+                    else:
+                        import_path = full_import_path
+
+                import_stmt = f"import {import_path}"
                 if import_stmt in skeleton:
                     continue
                 cangjie_imports.append(import_stmt)
@@ -1023,25 +1110,60 @@ def main(args):
         skeleton = "\n".join(skeleton_lines)
         formatted_schema_fname = ".".join(schema_fname.split(".")[:-1])
 
-        os.makedirs(f"data/java/skeletons/{args.project_name}", exist_ok=True)
+        # Use cjpm project structure
+        # my-project/
+        # ├── cjpm.toml
+        # ├── src/
+        # │   └── main.cj
+        # └── tests/
+        #     └── my_test.cj
+
+        project_dir = f"data/java/skeletons/{args.project_name}"
+        src_dir = f"{project_dir}/src"
+        tests_dir = f"{project_dir}/tests"
+
+        # Create project directories first
+        os.makedirs(project_dir, exist_ok=True)
+        os.makedirs(src_dir, exist_ok=True)
+        os.makedirs(tests_dir, exist_ok=True)
+
+        # Create cjpm.toml file if it doesn't exist
+        cjpm_toml_path = f"{project_dir}/cjpm.toml"
+        if not os.path.exists(cjpm_toml_path):
+            cjpm_toml_content = f"""[package]
+name = "{args.project_name}"
+version = "0.1.0"
+
+[dependencies]
+"""
+            with open(cjpm_toml_path, "w") as f:
+                f.write(cjpm_toml_content)
 
         formatted_schema_fname = ".".join(schema_fname.split(".")[:-1])
-        sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])
-        os.makedirs(f"data/java/skeletons/{args.project_name}/{sub_dir}", exist_ok=True)
+        class_name = formatted_schema_fname.split(".")[-1]
 
-        # Change file extension from .py to .cj
-        file_path = f"data/java/skeletons/{args.project_name}/{sub_dir}/{formatted_schema_fname.split('.')[-1]}.cj"
+        # Determine if this is a test file
+        is_test = "Test" in schema_fname or args.suffix == "_evosuite"
+
+        # Calculate output file path
+        file_path = calculate_output_path(
+            formatted_schema_fname=formatted_schema_fname,
+            class_name=class_name,
+            project_name=args.project_name,
+            is_test=is_test,
+            src_dir=src_dir,
+            tests_dir=tests_dir
+        )
+
+        # Create directory if needed
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir, exist_ok=True)
+
         with open(file_path, "w") as f:
             f.write(skeleton)
 
         # Note: Cangjie doesn't need black formatting like Python
         # The generated .cj file should be valid Cangjie code
-
-        # add __init__.cj files for each subdirectory (optional for Cangjie)
-        sub_dirs = sub_dir.split("/")
-        for i in range(len(sub_dirs)):
-            current_sub_dir = "/".join(sub_dirs[: i + 1])
-            # Cangjie doesn't require __init__.cj files
 
         os.makedirs(
             f"data/java/schemas{args.suffix}/translations/{args.model_name}/{args.type}/{args.temperature}/{args.project_name}",

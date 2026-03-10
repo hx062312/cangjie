@@ -628,7 +628,7 @@ def get_main_application_methods(args, parser):
     main_application_methods = set()
 
     src_path = (
-        f"java_projects/cleaned_final_projects_decomposed_tests/{args.project_name}/src"
+        f"java_projects/cleaned_final_projects_decomposed_tests/{args.project}/src"
     )
     src_files = []
     for root, dirs, files in os.walk(src_path):
@@ -676,7 +676,7 @@ def main(args):
     parser = Parser()
     parser.set_language(JAVA_LANGUAGE)
 
-    test_code_path = f"java_projects/cleaned_final_projects_decomposed_tests/{args.project_name}/src/test"
+    test_code_path = f"java_projects/cleaned_final_projects_decomposed_tests/{args.project}/src/test"
     # find all test files recursively in the test directory
     test_files = []
     for root, dirs, files in os.walk(test_code_path):
@@ -793,6 +793,6 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Decompose Java test methods")
-    parser.add_argument("--project_name", type=str, help="Name of the project")
+    parser.add_argument("--project", type=str, help="Name of the project")
     args = parser.parse_args()
     main(args)

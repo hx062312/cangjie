@@ -98,6 +98,7 @@
                     "signature": "isFormField()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isFormField(): Bool {",
                         "\t\t// TODO",
@@ -135,6 +136,7 @@
                     "signature": "getFieldName()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getFieldName(): String {",
                         "\t\t// TODO",
@@ -172,6 +174,7 @@
                     "signature": "getName()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getName(): String {",
                         "\t\t// TODO",
@@ -209,6 +212,7 @@
                     "signature": "getContentType()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContentType(): String {",
                         "\t\t// TODO",
@@ -246,6 +250,7 @@
                     "signature": "openStream()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func openStream():  {",
                         "\t\t// TODO",
@@ -271,6 +276,6 @@
     "cangjie_imports": [
         "import std.io.*",
         "import std.reflect.*",
-        "import org/apache/commons/fileupload/FileItemHeadersSupport"
+        "import FileItemHeadersSupport"
     ]
 }

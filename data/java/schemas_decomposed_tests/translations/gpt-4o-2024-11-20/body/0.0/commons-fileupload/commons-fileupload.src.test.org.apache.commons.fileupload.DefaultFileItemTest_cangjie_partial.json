@@ -59,6 +59,7 @@
                             "toString()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func constructString(unicodeChars: Array<Int64>): String {",
                         "\t\t// TODO",

@@ -137,6 +137,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import calculator/Validator"
+        "import calculator.Validator"
     ]
 }

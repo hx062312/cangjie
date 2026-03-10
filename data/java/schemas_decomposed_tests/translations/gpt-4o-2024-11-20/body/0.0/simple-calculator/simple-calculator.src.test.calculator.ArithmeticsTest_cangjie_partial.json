@@ -314,6 +314,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import calculator/Arithmetics"
+        "import calculator.Arithmetics"
     ]
 }

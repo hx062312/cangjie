@@ -128,6 +128,7 @@
                         "characterEncoding"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setCharacterEncoding(characterEncoding: String): Unit {",
                         "\t\t// TODO",
@@ -166,6 +167,7 @@
                     "signature": "getReader()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getReader():  {",
                         "\t\t// TODO",
@@ -204,6 +206,7 @@
                     "signature": "getPortletInputStream()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getPortletInputStream():  {",
                         "\t\t// TODO",
@@ -242,6 +245,7 @@
                     "signature": "getContentType()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContentType(): String {",
                         "\t\t// TODO",
@@ -280,6 +284,7 @@
                     "signature": "getContentLength()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContentLength(): Int64 {",
                         "\t\t// TODO",
@@ -318,6 +323,7 @@
                     "signature": "getCharacterEncoding()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getCharacterEncoding(): String {",
                         "\t\t// TODO",
@@ -365,6 +371,7 @@
                             "put(java.lang.String,java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setAttribute(key: String, value: Any): Unit {",
                         "\t\t// TODO",
@@ -411,6 +418,7 @@
                             "remove(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func removeAttribute(key: String): Unit {",
                         "\t\t// TODO",
@@ -451,6 +459,7 @@
                         "arg0"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isUserInRole(arg0: String): Bool {",
                         "\t\t// TODO",
@@ -489,6 +498,7 @@
                     "signature": "isSecure()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isSecure(): Bool {",
                         "\t\t// TODO",
@@ -527,6 +537,7 @@
                     "signature": "isRequestedSessionIdValid()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isRequestedSessionIdValid(): Bool {",
                         "\t\t// TODO",
@@ -565,6 +576,7 @@
                     "signature": "getServerPort()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getServerPort(): Int64 {",
                         "\t\t// TODO",
@@ -603,6 +615,7 @@
                     "signature": "getServerName()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getServerName(): String {",
                         "\t\t// TODO",
@@ -641,6 +654,7 @@
                     "signature": "getScheme()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getScheme(): String {",
                         "\t\t// TODO",
@@ -679,6 +693,7 @@
                     "signature": "getResponseContentTypes()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getResponseContentTypes():  {",
                         "\t\t// TODO",
@@ -717,6 +732,7 @@
                     "signature": "getResponseContentType()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getResponseContentType(): String {",
                         "\t\t// TODO",
@@ -755,6 +771,7 @@
                     "signature": "getRequestedSessionId()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getRequestedSessionId(): String {",
                         "\t\t// TODO",
@@ -793,6 +810,7 @@
                     "signature": "getRemoteUser()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getRemoteUser(): String {",
                         "\t\t// TODO",
@@ -831,6 +849,7 @@
                     "signature": "getPropertyNames()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getPropertyNames():  {",
                         "\t\t// TODO",
@@ -871,6 +890,7 @@
                         "arg0"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getProperty(arg0: String): String {",
                         "\t\t// TODO",
@@ -911,6 +931,7 @@
                         "arg0"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getProperties(arg0: String):  {",
                         "\t\t// TODO",
@@ -951,6 +972,7 @@
                         "arg0"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getParameterValues(arg0: String): Array<String> {",
                         "\t\t// TODO",
@@ -1000,6 +1022,7 @@
                             "keySet()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getParameterNames():  {",
                         "\t\t// TODO",
@@ -1044,6 +1067,7 @@
                             "unmodifiableMap(java.util.Map)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getParameterMap():  {",
                         "\t\t// TODO",
@@ -1090,6 +1114,7 @@
                             "get(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getParameter(key: String): String {",
                         "\t\t// TODO",
@@ -1144,6 +1169,7 @@
                             "getAvailableLocales()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getLocales():  {",
                         "\t\t// TODO",
@@ -1188,6 +1214,7 @@
                             "getDefault()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getLocale():  {",
                         "\t\t// TODO",
@@ -1226,6 +1253,7 @@
                     "signature": "getContextPath()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContextPath(): String {",
                         "\t\t// TODO",
@@ -1264,6 +1292,7 @@
                     "signature": "getAuthType()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getAuthType(): String {",
                         "\t\t// TODO",
@@ -1308,6 +1337,7 @@
                             "keys()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getAttributeNames():  {",
                         "\t\t// TODO",
@@ -1354,6 +1384,7 @@
                             "get(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getAttribute(key: String): Any {",
                         "\t\t// TODO",
@@ -1409,6 +1440,7 @@
                             "ByteArrayInputStream(byte[])"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func MockPortletActionRequest1(requestData: Array<Int8>, contentType: String): MockPortletActionRequest {",
                         "\t\t// TODO",
@@ -1461,6 +1493,7 @@
                             "put(java.lang.String,java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(requestLength: Int64, byteArrayInputStream: , contentType: String) {",
                         "\t\t// TODO",
@@ -1669,6 +1702,6 @@
         "import std.reflect.*",
         "import std.any.*",
         "import std.collection.*",
-        "import org/apache/commons/fileupload/FileUploadBase"
+        "import FileUploadBase"
     ]
 }

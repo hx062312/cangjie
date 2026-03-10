@@ -42,6 +42,7 @@
                             "Exception(java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal init(message: String) {",
                         "\t\t// TODO",

@@ -41,6 +41,7 @@
                     "signature": "isClosed()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isClosed(): Bool {",
                         "\t\t// TODO",
@@ -78,6 +79,7 @@
                     "signature": "close()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func close(): Unit {",
                         "\t\t// TODO",

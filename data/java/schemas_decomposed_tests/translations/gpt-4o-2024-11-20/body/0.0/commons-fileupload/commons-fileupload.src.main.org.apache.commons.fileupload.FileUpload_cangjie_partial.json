@@ -40,6 +40,7 @@
                         "factory"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setFileItemFactory(factory: FileItemFactory): Unit {",
                         "\t\t// TODO",
@@ -80,6 +81,7 @@
                     "signature": "getFileItemFactory()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getFileItemFactory(): FileItemFactory {",
                         "\t\t// TODO",
@@ -130,6 +132,7 @@
                             "FileUploadBase"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(constructorId: Int64, fileItemFactory: FileItemFactory) {",
                         "\t\t// TODO",
@@ -184,7 +187,7 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/FileItemFactory",
-        "import org/apache/commons/fileupload/FileUploadBase"
+        "import FileItemFactory",
+        "import FileUploadBase"
     ]
 }

@@ -36,6 +36,7 @@
                     "signature": "getLimit()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getLimit(): Int64 {",
                         "\t\t// TODO",
@@ -84,6 +85,7 @@
                             "54-57:FileUploadException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(message: String, limit: Int64) {",
                         "\t\t// TODO",
@@ -170,6 +172,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/FileUploadException"
+        "import FileUploadException"
     ]
 }

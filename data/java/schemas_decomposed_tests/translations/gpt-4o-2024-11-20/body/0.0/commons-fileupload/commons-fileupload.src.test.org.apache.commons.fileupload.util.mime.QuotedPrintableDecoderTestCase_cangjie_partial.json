@@ -92,6 +92,7 @@
                             "115-128:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func truncatedEscape(): Unit {",
                         "\t\t// TODO",
@@ -138,6 +139,7 @@
                             "115-128:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func invalidSoftBreak2(): Unit {",
                         "\t\t// TODO",
@@ -184,6 +186,7 @@
                             "115-128:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func invalidSoftBreak1(): Unit {",
                         "\t\t// TODO",
@@ -234,6 +237,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func softLineBreakDecode(): Unit {",
                         "\t\t// TODO",
@@ -280,6 +284,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func invalidCharDecode(): Unit {",
                         "\t\t// TODO",
@@ -326,6 +331,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func unsafeDecodeLowerCase(): Unit {",
                         "\t\t// TODO",
@@ -372,6 +378,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func unsafeDecode(): Unit {",
                         "\t\t// TODO",
@@ -419,6 +426,7 @@
                             "115-128:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func invalidQuotedPrintableEncoding(): Unit {",
                         "\t\t// TODO",
@@ -465,6 +473,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func basicEncodeDecode(): Unit {",
                         "\t\t// TODO",
@@ -513,6 +522,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func plainDecode(): Unit {",
                         "\t\t// TODO",
@@ -559,6 +569,7 @@
                             "104-113:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func emptyDecode(): Unit {",
                         "\t\t// TODO",
@@ -653,6 +664,7 @@
                             "contains(java.lang.CharSequence)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func assertIOException(messageText: String, encoded: String): Unit {",
                         "\t\t// TODO",
@@ -733,6 +745,7 @@
                             "assertArrayEquals(byte[],byte[])"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func assertEncoded(clearText: String, encoded: String): Unit {",
                         "\t\t// TODO",
@@ -790,6 +803,6 @@
     "cangjie_imports": [
         "import testing",
         "import std.io.*",
-        "import org/apache/commons/fileupload/util/mime/QuotedPrintableDecoder"
+        "import util.mime.QuotedPrintableDecoder"
     ]
 }

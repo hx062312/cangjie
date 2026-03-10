@@ -41,6 +41,7 @@
                     "signature": "next()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func next_(): FileItemStream {",
                         "\t\t// TODO",
@@ -78,6 +79,7 @@
                     "signature": "hasNext()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func hasNext(): Bool {",
                         "\t\t// TODO",
@@ -103,7 +105,7 @@
     "cangjie_imports": [
         "import std.io.*",
         "import std.iterator.*",
-        "import org/apache/commons/fileupload/FileItemStream",
-        "import org/apache/commons/fileupload/FileUploadException"
+        "import FileItemStream",
+        "import FileUploadException"
     ]
 }

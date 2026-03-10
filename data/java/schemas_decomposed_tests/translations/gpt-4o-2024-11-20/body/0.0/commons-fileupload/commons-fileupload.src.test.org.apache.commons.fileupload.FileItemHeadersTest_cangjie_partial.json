@@ -190,6 +190,7 @@
                             "assertTrue(boolean)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testFileItemHeaders(): Unit {",
                         "\t\t// TODO",
@@ -215,6 +216,6 @@
     "cangjie_imports": [
         "import testing",
         "import std.io.*",
-        "import org/apache/commons/fileupload/util/FileItemHeadersImpl"
+        "import util.FileItemHeadersImpl"
     ]
 }

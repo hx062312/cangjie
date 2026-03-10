@@ -93,6 +93,7 @@
                             "129-138:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func nonASCIIcharacter(): Unit {",
                         "\t\t// TODO",
@@ -139,6 +140,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func badLength(): Unit {",
                         "\t\t// TODO",
@@ -185,6 +187,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func badPaddingLeading2(): Unit {",
                         "\t\t// TODO",
@@ -231,6 +234,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func badPaddingLeading1(): Unit {",
                         "\t\t// TODO",
@@ -277,6 +281,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func badPadding(): Unit {",
                         "\t\t// TODO",
@@ -323,6 +328,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeTrailing3(): Unit {",
                         "\t\t// TODO",
@@ -369,6 +375,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeTrailing2(): Unit {",
                         "\t\t// TODO",
@@ -415,6 +422,7 @@
                             "140-153:assertIOException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeTrailing1(): Unit {",
                         "\t\t// TODO",
@@ -461,6 +469,7 @@
                             "129-138:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeTrailingJunk(): Unit {",
                         "\t\t// TODO",
@@ -513,6 +522,7 @@
                             "ByteArrayOutputStream()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func truncatedString(): Unit {",
                         "\t\t// TODO",
@@ -559,6 +569,7 @@
                             "129-138:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func nonBase64Bytes(): Unit {",
                         "\t\t// TODO",
@@ -605,6 +616,7 @@
                             "129-138:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeWithInnerPad(): Unit {",
                         "\t\t// TODO",
@@ -657,6 +669,7 @@
                             "129-138:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func rfc4648Section10Decode(): Unit {",
                         "\t\t// TODO",
@@ -751,6 +764,7 @@
                             "contains(java.lang.CharSequence)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func assertIOException(messageText: String, encoded: String): Unit {",
                         "\t\t// TODO",
@@ -831,6 +845,7 @@
                             "assertArrayEquals(byte[],byte[])"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func assertEncoded(clearText: String, encoded: String): Unit {",
                         "\t\t// TODO",
@@ -888,6 +903,6 @@
     "cangjie_imports": [
         "import testing",
         "import std.io.*",
-        "import org/apache/commons/fileupload/util/mime/Base64Decoder"
+        "import util.mime.Base64Decoder"
     ]
 }

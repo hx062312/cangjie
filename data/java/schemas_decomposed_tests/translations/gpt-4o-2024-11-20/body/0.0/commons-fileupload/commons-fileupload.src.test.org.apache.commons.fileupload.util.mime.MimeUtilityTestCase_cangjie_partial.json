@@ -64,6 +64,7 @@
                             "79-145:decodeText"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeInvalidEncoding(): Unit {",
                         "\t\t// TODO",
@@ -113,6 +114,7 @@
                             "66-68:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeIso88591Base64EncodedWithWhiteSpace(): Unit {",
                         "\t\t// TODO",
@@ -162,6 +164,7 @@
                             "66-68:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeIso88591Base64Encoded(): Unit {",
                         "\t\t// TODO",
@@ -208,6 +211,7 @@
                             "66-68:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeUtf8Base64Encoded(): Unit {",
                         "\t\t// TODO",
@@ -256,6 +260,7 @@
                             "66-68:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func decodeUtf8QuotedPrintableEncoded(): Unit {",
                         "\t\t// TODO",
@@ -302,6 +307,7 @@
                             "66-68:assertEncoded"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func noNeedToDecode(): Unit {",
                         "\t\t// TODO",
@@ -355,6 +361,7 @@
                             "79-145:decodeText"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func assertEncoded(expected: String, encoded: String): Unit {",
                         "\t\t// TODO",
@@ -380,6 +387,6 @@
     "cangjie_imports": [
         "import testing",
         "import std.io.*",
-        "import org/apache/commons/fileupload/util/mime/MimeUtility"
+        "import util.mime.MimeUtility"
     ]
 }

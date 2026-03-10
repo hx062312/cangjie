@@ -35,6 +35,7 @@
                         "headers"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setHeaders(headers: FileItemHeaders): Unit {",
                         "\t\t// TODO",
@@ -72,6 +73,7 @@
                     "signature": "getHeaders()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getHeaders(): FileItemHeaders {",
                         "\t\t// TODO",
@@ -96,6 +98,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/FileItemHeaders"
+        "import FileItemHeaders"
     ]
 }

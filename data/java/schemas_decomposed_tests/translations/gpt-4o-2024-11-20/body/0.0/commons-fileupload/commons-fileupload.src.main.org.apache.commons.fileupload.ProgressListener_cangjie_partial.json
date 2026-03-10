@@ -37,6 +37,7 @@
                         "pItems"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func update(pBytesRead: Int64, pContentLength: Int64, pItems: Int64): Unit {",
                         "\t\t// TODO",

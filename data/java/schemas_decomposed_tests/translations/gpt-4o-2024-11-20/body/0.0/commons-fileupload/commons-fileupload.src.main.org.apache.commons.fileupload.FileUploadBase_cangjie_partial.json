@@ -110,7 +110,23 @@
                             "java.base/java/lang/String",
                             "toLowerCase(java.util.Locale)"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getHeader(headers: , name: String): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "472-485:parseHeaders": {
                     "start": 472,
@@ -199,7 +215,23 @@
                             "java.base/java/lang/StringBuilder",
                             "toString()"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func parseHeaders(headerPart: String):  {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "401-409:createItem": {
                     "start": 401,
@@ -259,7 +291,23 @@
                             "FileUploadBase",
                             "306-308:getFileName0"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func createItem(headers: , isFormField: Bool): FileItem {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "386-388:getFieldName2": {
                     "start": 386,
@@ -297,7 +345,23 @@
                             "FileUploadBase",
                             "536-538:getHeader"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getFieldName2(headers: ): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "306-308:getFileName0": {
                     "start": 306,
@@ -335,7 +399,23 @@
                             "FileUploadBase",
                             "536-538:getHeader"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getFileName0(headers: ): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "974-976:setProgressListener": {
                     "start": 974,
@@ -360,7 +440,23 @@
                     "parameters": [
                         "pListener"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setProgressListener(pListener: ProgressListener): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "965-967:getProgressListener": {
                     "start": 965,
@@ -383,7 +479,23 @@
                     ],
                     "signature": "getProgressListener()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getProgressListener(): ProgressListener {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "457-459:newFileItemHeaders": {
                     "start": 457,
@@ -412,7 +524,23 @@
                             "FileItemHeadersImpl",
                             "FileItemHeadersImpl"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func newFileItemHeaders(): FileItemHeadersImpl {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "420-450:getParsedHeaders": {
                     "start": 420,
@@ -511,7 +639,23 @@
                             "java.base/java/lang/StringBuilder",
                             "toString()"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getParsedHeaders(headerPart: String): FileItemHeaders {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "353-355:getFieldName0": {
                     "start": 353,
@@ -547,7 +691,23 @@
                             "FileItemHeaders",
                             "40-40:getHeader"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getFieldName0(headers: FileItemHeaders): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "316-318:getFileName1": {
                     "start": 316,
@@ -583,7 +743,23 @@
                             "FileItemHeaders",
                             "40-40:getHeader"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getFileName1(headers: FileItemHeaders): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "280-296:getBoundary": {
                     "start": 280,
@@ -653,7 +829,23 @@
                             "java.base/java/lang/String",
                             "getBytes()"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tprotected func getBoundary(contentType: String): Array<Int8> {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "222-224:setHeaderEncoding": {
                     "start": 222,
@@ -678,7 +870,23 @@
                     "parameters": [
                         "encoding"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setHeaderEncoding(encoding: String): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "211-213:getHeaderEncoding": {
                     "start": 211,
@@ -701,7 +909,23 @@
                     ],
                     "signature": "getHeaderEncoding()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getHeaderEncoding(): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "200-202:setFileCountMax": {
                     "start": 200,
@@ -726,7 +950,23 @@
                     "parameters": [
                         "fileCountMax"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setFileCountMax(fileCountMax: Int64): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "191-193:getFileCountMax": {
                     "start": 191,
@@ -749,7 +989,23 @@
                     ],
                     "signature": "getFileCountMax()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getFileCountMax(): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "182-184:setFileSizeMax": {
                     "start": 182,
@@ -774,7 +1030,23 @@
                     "parameters": [
                         "fileSizeMax"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setFileSizeMax(fileSizeMax: Int64): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "172-174:getFileSizeMax": {
                     "start": 172,
@@ -797,7 +1069,23 @@
                     ],
                     "signature": "getFileSizeMax()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getFileSizeMax(): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "161-163:setSizeMax": {
                     "start": 161,
@@ -822,7 +1110,23 @@
                     "parameters": [
                         "sizeMax"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setSizeMax(sizeMax: Int64): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "149-151:getSizeMax": {
                     "start": 149,
@@ -845,7 +1149,23 @@
                     ],
                     "signature": "getSizeMax()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getSizeMax(): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "51-60:isMultipartContent": {
                     "start": 51,
@@ -895,7 +1215,23 @@
                             "java.base/java/lang/String",
                             "toLowerCase(java.util.Locale)"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic static func isMultipartContent(ctx: RequestContext): Bool {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "515-523:parseHeaderLine": {
                     "start": 515,
@@ -953,7 +1289,23 @@
                             "FileItemHeadersImpl",
                             "78-86:addHeader"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tinternal func parseHeaderLine(headers: FileItemHeadersImpl, header: String): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "494-507:parseEndOfLine": {
                     "start": 494,
@@ -1011,7 +1363,23 @@
                             "java.base/java/lang/String",
                             "charAt(int)"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tinternal func parseEndOfLine(headerPart: String, end: Int64): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "363-376:getFieldName1": {
                     "start": 363,
@@ -1083,7 +1451,23 @@
                             "java.base/java/lang/String",
                             "trim()"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tinternal func getFieldName1(pContentDisposition: String): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "326-345:getFileName2": {
                     "start": 326,
@@ -1166,7 +1550,23 @@
                             "java.base/java/lang/String",
                             "trim()"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tinternal func getFileName2(pContentDisposition: String): String {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "139-139:setFileItemFactory": {
                     "start": 139,
@@ -1190,7 +1590,23 @@
                     "parameters": [
                         "factory"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setFileItemFactory(factory: FileItemFactory): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "132-132:getFileItemFactory": {
                     "start": 132,
@@ -1212,7 +1628,23 @@
                     ],
                     "signature": "getFileItemFactory()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getFileItemFactory(): FileItemFactory {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1232,7 +1664,20 @@
                             "int",
                             "int"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let MAX_HEADER_SIZE: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "92-92:MULTIPART_MIXED": {
                     "start": 92,
@@ -1250,7 +1695,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let MULTIPART_MIXED: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "89-89:MULTIPART_FORM_DATA": {
                     "start": 89,
@@ -1268,7 +1726,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let MULTIPART_FORM_DATA: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "86-86:MULTIPART": {
                     "start": 86,
@@ -1286,7 +1757,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let MULTIPART: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "83-83:ATTACHMENT": {
                     "start": 83,
@@ -1304,7 +1788,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let ATTACHMENT: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "80-80:FORM_DATA": {
                     "start": 80,
@@ -1322,7 +1819,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let FORM_DATA: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "77-77:CONTENT_LENGTH": {
                     "start": 77,
@@ -1340,7 +1850,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let CONTENT_LENGTH: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "74-74:CONTENT_DISPOSITION": {
                     "start": 74,
@@ -1358,7 +1881,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let CONTENT_DISPOSITION: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "71-71:CONTENT_TYPE": {
                     "start": 71,
@@ -1376,7 +1912,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tpublic static let CONTENT_TYPE: String = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "125-125:listener": {
                     "start": 125,
@@ -1392,7 +1941,20 @@
                             "ProgressListener",
                             "ProgressListener"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var listener: ProgressListener = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "122-122:headerEncoding": {
                     "start": 122,
@@ -1408,7 +1970,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var headerEncoding: String = \"\""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "119-119:fileCountMax": {
                     "start": 119,
@@ -1424,7 +1999,20 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var fileCountMax: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "113-113:fileSizeMax": {
                     "start": 113,
@@ -1440,7 +2028,20 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var fileSizeMax: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "107-107:sizeMax": {
                     "start": 107,
@@ -1456,9 +2057,24 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var sizeMax: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class FileUploadBase {\n"
         },
         "FileUploadIOException": {
             "start": 700,
@@ -1469,7 +2085,7 @@
             "nests": [],
             "implements": [],
             "extends": [
-                "IOException"
+                ""
             ],
             "methods": {
                 "726-728:getCause": {
@@ -1495,7 +2111,23 @@
                     ],
                     "signature": "getCause()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getCause():  {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "716-718:FileUploadIOException": {
                     "start": 716,
@@ -1520,7 +2152,23 @@
                     "parameters": [
                         "pCause"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic init(pCause: FileUploadException) {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1539,7 +2187,20 @@
                             "FileUploadException",
                             "FileUploadException"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal let cause: FileUploadException = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "703-703:serialVersionUID": {
                     "start": 703,
@@ -1557,9 +2218,24 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tstatic let serialVersionUID: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class FileUploadIOException <: {\n"
         },
         "IOFileUploadException": {
             "start": 759,
@@ -1596,7 +2272,23 @@
                     ],
                     "signature": "getCause()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getCause():  {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "776-779:IOFileUploadException": {
                     "start": 776,
@@ -1629,7 +2321,23 @@
                             "FileUploadException",
                             "54-57:FileUploadException"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic init(pMsg: String, pException: ) {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1648,7 +2356,20 @@
                             "IOException",
                             "java.io.IOException"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal let cause:  = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "762-762:serialVersionUID": {
                     "start": 762,
@@ -1666,9 +2387,24 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tstatic let serialVersionUID: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class IOFileUploadException <:FileUploadException {\n"
         },
         "SizeLimitExceededException": {
             "start": 864,
@@ -1716,6 +2452,7 @@
                             "894-896:SizeLimitExceededException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func SizeLimitExceededException1(message: String): SizeLimitExceededException {",
                         "\t\t// TODO",
@@ -1764,6 +2501,7 @@
                             "894-896:SizeLimitExceededException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func SizeLimitExceededException0(): SizeLimitExceededException {",
                         "\t\t// TODO",
@@ -1812,6 +2550,7 @@
                             "811-815:SizeException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(message: String, actual: Int64, permitted: Int64) {",
                         "\t\t// TODO",
@@ -1898,7 +2637,23 @@
                     "parameters": [
                         "pHeaders"
                     ],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func setHeaders(pHeaders: FileItemHeaders): Unit {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "620-622:getHeaders": {
                     "start": 620,
@@ -1921,7 +2676,23 @@
                     ],
                     "signature": "getHeaders()",
                     "parameters": [],
-                    "calls": []
+                    "calls": [],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic func getHeaders(): FileItemHeaders {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -1939,7 +2710,20 @@
                             "FileItemHeaders",
                             "FileItemHeaders"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var headers: FileItemHeaders = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "559-559:opened": {
                     "start": 559,
@@ -1955,9 +2739,24 @@
                             "boolean",
                             "boolean"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var opened: Bool = false"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class FileItemStreamImpl {\n"
         },
         "FileItemIteratorImpl": {
             "start": 543,
@@ -2009,7 +2808,23 @@
                             "FileItemHeaders",
                             "40-40:getHeader"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tinternal func getContentLength(pHeaders: FileItemHeaders): Int64 {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2027,7 +2842,20 @@
                             "boolean",
                             "boolean"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var eof: Bool = false"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "650-650:itemValid": {
                     "start": 650,
@@ -2043,7 +2871,20 @@
                             "boolean",
                             "boolean"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var itemValid: Bool = false"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "647-647:skipPreamble": {
                     "start": 647,
@@ -2059,7 +2900,20 @@
                             "boolean",
                             "boolean"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var skipPreamble: Bool = false"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "644-644:currentFieldName": {
                     "start": 644,
@@ -2075,7 +2929,20 @@
                             "String",
                             "java.lang.String"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var currentFieldName: String = \"\""
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 },
                 "641-641:currentItem": {
                     "start": 641,
@@ -2091,9 +2958,24 @@
                             "FileItemStreamImpl",
                             "FileItemStreamImpl"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tinternal var currentItem: FileItemStreamImpl = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class FileItemIteratorImpl {\n"
         },
         "FileSizeLimitExceededException": {
             "start": 900,
@@ -2131,6 +3013,7 @@
                         "pFieldName"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setFieldName(pFieldName: String): Unit {",
                         "\t\t// TODO",
@@ -2169,6 +3052,7 @@
                     "signature": "getFieldName()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getFieldName(): String {",
                         "\t\t// TODO",
@@ -2209,6 +3093,7 @@
                         "pFileName"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setFileName(pFileName: String): Unit {",
                         "\t\t// TODO",
@@ -2247,6 +3132,7 @@
                     "signature": "getFileName()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getFileName(): String {",
                         "\t\t// TODO",
@@ -2295,6 +3181,7 @@
                             "811-815:SizeException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(message: String, actual: Int64, permitted: Int64) {",
                         "\t\t// TODO",
@@ -2440,6 +3327,7 @@
                     "signature": "getPermittedSize()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getPermittedSize(): Int64 {",
                         "\t\t// TODO",
@@ -2478,6 +3366,7 @@
                     "signature": "getActualSize()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getActualSize(): Int64 {",
                         "\t\t// TODO",
@@ -2528,6 +3417,7 @@
                             "54-57:FileUploadException"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tprotected init(message: String, actual: Int64, permitted: Int64) {",
                         "\t\t// TODO",
@@ -2683,7 +3573,23 @@
                             "FileUploadException",
                             "54-57:FileUploadException"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic init(msg: String, cause: ) {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2703,9 +3609,24 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tstatic let serialVersionUID: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class InvalidContentTypeException <:FileUploadException {\n"
         },
         "UnknownSizeException": {
             "start": 846,
@@ -2748,7 +3669,23 @@
                             "FileUploadException",
                             "54-57:FileUploadException"
                         ]
-                    ]
+                    ],
+                    "is_overload": false,
+                    "partial_translation": [
+                        "\tpublic init(message: String) {",
+                        "\t\t// TODO",
+                        "\t}\n"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
             },
             "fields": {
@@ -2768,12 +3705,39 @@
                             "long",
                             "long"
                         ]
-                    ]
+                    ],
+                    "partial_translation": [
+                        "\tstatic let serialVersionUID: Int64 = ?"
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "syntactic_validation": "pending",
+                    "field_exercise": "pending",
+                    "graal_validation": "pending",
+                    "test_execution": "pending",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
+                    "model_name": "gpt-4o-2024-11-20",
+                    "include_implementation": true
                 }
-            }
+            },
+            "is_enum": false,
+            "cangjie_class_declaration": "class UnknownSizeException <:FileUploadException {\n"
         }
     },
     "cangjie_imports": [
-        "import std.io.*"
+        "import std.io.*",
+        "import std.reflect.*",
+        "import std.iterator.*",
+        "import std.collection.*",
+        "import std.os.*",
+        "import FileItem",
+        "import FileItemFactory",
+        "import FileItemHeaders",
+        "import FileUploadException",
+        "import ParameterParser",
+        "import ProgressListener",
+        "import RequestContext",
+        "import util.FileItemHeadersImpl"
     ]
 }

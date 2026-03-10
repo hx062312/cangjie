@@ -38,6 +38,7 @@
                         "fileName"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func createItem(fieldName: String, contentType: String, isFormField: Bool, fileName: String): FileItem {",
                         "\t\t// TODO",
@@ -63,6 +64,6 @@
     "cangjie_imports": [
         "import std.io.*",
         "import std.reflect.*",
-        "import org/apache/commons/fileupload/FileItem"
+        "import FileItem"
     ]
 }

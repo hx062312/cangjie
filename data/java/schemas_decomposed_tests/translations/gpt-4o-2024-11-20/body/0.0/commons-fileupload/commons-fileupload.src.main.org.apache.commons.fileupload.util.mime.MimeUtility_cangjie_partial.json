@@ -195,6 +195,7 @@
                             "toString()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func decodeText(text: String): String {",
                         "\t\t// TODO",
@@ -255,6 +256,7 @@
                             "toLowerCase(java.util.Locale)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func javaCharset(charset: String): String {",
                         "\t\t// TODO",
@@ -425,6 +427,7 @@
                             "216-226:javaCharset"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal static func decodeWord(word: String): String {",
                         "\t\t// TODO",
@@ -461,6 +464,7 @@
                     "signature": "MimeUtility()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal init() {",
                         "\t\t// TODO",
@@ -734,8 +738,8 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import org/apache/commons/fileupload/util/mime/Base64Decoder",
-        "import org/apache/commons/fileupload/util/mime/ParseException",
-        "import org/apache/commons/fileupload/util/mime/QuotedPrintableDecoder"
+        "import util.mime.Base64Decoder",
+        "import util.mime.ParseException",
+        "import util.mime.QuotedPrintableDecoder"
     ]
 }

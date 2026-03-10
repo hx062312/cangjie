@@ -153,6 +153,7 @@
                             "put(java.lang.String,java.lang.String)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func parse3(charArray: Array<Int8>, offset: Int64, length: Int64, separator: ):  {",
                         "\t\t// TODO",
@@ -208,6 +209,7 @@
                             "250-289:parse3"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func parse2(charArray: Array<Int8>, separator: ):  {",
                         "\t\t// TODO",
@@ -268,6 +270,7 @@
                             "toCharArray()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func parse1(str_: String, separator: ):  {",
                         "\t\t// TODO",
@@ -344,6 +347,7 @@
                             "218-223:parse1"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func parse0(str_: String, separators: Array<Int8>):  {",
                         "\t\t// TODO",
@@ -384,6 +388,7 @@
                         "b"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func setLowerCaseNames(b: Bool): Unit {",
                         "\t\t// TODO",
@@ -422,6 +427,7 @@
                     "signature": "isLowerCaseNames()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func isLowerCaseNames(): Bool {",
                         "\t\t// TODO",
@@ -466,6 +472,7 @@
                             "Object()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init() {",
                         "\t\t// TODO",
@@ -539,6 +546,7 @@
                             "75-91:getToken"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func parseQuotedToken(terminators: Array<Int8>): String {",
                         "\t\t// TODO",
@@ -606,6 +614,7 @@
                             "75-91:getToken"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func parseToken(terminators: Array<Int8>): String {",
                         "\t\t// TODO",
@@ -654,6 +663,7 @@
                         "charray"
                     ],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func isOneOf(ch: , charray: Array<Int8>): Bool {",
                         "\t\t// TODO",
@@ -719,6 +729,7 @@
                             "String(char[],int,int)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func getToken(quoted: Bool): String {",
                         "\t\t// TODO",
@@ -757,6 +768,7 @@
                     "signature": "hasChar()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tinternal func hasChar(): Bool {",
                         "\t\t// TODO",
@@ -958,6 +970,6 @@
         "import std.io.*",
         "import std.collection.*",
         "import std.os.*",
-        "import org/apache/commons/fileupload/util/mime/MimeUtility"
+        "import util.mime.MimeUtility"
     ]
 }

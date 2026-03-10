@@ -62,6 +62,7 @@
                             "85-88:DiskFileItemFactory"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic init(sizeThreshold: Int64, repository: ) {",
                         "\t\t// TODO",
@@ -107,6 +108,7 @@
                             "50-52:DefaultFileItemFactory"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic static func DefaultFileItemFactory1(): DefaultFileItemFactory {",
                         "\t\t// TODO",
@@ -132,6 +134,6 @@
     "cangjie_imports": [
         "import std.io.*",
         "import std.os.*",
-        "import org/apache/commons/fileupload/disk/DiskFileItemFactory"
+        "import disk.DiskFileItemFactory"
     ]
 }

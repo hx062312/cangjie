@@ -1,11 +1,16 @@
 import json
 import argparse
 import tqdm
+from utils import (
+    parse_location,
+    read_file_lines,
+    find_callable_body,
+)
 
 
 def main(args):
 
-    project = args.project_name
+    project = args.project
     projects_dir = f"projects/java/cleaned_final_projects{args.suffix}/"
     query_outputs_dir = f"data/java/query_outputs{args.suffix}"
 
@@ -96,116 +101,29 @@ def main(args):
                 ".class:0:0:0:0" not in callee_location
             ), f"callee_location: {callee_location}"
 
-        callee_path = callee_location[
-            callee_location.find(":")
-            + 1 : callee_location.find(":", callee_location.find(":") + 1)
-        ]
+        callee_path = parse_location(callee_location)[0]
         callee_path = callee_path[callee_path.find(project) :]
 
-        caller_path = caller_location[
-            caller_location.find(":")
-            + 1 : caller_location.find(":", caller_location.find(":") + 1)
-        ]
+        caller_path = parse_location(caller_location)[0]
         caller_path = caller_path[caller_path.find(project) :]
 
-        caller_start_line = (
-            int(
-                caller_location[
-                    caller_location.find(":", caller_location.find(":") + 1) + 1 :
-                ].split(":")[0]
-            )
-            - 1
-        )
+        caller_start_line = parse_location(caller_location)[1] - 1
         caller_end_line = caller_start_line + 5
 
-        callable_body = ""
-        with open(f"{projects_dir}/{caller_path}", "r") as f:
-            callable_body = f.readlines()[caller_start_line - 1 : caller_end_line]
-
-        # print(call_location, caller_name, callee_name, callable_body, caller_start_line, caller_end_line, flush=True)
-        # print(caller_location)
-        # print(callee_location)
-        # print('-------------------' * 10, flush=True)
-
-        start_terminations = ["*/", "@", "}"]
-        end_terminations = [";", "}", "*/", "{"]
-        searched = False
-        while not (
-            any([callable_body[0].strip().startswith(x) for x in start_terminations])
-            or any([callable_body[0].strip().endswith(x) for x in end_terminations])
-        ):
-
-            searched = True
-
-            callable_body = ""
-            with open(f"{projects_dir}/{caller_path}", "r") as f:
-                callable_body = f.readlines()[caller_start_line - 1 : caller_end_line]
-            caller_start_line -= 1
-
-        if searched:
-            caller_start_line += 2
-
-            callable_body = ""
-            with open(f"{projects_dir}/{caller_path}", "r") as f:
-                callable_body = f.readlines()[caller_start_line - 1 : caller_end_line]
-
-            for i in range(len(callable_body)):
-                if callable_body[i].strip() == "":
-                    caller_start_line += 1
-                if callable_body[i].strip() != "":
-                    break
-        else:
-            caller_start_line += 1
+        # Use find_callable_body to adjust start line
+        callable_body, caller_start_line = find_callable_body(
+            f"{projects_dir}/{caller_path}", caller_start_line, caller_end_line
+        )
 
         if not is_library_callee:
 
-            callee_start_line = (
-                int(
-                    callee_location[
-                        callee_location.find(":", callee_location.find(":") + 1) + 1 :
-                    ].split(":")[0]
-                )
-                - 1
-            )
+            callee_start_line = parse_location(callee_location)[1] - 1
             callee_end_line = callee_start_line + 5
 
-            callable_body = ""
-            with open(f"{projects_dir}/{callee_path}", "r") as f:
-                callable_body = f.readlines()[callee_start_line - 1 : callee_end_line]
-
-            searched = False
-            while not (
-                any(
-                    [callable_body[0].strip().startswith(x) for x in start_terminations]
-                )
-                or any([callable_body[0].strip().endswith(x) for x in end_terminations])
-            ):
-
-                searched = True
-
-                callable_body = ""
-                with open(f"{projects_dir}/{callee_path}", "r") as f:
-                    callable_body = f.readlines()[
-                        callee_start_line - 1 : callee_end_line
-                    ]
-                callee_start_line -= 1
-
-            if searched:
-                callee_start_line += 2
-
-                callable_body = ""
-                with open(f"{projects_dir}/{callee_path}", "r") as f:
-                    callable_body = f.readlines()[
-                        callee_start_line - 1 : callee_end_line
-                    ]
-
-                for i in range(len(callable_body)):
-                    if callable_body[i].strip() == "":
-                        callee_start_line += 1
-                    if callable_body[i].strip() != "":
-                        break
-            else:
-                callee_start_line += 1
+            # Use find_callable_body to adjust start line
+            callable_body, callee_start_line = find_callable_body(
+                f"{projects_dir}/{callee_path}", callee_start_line, callee_end_line
+            )
 
             callee_schema_name = (
                 callee_path[callee_path.find(project) :]
@@ -314,7 +232,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="extract call graph of preprocessed project"
     )
-    parser.add_argument("--project_name", type=str, help="Name of the project")
+    parser.add_argument("--project", type=str, help="Name of the project")
     parser.add_argument("--suffix", type=str, help="suffix")
     args = parser.parse_args()
     main(args)

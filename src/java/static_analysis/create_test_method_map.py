@@ -7,11 +7,11 @@ def main(args):
 
     schema_dir = f"data/java/schemas{args.suffix}"
 
-    os.makedirs(f"data/java/call_graphs/{args.project_name}", exist_ok=True)
+    os.makedirs(f"data/java/call_graphs/{args.project}", exist_ok=True)
 
     global_call_graph = {}
     for schema_file in os.listdir(
-        f"{schema_dir}/translations/{args.model_name}/body/0.0/{args.project_name}"
+        f"{schema_dir}/translations/{args.model_name}/body/0.0/{args.project}"
     ):
 
         if "ESTest" in schema_file and not args.evosuite:
@@ -22,7 +22,7 @@ def main(args):
 
         data = {}
         with open(
-            f"{schema_dir}/translations/{args.model_name}/body/0.0/{args.project_name}/{schema_file}",
+            f"{schema_dir}/translations/{args.model_name}/body/0.0/{args.project}/{schema_file}",
             "r",
         ) as f:
             data = json.load(f)
@@ -45,14 +45,14 @@ def main(args):
 
         suffix = "-evosuite" if args.evosuite else ""
         with open(
-            f"data/java/call_graphs/{args.project_name}/call_graph{suffix}.json", "w"
+            f"data/java/call_graphs/{args.project}/call_graph{suffix}.json", "w"
         ) as f:
             json.dump(global_call_graph, f, indent=4)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Create call graph for test methods")
-    parser.add_argument("--project_name", type=str, help="Name of the project")
+    parser.add_argument("--project", type=str, help="Name of the project")
     parser.add_argument(
         "--model_name", type=str, dest="model_name", help="name of the model"
     )

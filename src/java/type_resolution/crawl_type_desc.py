@@ -8,7 +8,7 @@ import argparse
 
 def main(args):
 
-    project = args.project_name
+    project = args.project
 
     if not os.path.exists(f"data/java/type_resolution/{project}/type_description.json"):
 
@@ -72,6 +72,6 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Crawl type descriptions")
-    parser.add_argument("--project_name", type=str, help="Name of the project")
+    parser.add_argument("--project", type=str, help="Name of the project")
     args = parser.parse_args()
     main(args)

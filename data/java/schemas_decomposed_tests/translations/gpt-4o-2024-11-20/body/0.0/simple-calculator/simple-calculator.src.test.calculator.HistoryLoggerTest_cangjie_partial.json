@@ -395,6 +395,6 @@
     },
     "cangjie_imports": [
         "import std.io.*",
-        "import calculator/HistoryLogger"
+        "import calculator.HistoryLogger"
     ]
 }

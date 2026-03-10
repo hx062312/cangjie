@@ -92,6 +92,7 @@
                             "get(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func fileUpload199(): Unit {",
                         "\t\t// TODO",
@@ -164,6 +165,7 @@
                             "get(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testFileUpload139(): Unit {",
                         "\t\t// TODO",
@@ -250,6 +252,7 @@
                             "assertNull(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testParsingEscapedChars(): Unit {",
                         "\t\t// TODO",
@@ -320,6 +323,7 @@
                             "get(java.lang.Object)"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testContentTypeParsing(): Unit {",
                         "\t\t// TODO",
@@ -427,6 +431,7 @@
                             "size()"
                         ]
                     ],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func testParsing(): Unit {",
                         "\t\t// TODO",
@@ -453,6 +458,6 @@
         "import testing",
         "import std.io.*",
         "import std.reflect.*",
-        "import org/apache/commons/fileupload/ParameterParser"
+        "import ParameterParser"
     ]
 }

@@ -48,6 +48,7 @@
                     "signature": "getInputStream()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getInputStream():  {",
                         "\t\t// TODO",
@@ -85,6 +86,7 @@
                     "signature": "getContentLength()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContentLength(): Int64 {",
                         "\t\t// TODO",
@@ -122,6 +124,7 @@
                     "signature": "getContentType()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getContentType(): String {",
                         "\t\t// TODO",
@@ -159,6 +162,7 @@
                     "signature": "getCharacterEncoding()",
                     "parameters": [],
                     "calls": [],
+                    "is_overload": false,
                     "partial_translation": [
                         "\tpublic func getCharacterEncoding(): String {",
                         "\t\t// TODO",
