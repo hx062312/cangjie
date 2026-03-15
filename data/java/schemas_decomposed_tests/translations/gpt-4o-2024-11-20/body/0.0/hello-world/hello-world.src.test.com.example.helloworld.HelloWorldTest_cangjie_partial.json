@@ -53,9 +53,7 @@
                     ],
                     "translation": [],
                     "translation_status": "pending",
-                    "syntactic_validation": "pending",
-                    "field_exercise": "pending",
-                    "graal_validation": "pending",
+                    "cangjie_compilation": "pending",
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
@@ -71,6 +69,6 @@
     "cangjie_imports": [
         "import testing",
         "import std.io.*",
-        "import com.example.helloworld.HelloWorld"
+        "import hello-world.HelloWorld"
     ]
 }

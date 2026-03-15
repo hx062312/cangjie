@@ -1,17 +1,21 @@
 // Package Declaration
-package hello-world
+package hello_world.test
 
 // Imports Begin
-import std.collection.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import hello_world.HelloWorld   
 import std.io.*
 // Imports End
 
-class HelloWorld {
+
+@Test
+class HelloWorldTest {
 	// Class Fields Begin
 	// Class Fields End
 
 	// Class Methods Begin
-	main(args: Array<String>): Int32 {
+	public func testMain(): Unit {
 		// TODO
 	}
 	// Class Methods End

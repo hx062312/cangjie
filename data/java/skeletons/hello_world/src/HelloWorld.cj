@@ -1,21 +1,22 @@
 // Package Declaration
-package hello-world
+package hello_world
 
 // Imports Begin
-import com.example.helloworld.HelloWorld
+import std.collection.*
 import std.io.*
 // Imports End
 
-@Test
-class HelloWorldTest {
+class HelloWorld {
 	// Class Fields Begin
 	// Class Fields End
 
 	// Class Methods Begin
-	public func testMain(): Unit {
-		// TODO
-	}
 	// Class Methods End
 
+}
+
+main(args: Array<String>): Int64 {
+	// TODO
+	0
 }
 

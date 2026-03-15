@@ -46,7 +46,7 @@ Partial Cangjie translation:
 ```
 import testing
 import std.io.*
-import com.example.helloworld.HelloWorld
+import hello-world.HelloWorld
 
 @Test
 class HelloWorldTest {
@@ -75,7 +75,7 @@ Cangjie method translation:
                 "DiagCategory": "parse",
                 "Message": "expected a member name after '.' in qualified name, found keyword 'main'",
                 "Location": {
-                    "File": "/tmp/tmpxr866pz2.cj",
+                    "File": "/tmp/tmpq5kszh81.cj",
                     "Line": 4,
                     "Column": 14
                 },
@@ -83,12 +83,12 @@ Cangjie method translation:
                     "Content": "expected a member name here",
                     "Range": {
                         "Begin": {
-                            "File": "/tmp/tmpxr866pz2.cj",
+                            "File": "/tmp/tmpq5kszh81.cj",
                             "Line": 4,
                             "Column": 14
                         },
                         "End": {
-                            "File": "/tmp/tmpxr866pz2.cj",
+                            "File": "/tmp/tmpq5kszh81.cj",
                             "Line": 4,
                             "Column": 18
                         }
@@ -99,12 +99,12 @@ Cangjie method translation:
                         "Content": "after '.' in qualified name",
                         "Range": {
                             "Begin": {
-                                "File": "/tmp/tmpxr866pz2.cj",
+                                "File": "/tmp/tmpq5kszh81.cj",
                                 "Line": 4,
                                 "Column": 13
                             },
                             "End": {
-                                "File": "/tmp/tmpxr866pz2.cj",
+                                "File": "/tmp/tmpq5kszh81.cj",
                                 "Line": 4,
                                 "Column": 14
                             }
@@ -199,7 +199,7 @@ Execution feedback:
                 "DiagCategory": "parse",
                 "Message": "expected a member name after '.' in qualified name, found keyword 'main'",
                 "Location": {
-                    "File": "/tmp/tmpxr866pz2.cj",
+                    "File": "/tmp/tmpq5kszh81.cj",
                     "Line": 4,
                     "Column": 14
                 },
@@ -207,12 +207,12 @@ Execution feedback:
                     "Content": "expected a member name here",
                     "Range": {
                         "Begin": {
-                            "File": "/tmp/tmpxr866pz2.cj",
+                            "File": "/tmp/tmpq5kszh81.cj",
                             "Line": 4,
                             "Column": 14
                         },
                         "End": {
-                            "File": "/tmp/tmpxr866pz2.cj",
+                            "File": "/tmp/tmpq5kszh81.cj",
                             "Line": 4,
                             "Column": 18
                         }
@@ -223,12 +223,12 @@ Execution feedback:
                         "Content": "after '.' in qualified name",
                         "Range": {
                             "Begin": {
-                                "File": "/tmp/tmpxr866pz2.cj",
+                                "File": "/tmp/tmpq5kszh81.cj",
                                 "Line": 4,
                                 "Column": 13
                             },
                             "End": {
-                                "File": "/tmp/tmpxr866pz2.cj",
+                                "File": "/tmp/tmpq5kszh81.cj",
                                 "Line": 4,
                                 "Column": 14
                             }
@@ -249,7 +249,7 @@ Partial Cangjie translation:
 ```
 import testing
 import std.io.*
-import com.example.helloworld.HelloWorld
+import hello-world.HelloWorld
 
 @Test
 class HelloWorldTest {
@@ -262,7 +262,6 @@ Cangjie method translation:
 ```
 	public func testMain(): Unit {		// TODO	}
 =======================GENERATING=======================
-Cangjie method translation:
 ```
 	public func testMain(): Unit {
 		// Simple test to verify HelloWorld.main() runs without error

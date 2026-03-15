@@ -14,13 +14,152 @@ from cangjie_compilation_validation import cangjie_compile
 from get_reverse_traversal import get_reverse_traversal
 from prompt_generator import PromptGenerator
 from test_validation import test_validation
-from syntactic_validation import syntactic_validation
 
 # Status constants for translation validation
 ERROR = "error"
 SUCCESS = "success"
 FAILURE = "failure"
 NOT_EXERCISED = "not-exercised"
+
+
+def extract_cangjie_code(generation: str, class_name: str = None):
+    """
+    Extract Cangjie code from markdown code blocks.
+
+    Args:
+        generation: LLM response containing markdown code blocks
+        class_name: Optional class name to wrap the method in
+
+    Returns:
+        Extracted code or None if not found
+    """
+    import re
+
+    # Replace cangjie code block markers
+    generation = generation.replace("```cangjie", "```")
+    generation = generation.replace("```cj", "```")
+    generation = generation.replace("```java", "```")
+
+    # Extract code block content
+    pattern = r"(?:```\s*)+(.+?)(?:\s*```)+"
+    match = re.search(pattern, generation, re.DOTALL)
+
+    if match:
+        extracted = match.group(1).strip()
+
+        # If extracted code doesn't contain class definition but we have a class_name,
+        # wrap the method in a class
+        if class_name and 'class ' not in extracted:
+            # Check if it's a method (contains 'func')
+            if 'func ' in extracted:
+                # Wrap method in class
+                wrapped = f"class {class_name} {{\n{extracted}\n}}"
+                return wrapped
+
+        return extracted
+
+    # Try alternative pattern if no code block found
+    # Look for anything that looks like Cangjie code (has func, class, let, etc.)
+    lines = generation.split('\n')
+    code_lines = []
+    in_code = False
+
+    for line in lines:
+        # Check if line looks like it contains code (starts with whitespace or has common keywords)
+        if any(keyword in line for keyword in ['func ', 'class ', 'let ', 'var ', 'pub ', 'priv ', 'import ', 'package ']):
+            in_code = True
+            code_lines.append(line)
+        elif in_code and (line.strip() == '' or line.strip().startswith('//') or line.strip().startswith('#')):
+            # Allow empty lines and comments in code
+            code_lines.append(line)
+        elif in_code and not line.startswith(' ') and not line.startswith('\t'):
+            # Stop if we hit a non-indented line that's not a comment
+            if line.strip():
+                break
+            code_lines.append(line)
+
+    if code_lines:
+        extracted = '\n'.join(code_lines).strip()
+
+        # If extracted code doesn't contain class definition but we have a class_name,
+        # wrap the method in a class
+        if class_name and 'class ' not in extracted:
+            if 'func ' in extracted:
+                wrapped = f"class {class_name} {{\n{extracted}\n}}"
+                return wrapped
+
+        return extracted
+
+    return None
+
+
+def add_dummy_main(code: str) -> str:
+    """
+    Add a dummy main function if not present (required by Cangjie compiler).
+    Must be placed at the beginning of the file (before class definitions).
+    Cangjie uses 'main()' not 'func main()'.
+    """
+    import re
+    # Check if main function already exists (with any parameters)
+    # Match patterns like: main(), main(args: ...), main(args: Array<String>)
+    if re.search(r'\bmain\s*\(', code):
+        return code
+
+    # Add a dummy main function at the beginning (Cangjie uses main() without func)
+    code = """main() {
+    return 0
+}
+
+""" + code
+    return code
+
+
+def extract_code_for_translation(generation: str, fragment: dict, args):
+    """
+    Extract Cangjie code from markdown and prepare for compilation.
+
+    Args:
+        generation: LLM response
+        fragment: Fragment information
+        args: Command line arguments
+
+    Returns:
+        tuple: (success: bool, extracted_code: str or None, feedback: str)
+    """
+    # Get class name from fragment
+    class_name = fragment.get('class_name', None)
+
+    # Extract Cangjie code from markdown, passing class name for wrapping
+    extracted_code = extract_cangjie_code(generation, class_name)
+
+    if extracted_code is None:
+        return False, None, "the model did not generate any code"
+
+    # Add dummy main function if not present (required by Cangjie compiler)
+    extracted_code = add_dummy_main(extracted_code)
+
+    # Basic Cangjie syntax checks
+    code_lines = extracted_code.split('\n')
+
+    # Remove empty lines and comments for analysis
+    meaningful_lines = [line for line in code_lines if line.strip() and not line.strip().startswith('//')]
+
+    if not meaningful_lines:
+        return False, None, "the model did not generate any code"
+
+    # Check that the code has at least some structure
+    # Look for common Cangjie keywords
+    # Note: 'main(' without 'func' is also valid (main function in Cangjie)
+    has_function = any('func ' in line or 'main(' in line for line in code_lines)
+    has_class = any('class ' in line for line in code_lines)
+    has_var = any('var ' in line for line in code_lines)
+    has_let = any('let ' in line for line in code_lines)
+
+    if not (has_function or has_class or has_var or has_let):
+        return False, None, "the generated code does not appear to be valid Cangjie code"
+
+    # If validation passes, return the extracted code
+    return True, extracted_code.split('\n'), None
 
 
 # 找到可以执行来验证当前方法的测试。
@@ -69,9 +208,15 @@ def get_eligible_tests(fragment, processed_fragments, args):
             if focal_method
             != f"{fragment['schema_name']}|{fragment['class_name']}|{fragment['fragment_name']}"
         ):
-            test_schema = ".".join(test.split("|")[0].split("/")[2:]).replace(
-                ".java", ""
-            )
+            # Build test schema name from fragment schema_name:
+            # hello-world.src.main.com.example.helloworld.HelloWorld
+            # -> hello-world.src.test.com.example.helloworld.HelloWorldTest
+            main_schema = fragment['schema_name']
+            # Replace src.main with src.test
+            test_schema = main_schema.replace('.src.main.', '.src.test.')
+            # Add Test suffix to class name
+            test_schema += 'Test'
+
             test_class = test.split("|")[1]
             test_method = test.split("|")[2]
 
@@ -615,10 +760,10 @@ def translate(
             print("---" * 50, flush=True)
         ############################ </TRANSLATION> ############################
 
-        ############################ <SYNTACTIC VALIDATION> ############################
-        # Extract Cangjie code from markdown and validate basic syntax
-        syntactic_status, extracted_code, syntactic_feedback = syntactic_validation(
-            generation, fragment, args, prompt_gen.signature
+        ############################ <EXTRACT CODE> ############################
+        # Extract Cangjie code from markdown
+        syntactic_status, extracted_code, syntactic_feedback = extract_code_for_translation(
+            generation, fragment, args
         )
 
         if not syntactic_status:
@@ -638,7 +783,7 @@ def translate(
             budget["syntactic"] -= 1
             if args.debug:
                 print(
-                    "=======================SYNTACTIC VALIDATION FAILED - REPROMPTING=======================",
+                    "=======================CODE EXTRACTION FAILED - REPROMPTING=======================",
                     f"Feedback: {syntactic_feedback}",
                     flush=True,
                 )
@@ -662,7 +807,7 @@ def translate(
             test_execution="pending",
             elapsed_time=time.time() - start_time,
         )
-        ############################ </SYNTACTIC VALIDATION> ############################
+        ############################ </EXTRACT CODE> ############################
 
         ############################ <CANGJIE COMPILATION VALIDATION> ############################
         # Cangjie compiler (cjc) performs all three validations in one step:

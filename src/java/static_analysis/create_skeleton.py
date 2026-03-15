@@ -320,12 +320,20 @@ def normalize_class_names(class_names, extracted_types, class_path):
         List of normalized class names
     """
     # Step 1: Remove generic type parameters (e.g., List<T> -> List)
-    normalized = [cls_name.split("<")[0].replace("new ", "").strip() for cls_name in class_names]
+    normalized = [
+        cls_name.split("<")[0].replace("new ", "").strip() for cls_name in class_names
+    ]
     # Step 2: Remove parentheses (for constructors)
-    normalized = [cls_name.split("(")[0].replace("new ", "").strip() for cls_name in normalized]
+    normalized = [
+        cls_name.split("(")[0].replace("new ", "").strip() for cls_name in normalized
+    ]
     # Step 3: Apply type mapping if available and not in class_path
     normalized = [
-        extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name
+        (
+            extracted_types[cls_name]
+            if cls_name in extracted_types and cls_name not in class_path
+            else cls_name
+        )
         for cls_name in normalized
     ]
     return normalized
@@ -381,28 +389,23 @@ def main(args):
 
         # Extract package name: take path parts after first 3 (skip org/apache/xxx)
         if "src/test/java" in schema["path"]:
-            full_package = (
-                schema["path"]
-                .split("src/test/java/")[1]
-                .rsplit("/", 1)[0]
-            )
+            # For test files, use project.test as package
+            package_name = f"{args.project}.test"
         elif "src/main/java" in schema["path"]:
-            full_package = (
-                schema["path"]
-                .split("src/main/java/")[1]
-                .rsplit("/", 1)[0]
-            )
+            full_package = schema["path"].split("src/main/java/")[1].rsplit("/", 1)[0]
         elif "src" in schema["path"]:
             full_package = schema["path"].split("src/")[1].rsplit("/", 1)[0]
         else:
             full_package = args.project
 
         # Take parts after first 3 (skip org/apache/commons or com/example)
-        package_parts = full_package.split("/")
-        if len(package_parts) > 3:
-            package_name = "/".join(package_parts[3:])
-        else:
-            package_name = args.project
+        # Skip if package_name was already set for test files above
+        if "src/test/java" not in schema["path"]:
+            package_parts = full_package.split("/")
+            if len(package_parts) > 3:
+                package_name = "/".join(package_parts[3:])
+            else:
+                package_name = args.project
 
         skeleton += package_name.replace("/", ".") + "\n\n"
 
@@ -477,9 +480,7 @@ def main(args):
 
             if schema["classes"][class_]["extends"] != []:
                 schema["classes"][class_]["extends"] = normalize_class_names(
-                    schema["classes"][class_]["extends"],
-                    extracted_types,
-                    class_path
+                    schema["classes"][class_]["extends"], extracted_types, class_path
                 )
 
                 if is_interface:
@@ -510,9 +511,7 @@ def main(args):
 
             elif schema["classes"][class_]["implements"] != []:
                 schema["classes"][class_]["implements"] = normalize_class_names(
-                    schema["classes"][class_]["implements"],
-                    extracted_types,
-                    class_path
+                    schema["classes"][class_]["implements"], extracted_types, class_path
                 )
 
                 if is_interface:
@@ -557,8 +556,10 @@ def main(args):
             # Add @Test decorator for test classes in Cangjie
             if "src.test" in schema_fname and is_test_class:
                 class_declaration = "@Test\n" + class_declaration
-                if "import testing" not in cangjie_imports:
-                    cangjie_imports.append("import testing")
+                if "import std.unittest.*" not in cangjie_imports:
+                    cangjie_imports.append("import std.unittest.*")
+                if "import std.unittest.testmacro.*" not in cangjie_imports:
+                    cangjie_imports.append("import std.unittest.testmacro.*")
 
             skeleton += class_declaration
 
@@ -581,13 +582,7 @@ def main(args):
                     ]["translation_status"] = "pending"
                     target_schema["classes"][class_]["static_initializers"][
                         static_initializer_se
-                    ]["syntactic_validation"] = "pending"
-                    target_schema["classes"][class_]["static_initializers"][
-                        static_initializer_se
-                    ]["field_exercise"] = "pending"
-                    target_schema["classes"][class_]["static_initializers"][
-                        static_initializer_se
-                    ]["graal_validation"] = "pending"
+                    ]["cangjie_compilation"] = "pending"
                     target_schema["classes"][class_]["static_initializers"][
                         static_initializer_se
                     ]["test_execution"] = "pending"
@@ -714,13 +709,7 @@ def main(args):
                     "translation_status"
                 ] = "pending"
                 target_schema["classes"][class_]["fields"][field][
-                    "syntactic_validation"
-                ] = "pending"
-                target_schema["classes"][class_]["fields"][field][
-                    "field_exercise"
-                ] = "pending"
-                target_schema["classes"][class_]["fields"][field][
-                    "graal_validation"
+                    "cangjie_compilation"
                 ] = "pending"
                 target_schema["classes"][class_]["fields"][field][
                     "test_execution"
@@ -741,6 +730,8 @@ def main(args):
             skeleton += "\t// Class Fields End\n\n"
 
             skeleton += "\t// Class Methods Begin\n"
+            # For Cangjie, main function needs to be outside the class
+            main_method_template = None
             for method in schema["classes"][class_]["methods"]:
                 current_method = []
                 method_name = method.split(":")[1].strip()
@@ -810,9 +801,11 @@ def main(args):
                         skeleton += f"\t{access_modifier}init() {{\n\t\t// TODO\n\t}}\n"
                         current_method.append(f"\t{access_modifier}init() {{")
                     elif is_main:
-                        # Special handling for main function
-                        skeleton += f"\tmain(): Int64 {{\n\t\t// TODO\n\t}}\n"
-                        current_method.append(f"\tmain(): Int64 {{")
+                        # Special handling for main function - save for later (outside class)
+                        main_method_template = (
+                            f"main(args: Array<String>): Int64 {{\n\t// TODO\n}}\n"
+                        )
+                        continue  # Skip adding to class
                     else:
                         if is_static:
                             skeleton += f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{\n\t\t// TODO\n\t}}\n"
@@ -866,21 +859,13 @@ def main(args):
                             + ") {"
                         )
                     elif is_main:
-                        # Special handling for main function - no func keyword
-                        skeleton += (
-                            f"\tmain("
-                            + ", ".join(
-                                [x + f": {y.strip()}" for x, y in param_types]
-                            )
-                            + f"): Int64 {{\n\t\t// TODO\n\t}}\n"
+                        # Special handling for main function - save for later (outside class)
+                        main_method_template = (
+                            f"main("
+                            + ", ".join([x + f": {y.strip()}" for x, y in param_types])
+                            + f"): Int64 {{\n\t// TODO\n}}\n"
                         )
-                        current_method.append(
-                            f"\tmain("
-                            + ", ".join(
-                                [x + f": {y.strip()}" for x, y in param_types]
-                            )
-                            + f"): Int64 {{"
-                        )
+                        continue  # Skip adding to class
                     else:
                         if is_static:
                             skeleton += (
@@ -944,13 +929,7 @@ def main(args):
                     "translation_status"
                 ] = "pending"
                 target_schema["classes"][class_]["methods"][method][
-                    "syntactic_validation"
-                ] = "pending"
-                target_schema["classes"][class_]["methods"][method][
-                    "field_exercise"
-                ] = "pending"
-                target_schema["classes"][class_]["methods"][method][
-                    "graal_validation"
+                    "cangjie_compilation"
                 ] = "pending"
                 target_schema["classes"][class_]["methods"][method][
                     "test_execution"
@@ -968,6 +947,10 @@ def main(args):
 
             skeleton += "\t// Class Methods End\n\n"
             skeleton += "}\n\n"
+
+            # Add main function outside the class if exists
+            if main_method_template:
+                skeleton += main_method_template + "\n"
 
             if is_empty_class:
                 skeleton += "\t// Empty class body\n"
@@ -1002,7 +985,6 @@ def main(args):
             "tempfile": "import std.fs.*",
             "logging": "import std.log.*",
             "Enum": "import std.enum.*",
-            "testing": "import testing.*",
         }
 
         for key in import_map:
@@ -1071,6 +1053,15 @@ def main(args):
                         and import_parts[1] == "apache"
                     ):
                         import_path = ".".join(import_parts[3:])
+                    elif (
+                        len(import_parts) >= 3
+                        and import_parts[0] == "com"
+                        and import_parts[1] == "example"
+                    ):
+                        # For com.example.xxx projects, use project name as package
+                        # e.g., com.example.helloworld.HelloWorld -> hello-world.HelloWorld
+                        class_name = import_parts[-1]
+                        import_path = f"{args.project}.{class_name}"
                     else:
                         import_path = full_import_path
 
@@ -1115,14 +1106,6 @@ def main(args):
 
         skeleton = "\n".join(skeleton_lines)
         formatted_schema_fname = ".".join(schema_fname.split(".")[:-1])
-
-        # Use cjpm project structure
-        # my-project/
-        # ├── cjpm.toml
-        # ├── src/
-        # │   └── main.cj
-        # └── tests/
-        #     └── my_test.cj
 
         project_dir = f"data/java/skeletons/{args.project}"
         src_dir = f"{project_dir}/src"

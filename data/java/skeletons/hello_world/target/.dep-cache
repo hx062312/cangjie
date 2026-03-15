@@ -1,0 +1,78 @@
+{
+  "bin": {},
+  "pkg-build": {
+    "/home/cangjie/data/java/skeletons/hello_world/src": {
+      "package": "hello_world",
+      "isMacro": false,
+      "accessLevel": "public",
+      "timeStamp": 1773550549,
+      "dependencies": [],
+      "std-dependencies": [
+        {
+          "orPackage": "",
+          "package": "std.collection",
+          "isStd": true,
+          "imports": [
+            {
+              "file": "/home/cangjie/data/java/skeletons/hello_world/src/HelloWorld.cj"
+            }
+          ]
+        },
+        {
+          "orPackage": "",
+          "package": "std.io",
+          "isStd": true,
+          "imports": [
+            {
+              "file": "/home/cangjie/data/java/skeletons/hello_world/src/HelloWorld.cj"
+            }
+          ]
+        }
+      ],
+      "testUsed": false,
+      "mockUsed": false
+    },
+    "/home/cangjie/data/java/skeletons/hello_world/src/test": {
+      "package": "hello_world.test",
+      "isMacro": false,
+      "accessLevel": "public",
+      "timeStamp": 1773553445,
+      "dependencies": [],
+      "std-dependencies": [
+        {
+          "orPackage": "",
+          "package": "std.io",
+          "isStd": true,
+          "imports": [
+            {
+              "file": "/home/cangjie/data/java/skeletons/hello_world/src/test/HelloWorldTest.cj"
+            }
+          ]
+        },
+        {
+          "orPackage": "",
+          "package": "std.unittest",
+          "isStd": true,
+          "imports": [
+            {
+              "file": "/home/cangjie/data/java/skeletons/hello_world/src/test/HelloWorldTest.cj"
+            }
+          ]
+        },
+        {
+          "orPackage": "",
+          "package": "std.unittest.testmacro",
+          "isStd": true,
+          "imports": [
+            {
+              "file": "/home/cangjie/data/java/skeletons/hello_world/src/test/HelloWorldTest.cj"
+            }
+          ]
+        }
+      ],
+      "testUsed": true,
+      "mockUsed": false
+    }
+  },
+  "pkg-test": {}
+}

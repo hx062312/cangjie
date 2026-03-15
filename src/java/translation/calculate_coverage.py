@@ -221,7 +221,7 @@ def calculate_method_coverage(args, project_root):
             ]
 
         covered_lines = get_covered_lines(
-            f"{args.project_name}-{args.model_name}-coverage.xml", py_file_path
+            f"{args.project}-{args.model}-coverage.xml", py_file_path
         )
         for method in methods:
             method_lines = range(method.lineno + 1, method.end_lineno + 1)
@@ -241,7 +241,7 @@ def calculate_method_coverage(args, project_root):
 
                 covered_method_schema_data = {}
                 with open(
-                    f'{args.translation_dir}/{py_file_path[py_file_path.index(args.project_name):].replace(".py", "").replace("/", ".")}_python_partial.json',
+                    f'{args.translation_dir}/{py_file_path[py_file_path.index(args.project):].replace(".py", "").replace("/", ".")}_python_partial.json',
                     "r",
                 ) as f:
                     covered_method_schema_data = json.load(f)
@@ -302,7 +302,7 @@ def calculate_method_coverage(args, project_root):
 
                 covered_methods.append(
                     {
-                        "file": py_file_path[py_file_path.index(args.project_name) :]
+                        "file": py_file_path[py_file_path.index(args.project) :]
                         .replace(".py", "")
                         .replace("/", "."),
                         "class": class_name,
