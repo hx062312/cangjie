@@ -82,7 +82,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "126-128:isClosed": {
@@ -123,7 +123,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "110-117:read1": {
@@ -182,7 +182,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "83-90:read0": {
@@ -237,7 +237,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "45-48:LimitedInputStream": {
@@ -286,7 +286,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "64-68:checkLimit": {
@@ -333,7 +333,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "57-57:raiseError": {
@@ -374,7 +374,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },
@@ -405,7 +405,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "33-33:count": {
@@ -434,7 +434,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "30-30:sizeMax": {
@@ -464,7 +464,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },

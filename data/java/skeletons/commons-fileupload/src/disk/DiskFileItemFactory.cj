@@ -1,5 +1,5 @@
 // Package Declaration
-package org.apache.commons.fileupload.disk
+package fileupload.disk
 
 // Imports Begin
 import disk.DiskFileItem

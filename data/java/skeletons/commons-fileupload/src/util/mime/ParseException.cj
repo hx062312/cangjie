@@ -1,5 +1,5 @@
 // Package Declaration
-package org.apache.commons.fileupload.util.mime
+package fileupload.util.mime
 
 // Imports Begin
 import std.io.*

@@ -1,5 +1,5 @@
 // Package Declaration
-package org.apache.commons.fileupload.util
+package fileupload.util
 
 // Imports Begin
 import util.Closeable

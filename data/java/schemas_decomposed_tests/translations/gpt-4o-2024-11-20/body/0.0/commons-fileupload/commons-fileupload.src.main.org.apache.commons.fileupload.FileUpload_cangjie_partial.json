@@ -54,7 +54,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "64-66:getFileItemFactory": {
@@ -95,7 +95,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "51-56:FileUpload": {
@@ -146,7 +146,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },
@@ -177,7 +177,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },

@@ -104,7 +104,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "52-55:checkFinished": {
@@ -158,7 +158,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "35-38:ProgressListenerImpl": {
@@ -199,7 +199,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },
@@ -230,7 +230,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "31-31:bytesRead": {
@@ -259,7 +259,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "29-29:expectedItems": {
@@ -289,7 +289,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "27-27:expectedContentLength": {
@@ -319,7 +319,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },

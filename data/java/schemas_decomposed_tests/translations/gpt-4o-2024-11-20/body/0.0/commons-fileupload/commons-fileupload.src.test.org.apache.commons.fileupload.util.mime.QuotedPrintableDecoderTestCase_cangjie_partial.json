@@ -106,7 +106,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "95-97:invalidSoftBreak2": {
@@ -153,7 +153,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "90-92:invalidSoftBreak1": {
@@ -200,7 +200,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "81-87:softLineBreakDecode": {
@@ -251,7 +251,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "70-72:invalidCharDecode": {
@@ -298,7 +298,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "65-67:unsafeDecodeLowerCase": {
@@ -345,7 +345,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "60-62:unsafeDecode": {
@@ -392,7 +392,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "54-57:invalidQuotedPrintableEncoding": {
@@ -440,7 +440,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "49-51:basicEncodeDecode": {
@@ -487,7 +487,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "42-46:plainDecode": {
@@ -536,7 +536,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "37-39:emptyDecode": {
@@ -583,7 +583,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "115-128:assertIOException": {
@@ -678,7 +678,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 },
                 "104-113:assertEncoded": {
@@ -759,7 +759,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },
@@ -792,7 +792,7 @@
                     "test_execution": "pending",
                     "elapsed_time": 0,
                     "generation_timestamp": 0,
-                    "model_name": "gpt-4o-2024-11-20",
+                    "model": "gpt-4o-2024-11-20",
                     "include_implementation": true
                 }
             },

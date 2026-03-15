@@ -1,5 +1,5 @@
 // Package Declaration
-package calculator
+package simple-calculator
 
 // Imports Begin
 import std.io.*

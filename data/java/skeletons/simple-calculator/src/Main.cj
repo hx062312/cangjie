@@ -1,5 +1,5 @@
 // Package Declaration
-package calculator
+package simple-calculator
 
 // Imports Begin
 import calculator.HistoryLogger
@@ -13,7 +13,7 @@ class Main {
 	// Class Fields End
 
 	// Class Methods Begin
-	public static func main(args: Array<String>): Unit {
+	main(args: Array<String>): Int32 {
 		// TODO
 	}
 	internal static func printUsage(): Unit {

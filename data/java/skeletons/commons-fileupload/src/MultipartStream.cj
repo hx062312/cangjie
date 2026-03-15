@@ -1,5 +1,5 @@
 // Package Declaration
-package org.apache.commons.fileupload
+package fileupload
 
 // Imports Begin
 import ProgressListener
@@ -163,7 +163,7 @@ class ItemInputStream <:Closeable,  {
 
 }
 
-class MalformedStreamException <: {
+class IllegalBoundaryException <: {
 	// Class Fields Begin
 	static let serialVersionUID: Int64 = ?
 	// Class Fields End
@@ -176,7 +176,7 @@ class MalformedStreamException <: {
 
 }
 
-class IllegalBoundaryException <: {
+class MalformedStreamException <: {
 	// Class Fields Begin
 	static let serialVersionUID: Int64 = ?
 	// Class Fields End

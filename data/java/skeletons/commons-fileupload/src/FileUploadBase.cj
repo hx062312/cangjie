@@ -1,5 +1,5 @@
 // Package Declaration
-package org.apache.commons.fileupload
+package fileupload
 
 // Imports Begin
 import util.FileItemHeadersImpl
@@ -121,66 +121,6 @@ class FileUploadBase {
 
 }
 
-class FileItemIteratorImpl {
-	// Class Fields Begin
-	internal var currentItem: FileItemStreamImpl = ?
-	internal var currentFieldName: String = ""
-	internal var skipPreamble: Bool = false
-	internal var itemValid: Bool = false
-	internal var eof: Bool = false
-	// Class Fields End
-
-	// Class Methods Begin
-	internal func getContentLength(pHeaders: FileItemHeaders): Int64 {
-		// TODO
-	}
-	// Class Methods End
-
-}
-
-class FileItemStreamImpl {
-	// Class Fields Begin
-	internal var opened: Bool = false
-	internal var headers: FileItemHeaders = ?
-	// Class Fields End
-
-	// Class Methods Begin
-	public func setHeaders(pHeaders: FileItemHeaders): Unit {
-		// TODO
-	}
-	public func getHeaders(): FileItemHeaders {
-		// TODO
-	}
-	// Class Methods End
-
-}
-
-class InvalidContentTypeException <:FileUploadException {
-	// Class Fields Begin
-	static let serialVersionUID: Int64 = ?
-	// Class Fields End
-
-	// Class Methods Begin
-	public init(msg: String, cause: ) {
-		// TODO
-	}
-	// Class Methods End
-
-}
-
-class UnknownSizeException <:FileUploadException {
-	// Class Fields Begin
-	static let serialVersionUID: Int64 = ?
-	// Class Fields End
-
-	// Class Methods Begin
-	public init(message: String) {
-		// TODO
-	}
-	// Class Methods End
-
-}
-
 class IOFileUploadException <:FileUploadException {
 	// Class Fields Begin
 	static let serialVersionUID: Int64 = ?
@@ -219,25 +159,6 @@ class SizeException <:FileUploadException {
 
 }
 
-class SizeLimitExceededException <:SizeException {
-	// Class Fields Begin
-	static let serialVersionUID: Int64 = ?
-	// Class Fields End
-
-	// Class Methods Begin
-	public static func SizeLimitExceededException1(message: String): SizeLimitExceededException {
-		// TODO
-	}
-	public static func SizeLimitExceededException0(): SizeLimitExceededException {
-		// TODO
-	}
-	public init(message: String, actual: Int64, permitted: Int64) {
-		// TODO
-	}
-	// Class Methods End
-
-}
-
 class FileSizeLimitExceededException <:SizeException {
 	// Class Fields Begin
 	static let serialVersionUID: Int64 = ?
@@ -265,6 +186,38 @@ class FileSizeLimitExceededException <:SizeException {
 
 }
 
+class InvalidContentTypeException <:FileUploadException {
+	// Class Fields Begin
+	static let serialVersionUID: Int64 = ?
+	// Class Fields End
+
+	// Class Methods Begin
+	public init(msg: String, cause: ) {
+		// TODO
+	}
+	// Class Methods End
+
+}
+
+class SizeLimitExceededException <:SizeException {
+	// Class Fields Begin
+	static let serialVersionUID: Int64 = ?
+	// Class Fields End
+
+	// Class Methods Begin
+	public static func SizeLimitExceededException1(message: String): SizeLimitExceededException {
+		// TODO
+	}
+	public static func SizeLimitExceededException0(): SizeLimitExceededException {
+		// TODO
+	}
+	public init(message: String, actual: Int64, permitted: Int64) {
+		// TODO
+	}
+	// Class Methods End
+
+}
+
 class FileUploadIOException <: {
 	// Class Fields Begin
 	static let serialVersionUID: Int64 = ?
@@ -276,6 +229,53 @@ class FileUploadIOException <: {
 		// TODO
 	}
 	public init(pCause: FileUploadException) {
+		// TODO
+	}
+	// Class Methods End
+
+}
+
+class FileItemIteratorImpl {
+	// Class Fields Begin
+	internal var currentItem: FileItemStreamImpl = ?
+	internal var currentFieldName: String = ""
+	internal var skipPreamble: Bool = false
+	internal var itemValid: Bool = false
+	internal var eof: Bool = false
+	// Class Fields End
+
+	// Class Methods Begin
+	internal func getContentLength(pHeaders: FileItemHeaders): Int64 {
+		// TODO
+	}
+	// Class Methods End
+
+}
+
+class FileItemStreamImpl {
+	// Class Fields Begin
+	internal var opened: Bool = false
+	internal var headers: FileItemHeaders = ?
+	// Class Fields End
+
+	// Class Methods Begin
+	public func setHeaders(pHeaders: FileItemHeaders): Unit {
+		// TODO
+	}
+	public func getHeaders(): FileItemHeaders {
+		// TODO
+	}
+	// Class Methods End
+
+}
+
+class UnknownSizeException <:FileUploadException {
+	// Class Fields Begin
+	static let serialVersionUID: Int64 = ?
+	// Class Fields End
+
+	// Class Methods Begin
+	public init(message: String) {
 		// TODO
 	}
 	// Class Methods End

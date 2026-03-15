@@ -51,30 +51,16 @@
                         "\t\t// TODO",
                         "\t}\n"
                     ],
-                    "translation": "main(args: Array<String>): Int32 {\n\t\tprintln(\"Hello, World!\")\n\t\treturn 0\n\t}",
-                    "translation_status": "completed",
+                    "translation": [],
+                    "translation_status": "pending",
                     "syntactic_validation": "pending",
                     "field_exercise": "pending",
                     "graal_validation": "pending",
                     "test_execution": "pending",
-                    "elapsed_time": 11.53349494934082,
-                    "generation_timestamp": "2026-03-12T12:29:44.630762",
+                    "elapsed_time": 0,
+                    "generation_timestamp": 0,
                     "model": "gpt-4o-2024-11-20",
-                    "include_implementation": true,
-                    "original_budget": {
-                        "syntactic": 2,
-                        "cangjie_compilation": 2,
-                        "test_execution": 2
-                    },
-                    "cangjie_compilation": {
-                        "outcome": "success",
-                        "message": "Compilation successful"
-                    },
-                    "final_budget": {
-                        "syntactic": 2,
-                        "cangjie_compilation": 2,
-                        "test_execution": 2
-                    }
+                    "include_implementation": true
                 }
             },
             "fields": {},

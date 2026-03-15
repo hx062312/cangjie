@@ -1,5 +1,5 @@
 // Package Declaration
-package org.apache.commons.fileupload.portlet
+package fileupload.portlet
 
 // Imports Begin
 import FileUploadBase

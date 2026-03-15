@@ -1,18 +1,20 @@
 // Package Declaration
-package org.apache.commons.fileupload
+package simple-calculator
 
 // Imports Begin
-import util.FileItemHeadersImpl
+import calculator.Validator
 import std.io.*
 // Imports End
 
-@Test
-class FileItemHeadersTest {
+class ValidatorTest {
 	// Class Fields Begin
 	// Class Fields End
 
 	// Class Methods Begin
-	public func testFileItemHeaders(): Unit {
+	internal func testInvalidValues(): Unit {
+		// TODO
+	}
+	internal func testValidValues(): Unit {
 		// TODO
 	}
 	// Class Methods End

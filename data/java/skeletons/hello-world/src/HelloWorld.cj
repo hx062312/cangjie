@@ -1,20 +1,17 @@
 // Package Declaration
-package test.java.calculator
+package hello-world
 
 // Imports Begin
-import calculator.Validator
+import std.collection.*
 import std.io.*
 // Imports End
 
-class ValidatorTest {
+class HelloWorld {
 	// Class Fields Begin
 	// Class Fields End
 
 	// Class Methods Begin
-	internal func testInvalidValues(): Unit {
-		// TODO
-	}
-	internal func testValidValues(): Unit {
+	main(args: Array<String>): Int32 {
 		// TODO
 	}
 	// Class Methods End

@@ -1,5 +1,5 @@
 // Package Declaration
-package test.java.calculator
+package simple-calculator
 
 // Imports Begin
 import calculator.HistoryLogger

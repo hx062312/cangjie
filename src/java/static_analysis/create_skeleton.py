@@ -11,7 +11,6 @@ def calculate_output_path(
     project: str,
     is_test: bool,
     src_dir: str,
-    tests_dir: str,
 ) -> str:
     """
     Calculate the output file path for a Cangjie skeleton file.
@@ -22,45 +21,46 @@ def calculate_output_path(
         project: Name of the project (e.g., commons-fileupload)
         is_test: Whether this is a test file
         src_dir: Source directory path
-        tests_dir: Tests directory path
 
     Returns:
         The output file path for the .cj file
     """
-    # Extract subdirectory using schema filename
-    # e.g., commons-fileupload.src.main.org.apache.commons.fileupload.disk.DiskFileItem -> disk
-    # e.g., commons-fileupload.src.main.org.apache.commons.fileupload.DefaultFileItem -> "" (no subdir)
-    java_sub_dir = ""
-    # Convert schema filename to path and remove first part (project/src) and last part (class)
-    path_from_fname = "/".join(
-        formatted_schema_fname.replace(".", "/").split("/")[1:-1]
-    )
-    # e.g., src/main/org/apache/commons/fileupload/disk
-    # Delete src/main/ prefix
-    if path_from_fname.startswith("src/main/"):
-        path_from_fname = path_from_fname[len("src/main/") :]
-    elif path_from_fname.startswith("src/"):
-        path_from_fname = path_from_fname[len("src/") :]
-    # Now path is like: org/apache/commons/fileupload/disk
-    # Calculate package path for the project (remove project-specific subdir)
-    if project == "commons-fileupload":
-        # Package is: org/apache/commons/fileupload (without the last 'disk' etc)
-        # So we need to check if there's something after fileupload
-        if path_from_fname.startswith("org/apache/commons/fileupload/"):
-            java_sub_dir = path_from_fname.split("org/apache/commons/fileupload/")[-1]
-    else:
-        # Default: use the last directory
-        path_parts = path_from_fname.split("/")
-        if len(path_parts) > 1:
-            java_sub_dir = path_parts[-1]
+    # Convert schema filename to path
+    # e.g., commons-fileupload.src.main.org.apache.commons.fileupload.disk.DiskFileItem
+    #     -> commons-fileupload/src/main/org/apache/commons/fileupload/disk/DiskFileItem
+    path_parts = formatted_schema_fname.replace(".", "/").split("/")
 
-    # Put .cj files in src/ or tests/ with original subdirectory structure preserved
-    if is_test:
-        if java_sub_dir:
-            return f"{tests_dir}/{java_sub_dir}/{class_name}.cj"
-        else:
-            return f"{tests_dir}/{class_name}.cj"
+    # Remove first part (project) and last part (class name)
+    path_parts = path_parts[1:-1]
+    # e.g., ['src', 'main', 'org', 'apache', 'commons', 'fileupload', 'disk']
+
+    # Find 'main' or 'test' index to determine base directory
+    base_index = -1
+    for i, part in enumerate(path_parts):
+        if part in ("main", "test"):
+            base_index = i
+            break
+
+    # Get the subdirectory after the base (main/test) + package path (org/apache/commons/fileupload)
+    # We want to keep the part after those 5 fixed segments
+    if base_index >= 0:
+        # Skip base (main/test) + 5 package segments (org/apache/commons/fileupload)
+        # i.e., skip base_index + 5 elements
+        java_sub_dir = "/".join(path_parts[base_index + 5 :])
     else:
+        # No main/test found, use default logic
+        java_sub_dir = "/".join(path_parts[-1:]) if len(path_parts) > 1 else ""
+
+    # Build output path based on is_test
+    if is_test:
+        # Test files go to src/test/ subdirectory
+        test_base = f"{src_dir}/test"
+        if java_sub_dir:
+            return f"{test_base}/{java_sub_dir}/{class_name}.cj"
+        else:
+            return f"{test_base}/{class_name}.cj"
+    else:
+        # Main files go to src/ directory
         if java_sub_dir:
             return f"{src_dir}/{java_sub_dir}/{class_name}.cj"
         else:
@@ -303,20 +303,32 @@ def get_cangjie_type(java_type, extracted_types):
         elif base == "Map" or base == "HashMap":
             return f"HashMap<{type_params}>"
 
-    # Simple type mapping
-    type_mapping = {
-        "int": "Int64",
-        "long": "Int64",
-        "double": "Float64",
-        "boolean": "Bool",
-        "String": "String",
-        "void": "Unit",
-        "byte": "UInt8",
-        "short": "Int16",
-        "float": "Float32",
-    }
+    # Use global type mapping
+    return cangjie_type_map.get(java_type, java_type)
 
-    return type_mapping.get(java_type, java_type)
+
+def normalize_class_names(class_names, extracted_types, class_path):
+    """
+    Normalize class names: remove generics, apply type mapping, and clean up.
+
+    Args:
+        class_names: List of class/interface names to normalize
+        extracted_types: Dictionary of extracted type mappings
+        class_path: Set of class paths to skip for type mapping
+
+    Returns:
+        List of normalized class names
+    """
+    # Step 1: Remove generic type parameters (e.g., List<T> -> List)
+    normalized = [cls_name.split("<")[0].replace("new ", "").strip() for cls_name in class_names]
+    # Step 2: Remove parentheses (for constructors)
+    normalized = [cls_name.split("(")[0].replace("new ", "").strip() for cls_name in normalized]
+    # Step 3: Apply type mapping if available and not in class_path
+    normalized = [
+        extracted_types[cls_name] if cls_name in extracted_types and cls_name not in class_path else cls_name
+        for cls_name in normalized
+    ]
+    return normalized
 
 
 def main(args):
@@ -366,28 +378,33 @@ def main(args):
 
         # Cangjie uses package declaration instead of imports at the top
         skeleton = "// Package Declaration\npackage "
-        # Extract package name from path
+
+        # Extract package name: take path parts after first 3 (skip org/apache/xxx)
         if "src/test/java" in schema["path"]:
-            package_name = (
+            full_package = (
                 schema["path"]
                 .split("src/test/java/")[1]
                 .rsplit("/", 1)[0]
-                .replace("/", ".")
             )
         elif "src/main/java" in schema["path"]:
-            package_name = (
+            full_package = (
                 schema["path"]
                 .split("src/main/java/")[1]
                 .rsplit("/", 1)[0]
-                .replace("/", ".")
             )
         elif "src" in schema["path"]:
-            package_name = (
-                schema["path"].split("src/")[1].rsplit("/", 1)[0].replace("/", ".")
-            )
+            full_package = schema["path"].split("src/")[1].rsplit("/", 1)[0]
+        else:
+            full_package = args.project
+
+        # Take parts after first 3 (skip org/apache/commons or com/example)
+        package_parts = full_package.split("/")
+        if len(package_parts) > 3:
+            package_name = "/".join(package_parts[3:])
         else:
             package_name = args.project
-        skeleton += package_name + "\n\n"
+
+        skeleton += package_name.replace("/", ".") + "\n\n"
 
         skeleton += "// Imports Begin\n"
         skeleton += "// Imports End\n\n"
@@ -459,30 +476,11 @@ def main(args):
             is_abstract = schema["classes"][class_].get("is_abstract", False)
 
             if schema["classes"][class_]["extends"] != []:
-                schema["classes"][class_]["extends"] = [
-                    cls_name.split("<")[0].replace("new ", "").strip()
-                    for cls_name in schema["classes"][class_]["extends"]
-                ]
-                schema["classes"][class_]["extends"] = [
-                    cls_name.split("(")[0].replace("new ", "").strip()
-                    for cls_name in schema["classes"][class_]["extends"]
-                ]
-                schema["classes"][class_]["extends"] = [
-                    (
-                        extracted_types[cls_name]
-                        if cls_name in extracted_types and cls_name not in class_path
-                        else cls_name
-                    )
-                    for cls_name in schema["classes"][class_]["extends"]
-                ]
-                # schema["classes"][class_]["extends"] = [
-                #     cls_name
-                #     for cls_name in schema["classes"][class_]["extends"]
-                #     if not any(
-                #         substring in cls_name for substring in exceptional_superclasses
-                #     )
-                #     and cls_name != class_name
-                # ]
+                schema["classes"][class_]["extends"] = normalize_class_names(
+                    schema["classes"][class_]["extends"],
+                    extracted_types,
+                    class_path
+                )
 
                 if is_interface:
                     # Interface in Cangjie
@@ -511,30 +509,11 @@ def main(args):
                     )
 
             elif schema["classes"][class_]["implements"] != []:
-                schema["classes"][class_]["implements"] = [
-                    cls_name.split("<")[0].replace("new ", "").strip()
-                    for cls_name in schema["classes"][class_]["implements"]
-                ]
-                schema["classes"][class_]["implements"] = [
-                    cls_name.split("(")[0].replace("new ", "").strip()
-                    for cls_name in schema["classes"][class_]["implements"]
-                ]
-                schema["classes"][class_]["implements"] = [
-                    (
-                        extracted_types[cls_name]
-                        if cls_name in extracted_types and cls_name not in class_path
-                        else cls_name
-                    )
-                    for cls_name in schema["classes"][class_]["implements"]
-                ]
-                # schema["classes"][class_]["implements"] = [
-                #     cls_name
-                #     for cls_name in schema["classes"][class_]["implements"]
-                #     if not any(
-                #         substring in cls_name for substring in exceptional_superclasses
-                #     )
-                #     and cls_name != class_name
-                # ]
+                schema["classes"][class_]["implements"] = normalize_class_names(
+                    schema["classes"][class_]["implements"],
+                    extracted_types,
+                    class_path
+                )
 
                 if is_interface:
                     # Interfaces can only use extends in Java, not implements
@@ -832,8 +811,8 @@ def main(args):
                         current_method.append(f"\t{access_modifier}init() {{")
                     elif is_main:
                         # Special handling for main function
-                        skeleton += f"\tmain(): Int32 {{\n\t\t// TODO\n\t}}\n"
-                        current_method.append(f"\tmain(): Int32 {{")
+                        skeleton += f"\tmain(): Int64 {{\n\t\t// TODO\n\t}}\n"
+                        current_method.append(f"\tmain(): Int64 {{")
                     else:
                         if is_static:
                             skeleton += f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{\n\t\t// TODO\n\t}}\n"
@@ -893,14 +872,14 @@ def main(args):
                             + ", ".join(
                                 [x + f": {y.strip()}" for x, y in param_types]
                             )
-                            + f"): Int32 {{\n\t\t// TODO\n\t}}\n"
+                            + f"): Int64 {{\n\t\t// TODO\n\t}}\n"
                         )
                         current_method.append(
                             f"\tmain("
                             + ", ".join(
                                 [x + f": {y.strip()}" for x, y in param_types]
                             )
-                            + f"): Int32 {{"
+                            + f"): Int64 {{"
                         )
                     else:
                         if is_static:
@@ -1147,12 +1126,10 @@ def main(args):
 
         project_dir = f"data/java/skeletons/{args.project}"
         src_dir = f"{project_dir}/src"
-        tests_dir = f"{project_dir}/tests"
 
         # Create project directories first
         os.makedirs(project_dir, exist_ok=True)
         os.makedirs(src_dir, exist_ok=True)
-        os.makedirs(tests_dir, exist_ok=True)
 
         # Create cjpm.toml file if it doesn't exist
         cjpm_toml_path = f"{project_dir}/cjpm.toml"
@@ -1179,7 +1156,6 @@ version = "0.1.0"
             project=args.project,
             is_test=is_test,
             src_dir=src_dir,
-            tests_dir=tests_dir,
         )
 
         # Create directory if needed

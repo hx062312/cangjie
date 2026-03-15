@@ -1,18 +1,18 @@
 // Package Declaration
-package com.example.helloworld
+package fileupload
 
 // Imports Begin
-import com.example.helloworld.HelloWorld
+import util.FileItemHeadersImpl
 import std.io.*
 // Imports End
 
 @Test
-class HelloWorldTest {
+class FileItemHeadersTest {
 	// Class Fields Begin
 	// Class Fields End
 
 	// Class Methods Begin
-	public func testMain(): Unit {
+	public func testFileItemHeaders(): Unit {
 		// TODO
 	}
 	// Class Methods End
