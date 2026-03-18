@@ -9,29 +9,29 @@ import std.io.*
 
 class CalculatorTest {
 	// Class Fields Begin
-	internal var calculator: Calculator = ?
+	internal let calculator: Calculator = ?
 	// Class Fields End
 
 	// Class Methods Begin
-	internal func testHistoryLogging():  {
+	internal func testHistoryLogging(): Unit {
 		// TODO
 	}
-	internal func testInvalidInput():  {
+	internal func testInvalidInput(): Unit {
 		// TODO
 	}
-	internal func testPerformDiv():  {
+	internal func testPerformDiv(): Unit {
 		// TODO
 	}
-	internal func testPerformMul():  {
+	internal func testPerformMul(): Unit {
 		// TODO
 	}
-	internal func testPerformSub():  {
+	internal func testPerformSub(): Unit {
 		// TODO
 	}
-	internal func testPerformAdd():  {
+	internal func testPerformAdd(): Unit {
 		// TODO
 	}
-	internal func setUp():  {
+	internal func setUp(): Unit {
 		// TODO
 	}
 	// Class Methods End

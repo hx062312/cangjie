@@ -21,7 +21,7 @@ python3 src/java/translation/compositional_translation_validation.py \
     --from_lang=Java \
     --to_lang=Cangjie \
     --include_call_graph \
-    # --debug \
+    --debug \
     --suffix=_decomposed_tests \
     --temperature=$temperature \
     --validate_by_cangjie \

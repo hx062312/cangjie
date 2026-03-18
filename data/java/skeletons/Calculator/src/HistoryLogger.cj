@@ -8,17 +8,17 @@ import std.io.*
 
 class HistoryLogger {
 	// Class Fields Begin
-	internal let history: Array<String> = []
+	internal var history: Array<String> = []
 	// Class Fields End
 
 	// Class Methods Begin
-	public func clear():  {
+	public func clear(): Unit {
 		// TODO
 	}
 	public func getHistory(): Array<String> {
 		// TODO
 	}
-	public func log(operation: String, result: Int64):  {
+	public func log(operation: String, result: Int64): Unit {
 		// TODO
 	}
 	// Class Methods End

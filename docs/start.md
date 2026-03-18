@@ -94,8 +94,7 @@ bash scripts/java/decompose_test.sh <project>
 **命令：**
 
 ```Bash
-bash scripts/java/create_database.sh <project> cleaned_final_projects_decomposed_tests "_decomposed_tests"
-
+bash scripts/java/create_database.sh <project> "_decomposed_tests"
 ```
 
 - **作用：** 为预处理后的项目创建 CodeQL 数据库。

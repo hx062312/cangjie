@@ -117,6 +117,59 @@ def process_callables(schemas: dict, projects_dir: str, query_outputs_dir: str, 
         pos_callable_name = f"{start_line}-{end_line}:{callable_name}"
         schemas[path]["classes"][class_name].setdefault("methods", {})
 
+        # Check if this is a main method - store separately outside class
+        if callable_name == "main":
+            # Get file line count to place main at end of file
+            with open(path, "r") as f:
+                file_lines = f.readlines()
+            file_line_count = len(file_lines)
+
+            # Store main method separately at the end of the file
+            schemas[path].setdefault("main_methods", {})
+            main_start = file_line_count + 1  # Place after file end
+            main_end = main_start + (end_line - start_line)  # Add main function length
+
+            # Use a single key for main method to avoid duplicates
+            main_key = "main"
+
+            if main_key not in schemas[path]["main_methods"]:
+                schemas[path]["main_methods"][main_key] = {
+                    "start": main_start,
+                    "end": main_end,
+                    "body": callable_body,
+                    "is_constructor": False,
+                    "annotations": [],
+                    "modifiers": [],
+                    "return_types": [],
+                    "signature": signature,
+                    "parameters": [],
+                    "calls": [],
+                }
+
+            return_type_qualified = _parse_return_type(return_type, return_type_qualified_name)
+
+            if (return_type, return_type_qualified) not in schemas[path]["main_methods"][
+                main_key
+            ]["return_types"]:
+                schemas[path]["main_methods"][main_key][
+                    "return_types"
+                ].append((return_type, return_type_qualified))
+
+            if (
+                modifier
+                not in schemas[path]["main_methods"][main_key][
+                    "modifiers"
+                ]
+                and modifier != "null"
+            ):
+                schemas[path]["main_methods"][main_key][
+                    "modifiers"
+                ].append(modifier)
+
+            _process_annotation(schemas, path, "main_methods", main_key, annotation_location)
+            continue
+
+        # Skip public class methods
         if "public class" in "".join(callable_body) or "public static class" in "".join(
             callable_body
         ):
@@ -467,6 +520,13 @@ def process_parameters(schemas: dict, projects_dir: str, query_outputs_dir: str,
 
     # Apply deduplicated parameters once
     for (path, class_name, method_key), param_dict in params_map.items():
+        # Extract method name from method_key
+        extracted_method_name = method_key.split(":")[-1]
+        # Check if it's a main method (stored in main_methods)
+        if extracted_method_name == "main" and "main_methods" in schemas[path]:
+            if "main" in schemas[path]["main_methods"]:
+                schemas[path]["main_methods"]["main"]["parameters"] = list(param_dict.keys())
+            continue
         schemas[path]["classes"][class_name]["methods"][method_key]["parameters"] = list(param_dict.keys())
 
 
@@ -516,9 +576,16 @@ def _process_annotation(schemas: dict, path: str, class_name: str,
         annotation_body_lines = read_file_lines(annotation_path, annotation_start_line, annotation_end_line)
         if annotation_body_lines:
             annotation_body = annotation_body_lines[0][annotation_start_col:annotation_end_col]
-            schemas[path]["classes"][class_name]["methods"][pos_callable_name][
-                "annotations"
-            ].append(annotation_body)
+            # Support both class methods and main_methods
+            if class_name == "main_methods":
+                # Use "main" as key for main method
+                schemas[path]["main_methods"]["main"][
+                    "annotations"
+                ].append(annotation_body)
+            else:
+                schemas[path]["classes"][class_name]["methods"][pos_callable_name][
+                    "annotations"
+                ].append(annotation_body)
 
 
 def _remove_constructor_methods(schemas: dict):

@@ -8,23 +8,23 @@ import std.io.*
 
 class HistoryLoggerTest {
 	// Class Fields Begin
-	internal var logger: HistoryLogger = ?
+	internal let logger: HistoryLogger = ?
 	// Class Fields End
 
 	// Class Methods Begin
-	internal func testGetHistoryReturnsCopy():  {
+	internal func testGetHistoryReturnsCopy(): Unit {
 		// TODO
 	}
-	internal func testClear():  {
+	internal func testClear(): Unit {
 		// TODO
 	}
-	internal func testMultipleLogs():  {
+	internal func testMultipleLogs(): Unit {
 		// TODO
 	}
-	internal func testLog():  {
+	internal func testLog(): Unit {
 		// TODO
 	}
-	internal func setUp():  {
+	internal func setUp(): Unit {
 		// TODO
 	}
 	// Class Methods End

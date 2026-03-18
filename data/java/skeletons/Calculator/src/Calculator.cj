@@ -10,8 +10,8 @@ import std.io.*
 
 class Calculator {
 	// Class Fields Begin
-	internal let math: Arithmetics = ?
-	internal let logger: HistoryLogger = ?
+	internal var math: Arithmetics = ?
+	internal var logger: HistoryLogger = ?
 	// Class Fields End
 
 	// Class Methods Begin

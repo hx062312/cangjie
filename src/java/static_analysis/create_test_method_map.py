@@ -43,6 +43,17 @@ def main(args):
                         {"schema": call_[0], "class": call_[1], "method": call_[2]}
                     )
 
+        # Process main_methods (main function outside class)
+        if "main_methods" in data:
+            global_call_graph.setdefault("main", {"schema_file": data["path"]})
+            for method_ in data["main_methods"]:
+                global_call_graph["main"].setdefault(method_, [])
+                for call_ in data["main_methods"][method_].get("calls", []):
+                    # Include all calls (remove the colon check)
+                    global_call_graph["main"][method_].append(
+                        {"schema": call_[0], "class": call_[1], "method": call_[2]}
+                    )
+
         suffix = "-evosuite" if args.evosuite else ""
         with open(
             f"data/java/call_graphs/{args.project}/call_graph{suffix}.json", "w"

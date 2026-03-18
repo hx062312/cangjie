@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# ./scripts/java/extract_types.sh HelloWorld _decomposed_tests
 # ./scripts/java/extract_types.sh Calculator _decomposed_tests
 # ./scripts/java/extract_types.sh commons-fileupload _decomposed_tests
 

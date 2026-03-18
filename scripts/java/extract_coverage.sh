@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# ./scripts/java/extract_coverage.sh HelloWorld _decomposed_tests
 # ./scripts/java/extract_coverage.sh Calculator _decomposed_tests
 # ./scripts/java/extract_coverage.sh commons-fileupload _decomposed_tests
 
@@ -54,16 +55,33 @@ fi
 if grep -q "jacoco-maven-plugin" pom.xml; then
     echo "JaCoCo plugin already exists in pom.xml"
 else
-    awk -v config="$jacoco_plugin" '
-        /<build>/ { in_build = 1 }
-        /<\/build>/ { in_build = 0 }
-        in_build && /<plugins>/ {
-            print;
-            print config;
-            next
-        }
-        { print }
-    ' pom.xml > pom.xml.new && mv pom.xml.new pom.xml
+    # Check if <build> section exists
+    if grep -q "<build>" pom.xml; then
+        awk -v config="$jacoco_plugin" '
+            /<build>/ { in_build = 1 }
+            /<\/build>/ { in_build = 0 }
+            in_build && /<plugins>/ {
+                print;
+                print config;
+                next
+            }
+            { print }
+        ' pom.xml > pom.xml.new && mv pom.xml.new pom.xml
+    else
+        # Add <build> section with plugins containing jacoco
+        awk -v config="$jacoco_plugin" '
+            /<\/dependencies>/ {
+                print
+                print "    <build>"
+                print "        <plugins>"
+                print config
+                print "        </plugins>"
+                print "    </build>"
+                next
+            }
+            { print }
+        ' pom.xml > pom.xml.new && mv pom.xml.new pom.xml
+    fi
     echo "JaCoCo plugin added to pom.xml"
 fi
 

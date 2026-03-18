@@ -485,65 +485,101 @@ def update_labels(
     with open(schema_file, "r") as f:
         schema_data = json.load(f)
 
+    # Handle main_methods (main function outside class)
+    is_main = fragment["class_name"] == "main"
+
     if update_test_execution:
         # if dict ... update test_execution
-        if isinstance(
-            schema_data["classes"][fragment["class_name"]]["methods"][
-                fragment["fragment_name"]
-            ]["test_execution"],
-            dict,
-        ):
-            schema_data["classes"][fragment["class_name"]]["methods"][
-                fragment["fragment_name"]
-            ]["test_execution"].update(test_execution)
+        if is_main:
+            if isinstance(
+                schema_data["main_methods"][fragment["fragment_name"]]["test_execution"],
+                dict,
+            ):
+                schema_data["main_methods"][fragment["fragment_name"]]["test_execution"].update(test_execution)
+            else:
+                schema_data["main_methods"][fragment["fragment_name"]]["test_execution"] = test_execution
         else:
-            schema_data["classes"][fragment["class_name"]]["methods"][
-                fragment["fragment_name"]
-            ]["test_execution"] = test_execution
+            if isinstance(
+                schema_data["classes"][fragment["class_name"]]["methods"][
+                    fragment["fragment_name"]
+                ]["test_execution"],
+                dict,
+            ):
+                schema_data["classes"][fragment["class_name"]]["methods"][
+                    fragment["fragment_name"]
+                ]["test_execution"].update(test_execution)
+            else:
+                schema_data["classes"][fragment["class_name"]]["methods"][
+                    fragment["fragment_name"]
+                ]["test_execution"] = test_execution
     else:
         if translation == "<translated>":
-            fragment_data = schema_data["classes"][fragment["class_name"]][
-                f"{fragment['fragment_type']}s"
-            ][fragment["fragment_name"]]
+            if is_main:
+                fragment_data = schema_data["main_methods"][fragment["fragment_name"]]
+            else:
+                fragment_data = schema_data["classes"][fragment["class_name"]][
+                    f"{fragment['fragment_type']}s"
+                ][fragment["fragment_name"]]
             if "partial_translation" not in fragment_data:
                 print(
                     f"[DEBUG] partial_translation not found for {fragment['class_name']}.{fragment['fragment_name']}, using empty list"
                 )
             translation = fragment_data.get("partial_translation", [])
 
-        schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
-            fragment["fragment_name"]
-        ]["translation"] = translation
-        schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
-            fragment["fragment_name"]
-        ]["translation_status"] = translation_status
+        if is_main:
+            schema_data["main_methods"][fragment["fragment_name"]]["translation"] = translation
+            schema_data["main_methods"][fragment["fragment_name"]]["translation_status"] = translation_status
+            schema_data["main_methods"][fragment["fragment_name"]]["cangjie_compilation"] = cangjie_compilation
 
-        # Use cangjie_compilation instead of three separate validations
-        schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
-            fragment["fragment_name"]
-        ]["cangjie_compilation"] = cangjie_compilation
-
-        # Check if test_execution exists before accessing
-        fragment_data = schema_data["classes"][fragment["class_name"]][
-            f"{fragment['fragment_type']}s"
-        ][fragment["fragment_name"]]
-        if "test_execution" in fragment_data and isinstance(
-            fragment_data["test_execution"], dict
-        ):
-            pass
+            # Check if test_execution exists before accessing
+            fragment_data = schema_data["main_methods"][fragment["fragment_name"]]
+            if "test_execution" in fragment_data and (
+                isinstance(fragment_data["test_execution"], dict) or
+                fragment_data["test_execution"] in ("pending", "not-exercised")
+            ):
+                pass
+            else:
+                print(
+                    f"[DEBUG] Adding missing test_execution for main.{fragment['fragment_name']}"
+                )
+                schema_data["main_methods"][fragment["fragment_name"]]["test_execution"] = test_execution
+            schema_data["main_methods"][fragment["fragment_name"]]["elapsed_time"] = elapsed_time
+            schema_data["main_methods"][fragment["fragment_name"]]["generation_timestamp"] = datetime.datetime.now().isoformat()
         else:
-            print(
-                f"[DEBUG] Adding missing test_execution for {fragment['class_name']}.{fragment['fragment_name']}"
-            )
-            schema_data["classes"][fragment["class_name"]][
+            schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
+                fragment["fragment_name"]
+            ]["translation"] = translation
+            schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
+                fragment["fragment_name"]
+            ]["translation_status"] = translation_status
+
+            # Use cangjie_compilation instead of three separate validations
+            schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
+                fragment["fragment_name"]
+            ]["cangjie_compilation"] = cangjie_compilation
+
+            # Check if test_execution exists before accessing
+            fragment_data = schema_data["classes"][fragment["class_name"]][
                 f"{fragment['fragment_type']}s"
-            ][fragment["fragment_name"]]["test_execution"] = test_execution
-        schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
-            fragment["fragment_name"]
-        ]["elapsed_time"] = elapsed_time
-        schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
-            fragment["fragment_name"]
-        ]["generation_timestamp"] = datetime.datetime.now().isoformat()
+            ][fragment["fragment_name"]]
+            if "test_execution" in fragment_data and (
+                isinstance(fragment_data["test_execution"], dict) or
+                fragment_data["test_execution"] in ("pending", "not-exercised")
+            ):
+                pass
+            else:
+                print(
+                    f"[DEBUG] Adding missing test_execution for {fragment['class_name']}.{fragment['fragment_name']}"
+                )
+                schema_data["classes"][fragment["class_name"]][
+                    f"{fragment['fragment_type']}s"
+                ][fragment["fragment_name"]]["test_execution"] = test_execution
+            schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
+                fragment["fragment_name"]
+            ]["elapsed_time"] = elapsed_time
+            schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
+                fragment["fragment_name"]
+            ]["generation_timestamp"] = datetime.datetime.now().isoformat()
 
     with open(schema_file, "w") as f:
         json.dump(schema_data, f, indent=4)
@@ -558,9 +594,13 @@ def update_budget(fragment, args, budget, type_="original"):
     ) as f:
         schema_data = json.load(f)
 
-    schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
-        fragment["fragment_name"]
-    ][f"{type_}_budget"] = budget
+    # Handle main_methods (main function outside class)
+    if fragment["class_name"] == "main":
+        schema_data["main_methods"][fragment["fragment_name"]][f"{type_}_budget"] = budget
+    else:
+        schema_data["classes"][fragment["class_name"]][f"{fragment['fragment_type']}s"][
+            fragment["fragment_name"]
+        ][f"{type_}_budget"] = budget
 
     with open(
         f"{args.translation_dir}/{fragment['schema_name']}_cangjie_partial.json", "w"
@@ -662,7 +702,11 @@ def get_adaptive_budget(fragment, args, feedback=False):
     main_class_name = main_class_name[main_class_name.find("src.main") + 9 :].replace(
         ".", "/"
     )
-    main_method_name = fragment["fragment_name"].split(":")[1]
+    # Handle main method (stored as "main" not "start-end:main")
+    if ":" in fragment["fragment_name"]:
+        main_method_name = fragment["fragment_name"].split(":")[1]
+    else:
+        main_method_name = fragment["fragment_name"]
 
     total_executed_tests = 0
     total_covered = 0
@@ -1285,6 +1329,40 @@ def main(args):
         processed_fragments.append(
             f"{fragment['schema_name']}|{fragment['class_name']}|{fragment['fragment_name']}"
         )
+
+    # After all translations, check if there are main methods that need translation
+    # Main methods are stored separately and may not be in the traversal
+    for schema_file in os.listdir(args.translation_dir):
+        if "_cangjie_partial.json" not in schema_file:
+            continue
+        if args.translate_evosuite and "ESTest" not in schema_file:
+            continue
+        if not args.translate_evosuite and "ESTest" in schema_file:
+            continue
+
+        schema_data = {}
+        with open(f"{args.translation_dir}/{schema_file}", "r") as f:
+            schema_data = json.load(f)
+
+        # Check if main_methods exists and needs translation
+        if "main_methods" not in schema_data:
+            continue
+
+        for method_name, method_info in schema_data["main_methods"].items():
+            translation_status = method_info.get("translation_status", "")
+            translation = method_info.get("translation", [])
+
+            # If main method needs translation, add it to pending and translate
+            if translation_status not in ["completed", "attempted", "out_of_context"] or not translation:
+                print(f"Translating main method: {schema_file} -> {method_name}")
+                fragment = {
+                    "schema_name": schema_file.replace("_cangjie_partial.json", ""),
+                    "class_name": "main",
+                    "fragment_name": method_name,
+                    "fragment_type": "method",
+                    "is_test_method": False,
+                }
+                translate(fragment, args, processed_fragments, recursion_depth=args.recursion_depth)
 
 
 if __name__ == "__main__":

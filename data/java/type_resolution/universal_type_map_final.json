@@ -17,5 +17,7 @@
     "java.lang.System": "",
     "java.lang.IllegalArgumentException": "IllegalArgumentException",
     "HistoryLoggerTest": "HistoryLoggerTest",
-    "java.lang.NumberFormatException": ""
+    "java.lang.NumberFormatException": "",
+    "HelloWorldTest": "HelloWorldTest",
+    "HelloWorld": "HelloWorld"
 }

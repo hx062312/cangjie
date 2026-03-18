@@ -8,23 +8,23 @@ import std.io.*
 
 class ArithmeticsTest {
 	// Class Fields Begin
-	internal let arithmetics: Arithmetics = ?
+	internal var arithmetics: Arithmetics = ?
 	// Class Fields End
 
 	// Class Methods Begin
-	internal func testDivByZero():  {
+	internal func testDivByZero(): Unit {
 		// TODO
 	}
-	internal func testDiv():  {
+	internal func testDiv(): Unit {
 		// TODO
 	}
-	internal func testMul():  {
+	internal func testMul(): Unit {
 		// TODO
 	}
-	internal func testSub():  {
+	internal func testSub(): Unit {
 		// TODO
 	}
-	internal func testAdd():  {
+	internal func testAdd(): Unit {
 		// TODO
 	}
 	// Class Methods End

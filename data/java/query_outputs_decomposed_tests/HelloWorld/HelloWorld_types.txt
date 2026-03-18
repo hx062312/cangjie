@@ -1,0 +1,6 @@
+| void       | V                                   |
+| String     | Ljava/lang/String;                  |
+| System     | Ljava/lang/System;                  |
+| void       | V                                   |
+| HelloWorld | Lcom/example/helloworld/HelloWorld; |
+| String     | Ljava/lang/String;                  |

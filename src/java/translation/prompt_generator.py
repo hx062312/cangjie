@@ -149,7 +149,11 @@ Notes:
         self.schema_name = fragment_details["schema_name"]
         self.class_name = fragment_details["class_name"]
         self.fragment_name = fragment_details["fragment_name"]
-        self.fragment_actual_name = self.fragment_name.split(":")[1]
+        # Handle main method (stored as "main" not "start-end:main")
+        if ":" in self.fragment_name:
+            self.fragment_actual_name = self.fragment_name.split(":")[1]
+        else:
+            self.fragment_actual_name = self.fragment_name
         self.fragment_type = fragment_details["fragment_type"]
         self.is_test_method = fragment_details["is_test_method"]
 
@@ -159,9 +163,23 @@ Notes:
         ) as f:
             self.schema_data = json.load(f)
 
-        self.fragment_dict = self.schema_data["classes"][self.class_name][
-            f"{self.fragment_type}s"
-        ][self.fragment_name]
+        # Handle main_methods (main function outside class)
+        if self.class_name == "main":
+            self.fragment_dict = self.schema_data["main_methods"][self.fragment_name]
+            # Create a virtual class dict for compatibility
+            self.class_dict = {
+                "fields": {},
+                "methods": {"main": self.fragment_dict},
+                "nests": [],
+                "nested_inside": [],
+                "extends": [],
+                "cangjie_class_declaration": "class Main {\n"
+            }
+        else:
+            self.fragment_dict = self.schema_data["classes"][self.class_name][
+                f"{self.fragment_type}s"
+            ][self.fragment_name]
+            self.class_dict = self.schema_data["classes"][self.class_name]
 
         # Ensure partial_translation exists in fragment_dict
         if "partial_translation" not in self.fragment_dict:
@@ -173,7 +191,7 @@ Notes:
             "\n".join(
                 [
                     f"    @{x}"
-                    for x in self.schema_data["classes"][self.class_name]["methods"][
+                    for x in self.class_dict["methods"][
                         self.fragment_name
                     ]["annotations"]
                     if x.startswith("Test")
@@ -189,12 +207,12 @@ Notes:
 
         # add source class fields for reference
         self.source_class_dependent_fields = ""
-        for field in self.schema_data["classes"][self.class_name]["fields"]:
+        for field in self.class_dict["fields"]:
             if field == self.fragment_name:
                 continue
             if field.split(":")[1] in self.source_fragment_body:
                 self.source_class_dependent_fields += "".join(
-                    self.schema_data["classes"][self.class_name]["fields"][field][
+                    self.class_dict["fields"][field][
                         "body"
                     ]
                 )
@@ -223,7 +241,7 @@ Notes:
 
     def add_incorrect_translation(self):
         translation = "\n".join(
-            self.schema_data["classes"][self.class_name][f"{self.fragment_type}s"][
+            self.class_dict[f"{self.fragment_type}s"][
                 self.fragment_name
             ]["translation"]
         )
@@ -251,8 +269,8 @@ Notes:
         self.partial_translation += "\n\n"
 
         # add inner and outer classes
-        inner_outer_classes = self.schema_data["classes"][self.class_name]["nests"] + [
-            self.schema_data["classes"][self.class_name]["nested_inside"]
+        inner_outer_classes = self.class_dict["nests"] + [
+            self.class_dict["nested_inside"]
         ]
         for inner_outer_class in inner_outer_classes:
             if (
@@ -270,7 +288,7 @@ Notes:
             inner_outer_classes_py = [class_decl]
             for field in self.schema_data["classes"][inner_outer_class]["fields"]:
                 if field.split(":")[1] in "".join(
-                    self.schema_data["classes"][self.class_name][
+                    self.class_dict[
                         f"{self.fragment_type}s"
                     ][self.fragment_name]["body"]
                 ):
@@ -355,7 +373,7 @@ Notes:
                 "fields"
             ]:
                 if field.split(":")[1] in "".join(
-                    self.schema_data["classes"][self.class_name][
+                    self.class_dict[
                         f"{self.fragment_type}s"
                     ][self.fragment_name]["body"]
                 ):
@@ -377,7 +395,7 @@ Notes:
                 self.partial_translation += "\n".join(imported_classes) + "\n"
 
         # include fields of superclass
-        for super_class in self.schema_data["classes"][self.class_name]["extends"]:
+        for super_class in self.class_dict["extends"]:
             super_class_schema = ""
             for schema_file in os.listdir(self.args.translation_dir):
                 if f".{super_class}_cangjie_partial.json" in schema_file:
@@ -405,7 +423,7 @@ Notes:
             super_class_declaration = [super_class_decl]
             for field in super_class_data["classes"][super_class]["fields"]:
                 if field.split(":")[1] in "".join(
-                    self.schema_data["classes"][self.class_name][
+                    self.class_dict[
                         f"{self.fragment_type}s"
                     ][self.fragment_name]["body"]
                 ):
@@ -428,7 +446,7 @@ Notes:
 
         # add the fragment partial translation
         # 确保主类定义完整，包含闭合括号
-        main_class_decl = self.schema_data["classes"][self.class_name][
+        main_class_decl = self.class_dict[
             "cangjie_class_declaration"
         ]
         if not main_class_decl.rstrip().endswith("}"):
@@ -440,7 +458,7 @@ Notes:
             self.prompt_status = "translated"
 
         # add related fields of the main class
-        for field in self.schema_data["classes"][self.class_name]["fields"]:
+        for field in self.class_dict["fields"]:
             if (
                 field.split(":")[1] == self.fragment_actual_name
                 and self.fragment_type == "field"
@@ -448,19 +466,19 @@ Notes:
                 continue
             if field.split(":")[1] in "".join(
                 "".join(
-                    self.schema_data["classes"][self.class_name][
+                    self.class_dict[
                         f"{self.fragment_type}s"
                     ][self.fragment_name]["body"]
                 )
             ):
-                field_translation = self.schema_data["classes"][self.class_name][
+                field_translation = self.class_dict[
                     "fields"
                 ][field]["translation"]
                 main_class_partial_translation += (
                     "\n".join(field_translation)
                     if field_translation
                     else "".join(
-                        self.schema_data["classes"][self.class_name]["fields"][field][
+                        self.class_dict["fields"][field][
                             "partial_translation"
                         ]
                     ).replace("<placeholder>", "None")
@@ -472,7 +490,7 @@ Notes:
 
             if (
                 len(
-                    self.schema_data["classes"][self.class_name]["methods"][
+                    self.class_dict["methods"][
                         self.fragment_name
                     ]["calls"]
                 )
@@ -482,9 +500,7 @@ Notes:
 
                 out_of_file_dependencies = []
                 out_of_class_dependencies = []
-                for callee_schema, callee_class, callee_method in self.schema_data[
-                    "classes"
-                ][self.class_name]["methods"][self.fragment_name]["calls"]:
+                for callee_schema, callee_class, callee_method in self.class_dict["methods"][self.fragment_name]["calls"]:
 
                     if callee_schema == "library":
                         continue
@@ -538,7 +554,7 @@ Notes:
                     )
 
                 main_class_partial_translation += "".join(
-                    self.schema_data["classes"][self.class_name]["methods"][
+                    self.class_dict["methods"][
                         self.fragment_name
                     ]["partial_translation"]
                 ).rstrip()
@@ -692,22 +708,22 @@ Notes:
 
             else:
                 main_class_partial_translation += "".join(
-                    self.schema_data["classes"][self.class_name]["methods"][
+                    self.class_dict["methods"][
                         self.fragment_name
                     ]["partial_translation"]
                 ).rstrip()
                 main_class_partial_translation += "\n"
 
         else:
-            for method in self.schema_data["classes"][self.class_name]["methods"]:
+            for method in self.class_dict["methods"]:
                 if method.split(":")[1] in "".join(
                     "".join(
-                        self.schema_data["classes"][self.class_name][
+                        self.class_dict[
                             f"{self.fragment_type}s"
                         ][self.fragment_name]["body"]
                     )
                 ):
-                    method_translation = self.schema_data["classes"][self.class_name][
+                    method_translation = self.class_dict[
                         "methods"
                     ][method]["translation"]
                     if self.args.include_implementation:
@@ -715,14 +731,14 @@ Notes:
                             "\n".join(method_translation)
                             if method_translation
                             else "".join(
-                                self.schema_data["classes"][self.class_name]["methods"][
+                                self.class_dict["methods"][
                                     method
                                 ]["partial_translation"]
                             ).replace("<placeholder>", "None")
                         )
                     else:
                         main_class_partial_translation += "".join(
-                            self.schema_data["classes"][self.class_name]["methods"][
+                            self.class_dict["methods"][
                                 method
                             ]["partial_translation"]
                         ).replace("<placeholder>", "None")
@@ -752,7 +768,7 @@ Notes:
             self.prompt += f"Cangjie method translation:\n```\n"
             self.prompt += (
                 "".join(
-                    self.schema_data["classes"][self.class_name]["methods"][
+                    self.class_dict["methods"][
                         self.fragment_name
                     ]["partial_translation"]
                 )
@@ -760,7 +776,7 @@ Notes:
                 .replace("    pass", "    ")
             )
             self.signature = "".join(
-                self.schema_data["classes"][self.class_name]["methods"][
+                self.class_dict["methods"][
                     self.fragment_name
                 ]["partial_translation"]
             ).strip()

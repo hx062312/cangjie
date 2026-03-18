@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# ./scripts/java/crawl_type_desc.sh HelloWorld
 # ./scripts/java/crawl_type_desc.sh Calculator
 # ./scripts/java/crawl_type_desc.sh commons-fileupload
 

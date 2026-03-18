@@ -1,0 +1,59 @@
+{
+    "path": "projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/test/java/com/example/helloworld/HelloWorldTest.java",
+    "imports": {
+        "3-3:import Test": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import org.junit.jupiter.api.Test;\n"
+            ]
+        }
+    },
+    "classes": {
+        "HelloWorldTest": {
+            "start": 5,
+            "end": 5,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {
+                "8-11:testMain": {
+                    "start": 8,
+                    "end": 11,
+                    "body": [
+                        "    public void testMain() {\n",
+                        "        // Simple test to verify HelloWorld.main() runs without error\n",
+                        "        HelloWorld.main(new String[]{});\n",
+                        "    }\n"
+                    ],
+                    "is_constructor": false,
+                    "annotations": [
+                        "Test"
+                    ],
+                    "modifiers": [
+                        "public"
+                    ],
+                    "return_types": [
+                        [
+                            "void",
+                            "void"
+                        ]
+                    ],
+                    "signature": "testMain()",
+                    "parameters": [],
+                    "calls": [
+                        [
+                            "HelloWorld.src.main.com.example.helloworld.HelloWorld",
+                            "main",
+                            "main"
+                        ]
+                    ]
+                }
+            },
+            "fields": {}
+        }
+    }
+}

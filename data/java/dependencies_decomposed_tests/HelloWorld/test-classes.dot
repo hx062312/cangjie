@@ -1,0 +1,7 @@
+digraph "test-classes" {
+    // Path: projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/target/test-classes
+   "com.example.helloworld.HelloWorldTest"            -> "com.example.helloworld.HelloWorld (not found)";
+   "com.example.helloworld.HelloWorldTest"            -> "java.lang.Object (java.base)";
+   "com.example.helloworld.HelloWorldTest"            -> "java.lang.String (java.base)";
+   "com.example.helloworld.HelloWorldTest"            -> "org.junit.jupiter.api.Test (not found)";
+}

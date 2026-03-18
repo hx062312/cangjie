@@ -11,10 +11,10 @@ class ValidatorTest {
 	// Class Fields End
 
 	// Class Methods Begin
-	internal func testInvalidValues():  {
+	internal func testInvalidValues(): Unit {
 		// TODO
 	}
-	internal func testValidValues():  {
+	internal func testValidValues(): Unit {
 		// TODO
 	}
 	// Class Methods End

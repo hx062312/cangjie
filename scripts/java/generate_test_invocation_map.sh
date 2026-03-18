@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# ./scripts/java/generate_test_invocation_map.sh HelloWorld gpt-4o-2024-11-20 _decomposed_tests
 # ./scripts/java/generate_test_invocation_map.sh Calculator gpt-4o-2024-11-20 _decomposed_tests
 # ./scripts/java/generate_test_invocation_map.sh commons-fileupload gpt-4o-2024-11-20 _decomposed_tests
 

@@ -157,6 +157,21 @@ def main(args):
                 recomposed_file += "    // Class Fields End\n\n"
 
             # Process methods
+            # First, extract main method (Cangjie requires main outside class)
+            main_method_translation = None
+            if has_methods:
+                for method in list(data["classes"][class_]["methods"].keys()):
+                    method_key = method.split(":")[1] if ":" in method else method
+                    if method_key == "main":
+                        method_data = data["classes"][class_]["methods"][method]
+                        # Get translation or partial_translation
+                        if method_data.get("translation") and method_data["translation"] != []:
+                            main_method_translation = "\n".join(method_data["translation"])
+                        elif method_data.get("partial_translation"):
+                            main_method_translation = "\n".join(method_data["partial_translation"])
+                        break
+
+            # Then process other methods
             if has_methods:
                 recomposed_file += "    // Class Methods Begin\n"
                 for method in data["classes"][class_]["methods"]:
@@ -167,6 +182,11 @@ def main(args):
                         not args.recompose_evosuite
                         and method_data.get("is_overload", False)
                     ):
+                        continue
+
+                    # Skip main method (will be added outside class)
+                    method_key = method.split(":")[1] if ":" in method else method
+                    if method_key == "main":
                         continue
 
                     # Check if translation exists
@@ -188,6 +208,12 @@ def main(args):
 
             # Close class
             recomposed_file += "\n}\n\n"
+
+            # Add main function outside the class (Cangjie requirement)
+            if main_method_translation:
+                # Remove leading indentation for top-level function
+                main_method_translation = main_method_translation.replace("    ", "", 1)
+                recomposed_file += main_method_translation + "\n\n"
 
         formatted_schema_fname = ".".join(schema.split(".")[:-1])
         sub_dir = "/".join(formatted_schema_fname.replace(".", "/").split("/")[1:-1])

@@ -1,0 +1,2 @@
+| HelloWorld     | false | Object | file:///home/cangjie/projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java:5:14:5:23     |
+| HelloWorldTest | false | Object | file:///home/cangjie/projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/test/java/com/example/helloworld/HelloWorldTest.java:5:14:5:27 |

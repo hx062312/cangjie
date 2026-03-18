@@ -13,10 +13,10 @@ class Main {
 	// Class Fields End
 
 	// Class Methods Begin
-	internal static func printUsage():  {
+	internal static func printUsage(): Unit {
 		// TODO
 	}
-	internal static func printResult(result: Int64):  {
+	internal static func printResult(result: Int64): Unit {
 		// TODO
 	}
 	internal static func parseInt(s: String): Int64 {

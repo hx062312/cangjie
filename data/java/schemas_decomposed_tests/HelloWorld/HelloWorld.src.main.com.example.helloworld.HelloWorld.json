@@ -1,0 +1,60 @@
+{
+    "path": "projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java",
+    "imports": {
+        "3-3:import Scanner": {
+            "start": 3,
+            "end": 3,
+            "body": [
+                "import java.util.Scanner;\n"
+            ]
+        }
+    },
+    "classes": {
+        "HelloWorld": {
+            "start": 5,
+            "end": 5,
+            "is_abstract": false,
+            "is_interface": false,
+            "nested_inside": [],
+            "nests": [],
+            "implements": [],
+            "extends": [],
+            "methods": {},
+            "fields": {}
+        }
+    },
+    "main_methods": {
+        "main": {
+            "start": 11,
+            "end": 13,
+            "body": [
+                "    public static void main(String[] args) {\n",
+                "        System.out.println(\"Hello, World!\");\n",
+                "    }\n"
+            ],
+            "is_constructor": false,
+            "annotations": [],
+            "modifiers": [
+                "public",
+                "static"
+            ],
+            "return_types": [
+                [
+                    "void",
+                    "void"
+                ]
+            ],
+            "signature": "main(String[])",
+            "parameters": [
+                "args"
+            ],
+            "calls": [
+                [
+                    "library",
+                    "java.base/java/io/PrintStream",
+                    "println(java.lang.String)"
+                ]
+            ]
+        }
+    }
+}

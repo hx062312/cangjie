@@ -1,0 +1,1 @@
+| HelloWorld | main     | args | file:///home/cangjie/projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java:7:24:7:27 | file:///home/cangjie/projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java:7:44:9:5 |

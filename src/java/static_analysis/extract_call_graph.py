@@ -145,30 +145,40 @@ def main(args):
                 f"data/java/schemas{args.suffix}/{project}/{callee_schema_name}.json"
             ) as f:
                 callee_schema = json.load(f)
-                for class_ in callee_schema["classes"]:
 
-                    if (
-                        callee_name == class_
-                        and callee_start_line
-                        == callee_schema["classes"][class_]["start"]
-                    ):
-                        callee_method_class_name = class_
-                        callee_method_key_name = class_
+                # First check if it's a main method (stored in main_methods)
+                if "main_methods" in callee_schema:
+                    if callee_name == "main" and "main" in callee_schema["main_methods"]:
+                        callee_method_class_name = "main"
+                        callee_method_key_name = "main"
                         is_available = True
-                        break
 
-                    for method in callee_schema["classes"][class_]["methods"]:
+                # Then check in classes
+                if not is_available:
+                    for class_ in callee_schema["classes"]:
+
                         if (
-                            callee_name == method.split(":")[1]
+                            callee_name == class_
                             and callee_start_line
-                            == callee_schema["classes"][class_]["methods"][method][
-                                "start"
-                            ]
+                            == callee_schema["classes"][class_]["start"]
                         ):
                             callee_method_class_name = class_
-                            callee_method_key_name = method
+                            callee_method_key_name = class_
                             is_available = True
                             break
+
+                        for method in callee_schema["classes"][class_]["methods"]:
+                            if (
+                                callee_name == method.split(":")[1]
+                                and callee_start_line
+                                == callee_schema["classes"][class_]["methods"][method][
+                                    "start"
+                                ]
+                            ):
+                                callee_method_class_name = class_
+                                callee_method_key_name = method
+                                is_available = True
+                                break
 
             assert (
                 is_available
@@ -190,32 +200,54 @@ def main(args):
             f"data/java/schemas{args.suffix}/{project}/{caller_schema_name}.json"
         ) as f:
             caller_schema = json.load(f)
-            for class_ in caller_schema["classes"]:
 
-                for method in caller_schema["classes"][class_]["methods"]:
-                    if (
-                        caller_name == method.split(":")[1]
-                        and caller_start_line
-                        == caller_schema["classes"][class_]["methods"][method]["start"]
-                    ):
-                        if [
-                            callee_schema_name,
-                            callee_method_class_name,
-                            callee_method_key_name,
-                        ] not in caller_schema["classes"][class_]["methods"][method][
-                            "calls"
-                        ]:
-                            caller_schema["classes"][class_]["methods"][method][
-                                "calls"
-                            ].append(
-                                (
-                                    callee_schema_name,
-                                    callee_method_class_name,
-                                    callee_method_key_name,
-                                )
+            # First check if it's a main method (stored in main_methods)
+            if "main_methods" in caller_schema:
+                # main_methods uses "main" as key, not "line-line:main" format
+                if caller_name == "main" and "main" in caller_schema["main_methods"]:
+                    method = "main"
+                    if [
+                        callee_schema_name,
+                        callee_method_class_name,
+                        callee_method_key_name,
+                    ] not in caller_schema["main_methods"][method]["calls"]:
+                        caller_schema["main_methods"][method]["calls"].append(
+                            (
+                                callee_schema_name,
+                                callee_method_class_name,
+                                callee_method_key_name,
                             )
-                        is_available = True
-                        break
+                        )
+                    is_available = True
+
+            # Then check in classes
+            if not is_available:
+                for class_ in caller_schema["classes"]:
+
+                    for method in caller_schema["classes"][class_]["methods"]:
+                        if (
+                            caller_name == method.split(":")[1]
+                            and caller_start_line
+                            == caller_schema["classes"][class_]["methods"][method]["start"]
+                        ):
+                            if [
+                                callee_schema_name,
+                                callee_method_class_name,
+                                callee_method_key_name,
+                            ] not in caller_schema["classes"][class_]["methods"][method][
+                                "calls"
+                            ]:
+                                caller_schema["classes"][class_]["methods"][method][
+                                    "calls"
+                                ].append(
+                                    (
+                                        callee_schema_name,
+                                        callee_method_class_name,
+                                        callee_method_key_name,
+                                    )
+                                )
+                            is_available = True
+                            break
 
         assert (
             is_available

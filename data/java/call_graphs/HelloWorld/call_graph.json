@@ -1,0 +1,19 @@
+{
+    "HelloWorldTest": {
+        "schema_file": "projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/test/java/com/example/helloworld/HelloWorldTest.java",
+        "8-11:testMain": []
+    },
+    "HelloWorld": {
+        "schema_file": "projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java"
+    },
+    "main": {
+        "schema_file": "projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java",
+        "main": [
+            {
+                "schema": "library",
+                "class": "java.base/java/io/PrintStream",
+                "method": "println(java.lang.String)"
+            }
+        ]
+    }
+}

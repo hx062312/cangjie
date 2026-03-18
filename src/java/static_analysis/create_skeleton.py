@@ -416,6 +416,36 @@ def main(args):
         cangjie_imports = []
         class_order = get_class_order(schema)
 
+        # Process main_methods if exists (main function stored separately from classes)
+        main_method_template = None
+        if "main_methods" in schema:
+            if "main" in schema["main_methods"]:
+                main_method_template = f"main(args: Array<String>): Int64 {{\n\tthrow Exception('TODO')\n}}\n"
+                # Add main_methods to target_schema, preserve original fields
+                target_schema.setdefault("main_methods", {})
+                target_schema["main_methods"]["main"] = {
+                    "start": schema["main_methods"]["main"]["start"],
+                    "end": schema["main_methods"]["main"]["end"],
+                    "body": schema["main_methods"]["main"]["body"],
+                    "is_constructor": schema["main_methods"]["main"]["is_constructor"],
+                    "annotations": schema["main_methods"]["main"]["annotations"],
+                    "modifiers": schema["main_methods"]["main"]["modifiers"],
+                    "return_types": schema["main_methods"]["main"]["return_types"],
+                    "signature": schema["main_methods"]["main"]["signature"],
+                    "parameters": schema["main_methods"]["main"]["parameters"],
+                    "calls": schema["main_methods"]["main"]["calls"],
+                    "partial_translation": [
+                        f"func main(args: Array<String>): Int64 {{",
+                        "\tthrow Exception('TODO')",
+                        "\t}\n",
+                    ],
+                    "translation": [],
+                    "translation_status": "pending",
+                    "cangjie_compilation": "pending",
+                    "test_execution": {},
+                    "elapsed_time": 0,
+                }
+
         # Begin processing classes
         class_dependencies = []
         for class_ in class_order:
@@ -585,7 +615,7 @@ def main(args):
                     ]["cangjie_compilation"] = "pending"
                     target_schema["classes"][class_]["static_initializers"][
                         static_initializer_se
-                    ]["test_execution"] = "pending"
+                    ]["test_execution"] = {}
                     target_schema["classes"][class_]["static_initializers"][
                         static_initializer_se
                     ]["elapsed_time"] = 0
@@ -713,7 +743,7 @@ def main(args):
                 ] = "pending"
                 target_schema["classes"][class_]["fields"][field][
                     "test_execution"
-                ] = "pending"
+                ] = {}
                 target_schema["classes"][class_]["fields"][field]["elapsed_time"] = 0
                 target_schema["classes"][class_]["fields"][field][
                     "generation_timestamp"
@@ -731,7 +761,9 @@ def main(args):
 
             skeleton += "\t// Class Methods Begin\n"
             # For Cangjie, main function needs to be outside the class
-            main_method_template = None
+            # Only reset if main_methods wasn't detected at file level
+            if "main_methods" not in schema:
+                main_method_template = None
             for method in schema["classes"][class_]["methods"]:
                 current_method = []
                 method_name = method.split(":")[1].strip()
@@ -798,18 +830,22 @@ def main(args):
                 if len(schema["classes"][class_]["methods"][method]["parameters"]) == 0:
                     if is_constructor:
                         # Constructor
-                        skeleton += f"\t{access_modifier}init() {{\n\t\t// TODO\n\t}}\n"
+                        skeleton += f"\t{access_modifier}init() {{\n\t\tthrow Exception('TODO')\n\t}}\n"
                         current_method.append(f"\t{access_modifier}init() {{")
-                    elif is_main:
+                    elif is_main and "main_methods" not in schema:
                         # Special handling for main function - save for later (outside class)
-                        main_method_template = (
-                            f"main(args: Array<String>): Int64 {{\n\t// TODO\n}}\n"
-                        )
+                        main_method_template = f"main(args: Array<String>): Int64 {{\n\tthrow Exception('TODO')\n}}\n"
                         # Create partial_translation for main method before skipping
                         target_schema["classes"][class_]["methods"][method][
                             "partial_translation"
-                        ] = [f"\tpublic func {method_name}(args: Array<String>): Int64 {{", "\t\t// TODO", "\t}\n"]
-                        target_schema["classes"][class_]["methods"][method]["translation"] = []
+                        ] = [
+                            f"\tpublic func {method_name}(args: Array<String>): Int64 {{",
+                            "\t\tthrow Exception('TODO')",
+                            "\t}\n",
+                        ]
+                        target_schema["classes"][class_]["methods"][method][
+                            "translation"
+                        ] = []
                         target_schema["classes"][class_]["methods"][method][
                             "translation_status"
                         ] = "pending"
@@ -818,8 +854,10 @@ def main(args):
                         ] = "pending"
                         target_schema["classes"][class_]["methods"][method][
                             "test_execution"
-                        ] = "pending"
-                        target_schema["classes"][class_]["methods"][method]["elapsed_time"] = 0
+                        ] = {}
+                        target_schema["classes"][class_]["methods"][method][
+                            "elapsed_time"
+                        ] = 0
                         target_schema["classes"][class_]["methods"][method][
                             "generation_timestamp"
                         ] = 0
@@ -832,12 +870,12 @@ def main(args):
                         continue  # Skip adding to class
                     else:
                         if is_static:
-                            skeleton += f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{\n\t\t// TODO\n\t}}\n"
+                            skeleton += f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{\n\t\tthrow Exception('TODO')\n\t}}\n"
                             current_method.append(
                                 f"\t{access_modifier}{static_prefix}func {method_name}(): {return_type} {{"
                             )
                         else:
-                            skeleton += f"\t{access_modifier}func {method_name}(): {return_type} {{\n\t\t// TODO\n\t}}\n"
+                            skeleton += f"\t{access_modifier}func {method_name}(): {return_type} {{\n\t\tthrow Exception('TODO')\n\t}}\n"
                             current_method.append(
                                 f"\t{access_modifier}func {method_name}(): {return_type} {{"
                             )
@@ -875,23 +913,27 @@ def main(args):
                         skeleton += (
                             f"\t{access_modifier}init("
                             + ", ".join([x + f": {y.strip()}" for x, y in param_types])
-                            + ") {\n\t\t// TODO\n\t}\n"
+                            + ") {\n\t\tthrow Exception('TODO')\n\t}\n"
                         )
                         current_method.append(
                             f"\t{access_modifier}init("
                             + ", ".join([x + f": {y.strip()}" for x, y in param_types])
                             + ") {"
                         )
-                    elif is_main:
+                    elif is_main and "main_methods" not in schema:
                         # Special handling for main function - always use Array<String>
-                        main_method_template = (
-                            f"main(args: Array<String>): Int64 {{\n\t// TODO\n}}\n"
-                        )
+                        main_method_template = f"main(args: Array<String>): Int64 {{\n\tthrow Exception('TODO')\n}}\n"
                         # Create partial_translation for main method before skipping
                         target_schema["classes"][class_]["methods"][method][
                             "partial_translation"
-                        ] = [f"\tpublic func {method_name}(args: Array<String>): Int64 {{", "\t\t// TODO", "\t}\n"]
-                        target_schema["classes"][class_]["methods"][method]["translation"] = []
+                        ] = [
+                            f"\tpublic func {method_name}(args: Array<String>): Int64 {{",
+                            "\t\tthrow Exception('TODO')",
+                            "\t}\n",
+                        ]
+                        target_schema["classes"][class_]["methods"][method][
+                            "translation"
+                        ] = []
                         target_schema["classes"][class_]["methods"][method][
                             "translation_status"
                         ] = "pending"
@@ -900,8 +942,10 @@ def main(args):
                         ] = "pending"
                         target_schema["classes"][class_]["methods"][method][
                             "test_execution"
-                        ] = "pending"
-                        target_schema["classes"][class_]["methods"][method]["elapsed_time"] = 0
+                        ] = {}
+                        target_schema["classes"][class_]["methods"][method][
+                            "elapsed_time"
+                        ] = 0
                         target_schema["classes"][class_]["methods"][method][
                             "generation_timestamp"
                         ] = 0
@@ -919,7 +963,7 @@ def main(args):
                                 + ", ".join(
                                     [x + f": {y.strip()}" for x, y in param_types]
                                 )
-                                + f"): {return_type} {{\n\t\t// TODO\n\t}}\n"
+                                + f"): {return_type} {{\n\t\tthrow Exception('TODO')\n\t}}\n"
                             )
                             current_method.append(
                                 f"\t{access_modifier}{static_prefix}func {method_name}("
@@ -934,7 +978,7 @@ def main(args):
                                 + ", ".join(
                                     [x + f": {y.strip()}" for x, y in param_types]
                                 )
-                                + f"): {return_type} {{\n\t\t// TODO\n\t}}\n"
+                                + f"): {return_type} {{\n\t\tthrow Exception('TODO')\n\t}}\n"
                             )
                             current_method.append(
                                 f"\t{access_modifier}func {method_name}("
@@ -964,7 +1008,7 @@ def main(args):
                             [schema_fname.replace(".json", ""), class_, setup_method]
                         )
 
-                current_method.append("\t\t// TODO")
+                current_method.append("\t\tthrow Exception('TODO')")
                 current_method.append("\t}\n")
 
                 target_schema["classes"][class_]["methods"][method][
@@ -979,7 +1023,7 @@ def main(args):
                 ] = "pending"
                 target_schema["classes"][class_]["methods"][method][
                     "test_execution"
-                ] = "pending"
+                ] = {}
                 target_schema["classes"][class_]["methods"][method]["elapsed_time"] = 0
                 target_schema["classes"][class_]["methods"][method][
                     "generation_timestamp"
@@ -994,12 +1038,11 @@ def main(args):
             skeleton += "\t// Class Methods End\n\n"
             skeleton += "}\n\n"
 
-            # Add main function outside the class if exists
+            # Add main function outside the class if exists, otherwise add dummy main
             if main_method_template:
                 skeleton += main_method_template + "\n"
-
-            if is_empty_class:
-                skeleton += "\t// Empty class body\n"
+            else:
+                skeleton += "main(args: Array<String>): Int64 {\n    // dummy main (original source doesn't have main)\n    0\n}\n"
 
         # Cangjie import mapping
         import_map = {
@@ -1194,8 +1237,15 @@ version = "0.1.0"
         with open(file_path, "w") as f:
             f.write(skeleton)
 
-        # Note: Cangjie doesn't need black formatting like Python
-        # The generated .cj file should be valid Cangjie code
+        # translations - 保持与 data/java/skeletons/<project> 相同的目录结构
+        # 从 file_path 中提取相对于 project_dir 的路径部分
+        relative_path = os.path.relpath(file_path, project_dir)
+        translations_skeleton_dir = f"data/java/skeletons/translations/{args.model}/{args.type}/{args.temperature}/{args.project}"
+        os.makedirs(translations_skeleton_dir, exist_ok=True)
+        translations_file_path = os.path.join(translations_skeleton_dir, relative_path)
+        os.makedirs(os.path.dirname(translations_file_path), exist_ok=True)
+        with open(translations_file_path, "w") as f:
+            f.write(skeleton)
 
         os.makedirs(
             f"data/java/schemas{args.suffix}/translations/{args.model}/{args.type}/{args.temperature}/{args.project}",

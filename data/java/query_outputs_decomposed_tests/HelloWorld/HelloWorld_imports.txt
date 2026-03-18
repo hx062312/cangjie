@@ -1,0 +1,2 @@
+| import Test    | file:///home/cangjie/projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/test/java/com/example/helloworld/HelloWorldTest.java:3:1:3:34 |
+| import Scanner | file:///home/cangjie/projects/java/cleaned_final_projects_decomposed_tests/HelloWorld/src/main/java/com/example/helloworld/HelloWorld.java:3:1:3:25     |
