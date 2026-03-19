@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/create_skeleton.sh Calculator gpt-4o-2024-11-20 signature _decomposed_tests 0.0
-# ./scripts/java/create_skeleton.sh commons-fileupload gpt-4o-2024-11-20 signature _decomposed_tests 0.0
-
-# ./scripts/java/create_skeleton.sh Calculator gpt-4o-2024-11-20 body _decomposed_tests 0.0
+# ./scripts/java/create_skeleton.sh calculator gpt-4o-2024-11-20 body _decomposed_tests 0.0
 # ./scripts/java/create_skeleton.sh commons-fileupload gpt-4o-2024-11-20 body _decomposed_tests 0.0
 # ./scripts/java/create_skeleton.sh HelloWorld gpt-4o-2024-11-20 body _decomposed_tests 0.0
 

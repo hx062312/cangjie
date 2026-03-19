@@ -16,6 +16,7 @@ class HelloWorld {
 }
 
 main(args: Array<String>): Int64 {
-	throw Exception('TODO')
+		println("Hello, World!")
+	return 0
 }
 

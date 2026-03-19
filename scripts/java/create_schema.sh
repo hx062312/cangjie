@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/create_schema.sh Calculator _decomposed_tests
+# ./scripts/java/create_schema.sh calculator _decomposed_tests
 # ./scripts/java/create_schema.sh commons-fileupload _decomposed_tests
 # ./scripts/java/create_schema.sh HelloWorld _decomposed_tests
 

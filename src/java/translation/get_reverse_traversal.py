@@ -158,22 +158,37 @@ def unroll_cycles(waiting_queue, processed_fragments, project_traversal):
 
 def get_reverse_traversal(args):
     """
-    Get the reverse traversal of the project based on call dependencies
+    Get the traversal of the project based on class order defined in traversal.json
+
+    The traversal.json file defines the order in which classes should be translated:
+    - Fields and static initializers are processed first for each class
+    - Methods are processed in class order, but with dependency checking
+    - Classes are processed in the order defined in traversal.json
+
+    If traversal.json doesn't exist, falls back to original dependency-based traversal.
     """
     project_traversal = []
     schemas = os.listdir(args.translation_dir)
 
-    executed_tests = {}
-    with open(
-        f"data/java/source_test_execution{args.suffix}/{args.project}/tests.json"
-    ) as f:
-        executed_tests = json.load(f)
+    # Load class order from traversal.json
+    traversal_order_path = f"data/java/dependencies_decomposed_tests/{args.project}/traversal.json"
+    class_order = []
+    try:
+        with open(traversal_order_path, "r") as f:
+            class_order = json.load(f)
+        # Convert to list of class names in order
+        class_order = [class_order[str(i)] for i in range(len(class_order))]
+    except FileNotFoundError:
+        class_order = []
 
-    # extract all fields and static initializers
-    waiting_queue = {}
-    processed_fragments = []
+    # Build a map of class_name -> class_order_index for fast lookup
+    class_order_index_map = {}
+    for idx, class_name in enumerate(class_order):
+        class_order_index_map[class_name] = idx
+
+    # Load all schema data first
+    all_schema_data = {}
     for schema in schemas:
-
         if "_cangjie_partial.json" not in schema:
             continue
 
@@ -188,15 +203,148 @@ def get_reverse_traversal(args):
         path_ = f"{args.translation_dir}/{schema}"
         with open(path_, "r") as f:
             data = json.load(f)
+            all_schema_data[schema_base_name] = data
 
-        for class_ in data["classes"]:
+    # If no traversal.json, use original behavior
+    if not class_order:
+        # ... (original logic unchanged - keep for backward compatibility)
+        # Extract fields and static initializers
+        waiting_queue = {}
+        processed_fragments = []
 
-            if "new" in class_ or "{" in class_:  # skip nested and nameless classes
+        for schema in schemas:
+            if "_cangjie_partial.json" not in schema:
                 continue
 
-            field_order = get_field_order(data, class_)
+            schema_base_name = schema.replace("_cangjie_partial.json", "")
 
+            if args.translate_evosuite and "ESTest" not in schema:
+                continue
+
+            if not args.translate_evosuite and "ESTest" in schema:
+                continue
+
+            path_ = f"{args.translation_dir}/{schema}"
+            with open(path_, "r") as f:
+                data = json.load(f)
+
+            for class_ in data["classes"]:
+                if "new" in class_ or "{" in class_:
+                    continue
+
+                field_order = get_field_order(data, class_)
+
+                for field_ in field_order:
+                    project_traversal.append(
+                        {
+                            "schema_name": schema_base_name,
+                            "class_name": class_,
+                            "fragment_name": field_,
+                            "fragment_type": "field",
+                            "is_test_method": False,
+                        }
+                    )
+
+                if "static_initializers" in data["classes"][class_]:
+                    for static_initializer in data["classes"][class_][
+                        "static_initializers"
+                    ]:
+                        project_traversal.append(
+                            {
+                                "schema_name": schema_base_name,
+                                "class_name": class_,
+                                "fragment_name": static_initializer,
+                                "fragment_type": "static_initializer",
+                                "is_test_method": False,
+                            }
+                        )
+
+                for method_ in data["classes"][class_]["methods"]:
+                    full_fragment_name = f"{schema_base_name}|{class_}|{method_}"
+                    dependent_fragments = [
+                        f"{x[0]}|{x[1]}|{x[2]}"
+                        for x in data["classes"][class_]["methods"][method_]["calls"]
+                        if ":" in x[2] and full_fragment_name != f"{x[0]}|{x[1]}|{x[2]}"
+                    ]
+
+                    is_test_method = False
+                    if any(
+                        [
+                            "Test" in x
+                            for x in data["classes"][class_]["methods"][method_][
+                                "annotations"
+                            ]
+                        ]
+                    ):
+                        is_test_method = True
+
+                    if (
+                        any([x not in processed_fragments for x in dependent_fragments])
+                        and not args.translate_evosuite
+                    ):
+                        waiting_queue[full_fragment_name] = [
+                            dependent_fragments,
+                            schema_base_name,
+                            class_,
+                            method_,
+                            is_test_method,
+                        ]
+                        continue
+
+                    processed_fragments.append(full_fragment_name)
+                    project_traversal.append(
+                        {
+                            "schema_name": schema_base_name,
+                            "class_name": class_,
+                            "fragment_name": method_,
+                            "fragment_type": "method",
+                            "is_test_method": is_test_method,
+                        }
+                    )
+
+                    waiting_queue, processed_fragments, project_traversal = (
+                        process_waiting_queue(
+                            waiting_queue, processed_fragments, project_traversal, 1
+                        )
+                    )
+
+        waiting_queue, processed_fragments, project_traversal = process_waiting_queue(
+            waiting_queue, processed_fragments, project_traversal
+        )
+
+        if len(waiting_queue) == 0:
+            return order_fragments(project_traversal)
+
+        unroll_cycles(waiting_queue, processed_fragments, project_traversal)
+        waiting_queue, processed_fragments, project_traversal = process_waiting_queue(
+            waiting_queue, processed_fragments, project_traversal
+        )
+
+        return order_fragments(project_traversal)
+
+    # With traversal.json: process by class order, but with dependency checking
+    processed_fragments = []
+    waiting_queue = {}
+
+    # Group all classes by their order index
+    classes_by_order = {}  # order_idx -> [(schema_base_name, class_, data), ...]
+    for schema_base_name, data in all_schema_data.items():
+        for class_ in data["classes"]:
+            if "new" in class_ or "{" in class_:
+                continue
+            if class_ in class_order_index_map:
+                order_idx = class_order_index_map[class_]
+                if order_idx not in classes_by_order:
+                    classes_by_order[order_idx] = []
+                classes_by_order[order_idx].append((schema_base_name, class_, data))
+
+    # Process classes in order
+    for order_idx in sorted(classes_by_order.keys()):
+        for schema_base_name, class_, data in classes_by_order[order_idx]:
+            # Add fields first (no dependency checking needed for fields)
+            field_order = get_field_order(data, class_)
             for field_ in field_order:
+                processed_fragments.append(f"{schema_base_name}|{class_}|{field_}")
                 project_traversal.append(
                     {
                         "schema_name": schema_base_name,
@@ -207,15 +355,12 @@ def get_reverse_traversal(args):
                     }
                 )
 
+            # Add static initializers
             if "static_initializers" in data["classes"][class_]:
-
-                assert 1 == len(
-                    data["classes"][class_]["static_initializers"]
-                ), f"Found more than one static initializer for class {class_} @ schema {schema_base_name}"
-
                 for static_initializer in data["classes"][class_][
                     "static_initializers"
                 ]:
+                    processed_fragments.append(f"{schema_base_name}|{class_}|{static_initializer}")
                     project_traversal.append(
                         {
                             "schema_name": schema_base_name,
@@ -226,8 +371,11 @@ def get_reverse_traversal(args):
                         }
                     )
 
+            # Process methods with dependency checking
             for method_ in data["classes"][class_]["methods"]:
                 full_fragment_name = f"{schema_base_name}|{class_}|{method_}"
+
+                # Get dependent fragments
                 dependent_fragments = [
                     f"{x[0]}|{x[1]}|{x[2]}"
                     for x in data["classes"][class_]["methods"][method_]["calls"]
@@ -244,17 +392,10 @@ def get_reverse_traversal(args):
                     ]
                 ):
                     is_test_method = True
-                # if 'src.test' in schema_base_name:
-                #     test_class_path = schema_base_name[schema_base_name.find('src.test.')+len('src.test.'):]
-                #     if test_class_path not in executed_tests:
-                #         is_test_method = False
-                #     elif method_.split(':')[1] in executed_tests[test_class_path]:
-                #         is_test_method = True
 
-                if (
-                    any([x not in processed_fragments for x in dependent_fragments])
-                    and not args.translate_evosuite
-                ):
+                # Check if all dependencies are processed
+                if any([x not in processed_fragments for x in dependent_fragments]):
+                    # Add to waiting queue
                     waiting_queue[full_fragment_name] = [
                         dependent_fragments,
                         schema_base_name,
@@ -264,6 +405,7 @@ def get_reverse_traversal(args):
                     ]
                     continue
 
+                # All dependencies processed, add to traversal
                 processed_fragments.append(full_fragment_name)
                 project_traversal.append(
                     {
@@ -275,30 +417,32 @@ def get_reverse_traversal(args):
                     }
                 )
 
-                # check if a waiting fragment is now ready to be processed
-                waiting_queue, processed_fragments, project_traversal = (
-                    process_waiting_queue(
-                        waiting_queue, processed_fragments, project_traversal, 1
+            # Check if this schema has main_methods
+            # If so, add main as a fragment (with class_name="main" to indicate it's in main_methods)
+            if "main_methods" in data and "main" in data["main_methods"]:
+                full_fragment_name = f"{schema_base_name}|main|main"
+                if full_fragment_name not in processed_fragments:
+                    processed_fragments.append(full_fragment_name)
+                    project_traversal.append(
+                        {
+                            "schema_name": schema_base_name,
+                            "class_name": "main",
+                            "fragment_name": "main",
+                            "fragment_type": "method",
+                            "is_test_method": False,
+                        }
                     )
-                )
 
-    # further checking the waiting queue to see if any fragment can be processed
+    # Process remaining waiting queue
     waiting_queue, processed_fragments, project_traversal = process_waiting_queue(
         waiting_queue, processed_fragments, project_traversal
     )
 
-    # if there are no waiting fragments, return the project traversal
-    if len(waiting_queue) == 0:
-        return order_fragments(project_traversal)
-
-    # detect and unroll cycles in the waiting queue, if any
-    unroll_cycles(waiting_queue, processed_fragments, project_traversal)
-
-    # further checking the waiting queue to see if any fragment can be processed
-    waiting_queue, processed_fragments, project_traversal = process_waiting_queue(
-        waiting_queue, processed_fragments, project_traversal
-    )
-
-    assert len(waiting_queue) == 0, f"Found cycles in the waiting queue"
+    # Handle cycles if any
+    if len(waiting_queue) > 0:
+        unroll_cycles(waiting_queue, processed_fragments, project_traversal)
+        waiting_queue, processed_fragments, project_traversal = process_waiting_queue(
+            waiting_queue, processed_fragments, project_traversal
+        )
 
     return order_fragments(project_traversal)

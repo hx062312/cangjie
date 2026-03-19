@@ -661,7 +661,7 @@ def main(args):
                 )
 
                 # Get field type
-                field_type = "<?>"  # placeholder
+                field_type = "Any"  # placeholder
                 assert (
                     len(schema["classes"][class_]["fields"][field]["types"]) == 1
                     or len(schema["classes"][class_]["fields"][field]["types"]) == 0

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/get_dependencies.sh Calculator _decomposed_tests
+# ./scripts/java/get_dependencies.sh calculator _decomposed_tests
 # ./scripts/java/get_dependencies.sh commons-fileupload _decomposed_tests
 # ./scripts/java/get_dependencies.sh HelloWorld _decomposed_tests
 

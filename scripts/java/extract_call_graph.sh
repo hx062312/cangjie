@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/extract_call_graph.sh Calculator _decomposed_tests
+# ./scripts/java/extract_call_graph.sh calculator _decomposed_tests
 # ./scripts/java/extract_call_graph.sh commons-fileupload _decomposed_tests
 # ./scripts/java/extract_call_graph.sh HelloWorld _decomposed_tests
 

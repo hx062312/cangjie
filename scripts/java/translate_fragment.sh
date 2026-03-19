@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/translate_fragment.sh Calculator gpt-4o-2024-11-20 0.0
+# ./scripts/java/translate_fragment.sh calculator gpt-4o-2024-11-20 0.0
 # ./scripts/java/translate_fragment.sh commons-fileupload gpt-4o-2024-11-20 0.0
 # ./scripts/java/translate_fragment.sh HelloWorld gpt-4o-2024-11-20 0.0
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ./scripts/java/extract_coverage.sh HelloWorld _decomposed_tests
-# ./scripts/java/extract_coverage.sh Calculator _decomposed_tests
+# ./scripts/java/extract_coverage.sh calculator _decomposed_tests
 # ./scripts/java/extract_coverage.sh commons-fileupload _decomposed_tests
 
 if [ $# -ne 2 ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/create_database.sh Calculator _decomposed_tests
+# ./scripts/java/create_database.sh calculator _decomposed_tests
 # ./scripts/java/create_database.sh commons-fileupload _decomposed_tests
 # ./scripts/java/create_database.sh HelloWorld _decomposed_tests
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ./scripts/java/create_query_outputs.sh Calculator _decomposed_tests
+# ./scripts/java/create_query_outputs.sh calculator _decomposed_tests
 # ./scripts/java/create_query_outputs.sh commons-fileupload _decomposed_tests
 # ./scripts/java/create_query_outputs.sh HelloWorld _decomposed_tests
 
