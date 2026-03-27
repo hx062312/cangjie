@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     rsync \
     vim \
+    openjdk-21-jdk \
     && rm -rf /var/lib/apt/lists/*
 
 RUN arch=$(uname -m) && \
@@ -53,9 +54,6 @@ RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkg
 
 RUN conda env create -f environment.yaml
 
-RUN bash scripts/install_graal.sh
-ENV JAVA_HOME="/root/.sdkman/candidates/java/current"
-
 RUN mkdir -p /home/cangjie/misc/sitter-libs
 RUN git clone https://github.com/tree-sitter/tree-sitter-java.git /home/cangjie/misc/sitter-libs/java
 RUN git clone https://github.com/tree-sitter/tree-sitter-python.git /home/cangjie/misc/sitter-libs/python
@@ -79,7 +77,7 @@ WORKDIR /home/cangjie/vscode-codeql-starter/ql
 RUN git checkout 3b2e55bc2ac942ac2cf2646f5c69acd081ce8ea2
 
 WORKDIR /home/cangjie
-RUN cp queries/* vscode-codeql-starter/codeql-custom-queries-java
+RUN cp queries/java/* vscode-codeql-starter/codeql-custom-queries-java
 
 RUN bash scripts/download_original_projects.sh
 
